@@ -1,0 +1,163 @@
+body{
+    font: 20px "Lucida Grande", Tahoma, Verdana, sans-serif;
+    color: #404040;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+.right {
+    float: right;
+}
+
+input[type=text],
+input[type=password],
+input[type=email]{
+    padding:10px;
+    width:100%;
+}
+
+.g-recaptcha{
+    transform:scale(0.97);
+}
+
+.red{
+    color: red;
+}
+
+.content{
+    background: #FFFFFF;
+    margin: 0 auto;
+    height: 100%;
+    width: 1200px;
+}
+
+#userNotes{
+    font-size:0.7em;
+    text-align:left;
+    padding:10px;
+}
+
+.formBody{
+    padding:5px;
+}
+
+#loginForm{
+
+    text-align:center;
+    border:thin solid #000;
+    width:320px;
+    margin:7em auto 0 auto;
+}
+
+#formHeader{
+    border-bottom:thin solid gray;
+    padding:10px;
+    background:#f3f3f3;
+}
+
+.customButton {
+    padding:5px;
+    width:100%;
+}
+
+.customButton:enabled{
+    background-color: #378de5;
+}
+
+.customButton:disabled{
+    background-color: grey;
+    pointer-events: none;
+}
+
+.customButton:hover {
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+    background-color:#378de5;
+}
+
+#userList {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#userList td, #userList th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#userList tr:nth-child(even){background-color: #f2f2f2;}
+
+#userList tr:hover {background-color: #ddd;}
+
+#userList th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.tableBtn{
+    width: 100%;
+    margin: 1px 1px 2px 2px;
+    float: left;
+}
+
+.tableForm{
+    width: 30%;
+    margin: 3px 3px 3px 3px;
+    float: left;
+}
+
+.hidden{
+    display: none;
+}
+
+.searchFormField{
+    margin: 5px;
+    float: left;
+    height: 100%;
+}
+
+.searchButton{
+    width: 20%; !important;
+    float: right;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.editForm {
+    width: 45%;
+    margin: 5px;
+    float: left;
+}
