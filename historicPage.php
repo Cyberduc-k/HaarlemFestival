@@ -139,6 +139,138 @@
                 </p>
             </article>
         </section>
+        <section id="schedule" class="historicContent">
+            <article>
+                <header>
+                    <h3>
+                        Schedule
+                    </h3>
+                </header>
+
+                <table border="1">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>No of English tours</th>
+                        <th>No of Dutch tours</th>
+                        <th>No of Chinese tours</th>
+                        <th>Start Location</th>
+                    </tr>
+                    <tr>
+                        <td>Thursday July 26</td>
+                        <td>10.00</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>&dash;</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>13.00</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>&dash;</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>16.00</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>&dash;</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td>Friday July 27</td>
+                        <td>10.00</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>&dash;</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>13.00</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>16.00</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>&dash;</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday July 28</td>
+                        <td>10.00</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>&dash;</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>13.00</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>16.00</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td>Sunday July 29</td>
+                        <td>10.00</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>13.00</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>16.00</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>&dash;</td>
+                        <td>Bavo Church</td>
+                    </tr>
+                </table>
+
+                <header>
+                    <h3>Prices</h3>
+                </header>
+
+                <table border="1">
+                    <tr>
+                        <td>Single ticket</td>
+                        <td>17,50</td>
+                    </tr>
+                    <tr>
+                        <td>Family ticket (4 persons max.)</td>
+                        <td>60,&dash;</td>
+                    </tr>
+                </table>
+
+            </article>
+        </section>
     </body>
 
 </html>
