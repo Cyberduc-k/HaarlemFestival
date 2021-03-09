@@ -1,16 +1,15 @@
 <?php
+
 require_once("Base.php");
 require_once ("DAOUtils.php");
 
-//DAO for the edit keys
-class EditKeyDAO extends DAOUtils
-{
+// DAO for the edit keys
+class EditKeyDAO extends DAOUtils {
     // table name
     private string $tableName = "edit_verifications";
 
     // create new edit key entry
-    function create(EditKey $editKey): bool
-    {
+    function create(EditKey $editKey): bool {
         try {
             // query to insert record
             $query = "INSERT INTO
@@ -34,7 +33,7 @@ class EditKeyDAO extends DAOUtils
 
             // execute query
             $stmt->execute();
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return true;
@@ -43,9 +42,9 @@ class EditKeyDAO extends DAOUtils
         }
     }
 
-    //get an edit key by id
-    public function getById(int $id): ?PDOStatement{
-        try{
+    // get an edit key by id
+    public function getById(int $id): ?PDOStatement {
+        try {
             // query to read single record
             $query = "SELECT
                 stashId, `key`, expDate
@@ -63,14 +62,14 @@ class EditKeyDAO extends DAOUtils
             // execute query
             $stmt->execute();
 
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return $stmt;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $this->handleNullError($e, true);
         }
     }
 }
+
 ?>

@@ -1,12 +1,12 @@
 <?php
+
 require_once(__DIR__ . "/../models/User.php");
 require_once(__DIR__ . "/../models/ResetKey.php");
 
-//Functions often used throughout the service layer
-class ServiceUtils
-{
-    //Used to convert the raw data from the query to a User object
-     protected function rowToUser(array $row): User{
+// Functions often used throughout the service layer
+class ServiceUtils {
+    // Used to convert the raw data from the query to a User object
+    protected function rowToUser(array $row): User {
         $user = new User();
 
         $registerDate = DateTime::createFromFormat('Y-m-d H:i:s', (string)$row["register_date"]);
@@ -23,8 +23,8 @@ class ServiceUtils
         return $user;
     }
 
-    //Used to convert the raw data from the query to a EditStash object
-     protected function rowToEditStash(array $row): EditStash{
+    // Used to convert the raw data from the query to a EditStash object
+    protected function rowToEditStash(array $row): EditStash {
         $stash = new EditStash();
 
         $expDate = DateTime::createFromFormat('Y-m-d H:i:s', (string)$row["expDate"]);
@@ -42,8 +42,8 @@ class ServiceUtils
         return $stash;
     }
 
-    //Used to convert the raw data from the query to a ResetKey object
-     protected function rowToResetKey(array $row): ResetKey{
+    // Used to convert the raw data from the query to a ResetKey object
+    protected function rowToResetKey(array $row): ResetKey {
         $resetKey = new ResetKey();
 
         $expDate = DateTime::createFromFormat('Y-m-d H:i:s', (string)$row["expDate"]);
@@ -56,8 +56,8 @@ class ServiceUtils
         return $resetKey;
     }
 
-    //Used to convert the raw data from the query to a EditKey object
-     protected function rowToEditKey(array $row): EditKey{
+    // Used to convert the raw data from the query to a EditKey object
+    protected function rowToEditKey(array $row): EditKey {
         $editKey = new EditKey();
 
         $expDate = DateTime::createFromFormat('Y-m-d H:i:s', (string)$row["expDate"]);
@@ -69,8 +69,8 @@ class ServiceUtils
         return $editKey;
     }
 
-    //Used to convert the raw data from the query to a EditEmailKey object
-     protected function rowToEditEmailKey(array $row): EditEmailKey{
+    // Used to convert the raw data from the query to a EditEmailKey object
+    protected function rowToEditEmailKey(array $row): EditEmailKey {
         $editEmailKey = new EditEmailKey();
 
         $expDate = DateTime::createFromFormat('Y-m-d H:i:s', (string)$row["expDate"]);
@@ -87,11 +87,12 @@ class ServiceUtils
         return $editEmailKey;
     }
 
-    //Prepare file name for storage
+    // Prepare file name for storage
     protected function clean($string) {
         $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
 
         return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
     }
 }
+
 ?>

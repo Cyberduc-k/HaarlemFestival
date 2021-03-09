@@ -6,29 +6,31 @@
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
 <?php
+
 require_once ("models/User.php");
 require_once ("services/UserService.php");
 require_once ("validate.php");
 require_once ("menubar.php");
 
-//Handle form submission
-if($_POST){
-    //Clear any exiting error message
+// Handle form submission
+if ($_POST) {
+    // Clear any exiting error message
     unset($_SESSION["createError"]);
 
-    if(
+    if (
         !empty($_POST["firstname"]) &&
         !empty($_POST["lastname"]) &&
         !empty($_POST["email"]) &&
         !empty($_POST["password"]) &&
         !empty($_POST["usertype"]) &&
         isset($_SESSION["userType"])
-    ){
-        //Make sure the logged in user is a superadmin
-        if((int)$_SESSION["userType"] == UserTypes::SUPERADMIN){
-            try{
-                //Create the new user
+    ) {
+        // Make sure the logged in user is a superadmin
+        if ((int)$_SESSION["userType"] == UserTypes::SUPERADMIN) {
+            try {
+                // Create the new user
                 $user = new User();
 
                 $user->setFirstname((string)htmlentities($_POST["firstname"]));
@@ -39,30 +41,25 @@ if($_POST){
 
                 $userService = new UserService();
 
-                if($userService->create($user)){
+                if ($userService->create($user)) {
                     echo "Succesfully created user";
-                }
-                else{
+                } else {
                     header("Location: create.php");
                     exit;
                 }
-            }
-            catch (Exception $e){
+            } catch (Exception $e) {
                 $_SESSION["createError"] = "An error occured, try again please".$e;
                 header("Location: create.php");
                 exit;
             }
         }
-
-    }
-    else{
+    } else {
         $_SESSION["editError"] = "Not all information was filled in";
         header("Location: create.php");
         exit;
     }
-}
-else{
- ?>
+} else {
+?>
     <div class="content">
         <h1>Add new user</h1>
         <form name="editForm" action="create.php" method="post">

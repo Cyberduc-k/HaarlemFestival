@@ -1,55 +1,59 @@
 <?php
-if(!isset($_SESSION)) session_start();
+
+if (!isset($_SESSION)) session_start();
 
 require_once ("models/User.php");
 require_once ("services/UserService.php");
 require_once ("validate.php");
 
-//Handle form submission
+// Handle form submission
 $userService = new UserService();
 
-if($_POST){
-    //Clear any exiting error message
+if ($_POST) {
+    // Clear any exiting error message
     unset($_SESSION["avatarError"]);
-    if(
+
+    if (
         isset($_SESSION["userId"]) &&
         isset($_SESSION["userType"]) &&
         !empty($_FILES["avatar"]["name"])
-    ){
-        if($userService->setAvatar((int)$_SESSION["userId"], $_FILES["avatar"])){
+    ) {
+        if ($userService->setAvatar((int)$_SESSION["userId"], $_FILES["avatar"])) {
             echo "<h2>Succesfully changed avatar</h2>";
-        }
-        else{
+        } else{
             header("Location: changeAvatar.php");
             exit;
         }
-    }
-    else{
+    } else {
         $_SESSION["avatarError"] = "Please select an image first";
         header("Location: changeAvatar.php");
         exit;
     }
 }
 //Just show the page
-else{
+else {
     require_once ("menubar.php");
-    if(isset($_SESSION["email"])){
-        ?>
+
+    if (isset($_SESSION["email"])) {
+?>
         <html lang="en">
         <head>
             <title>Change Avatar</title>
             <link type="text/css" rel="stylesheet" href="css/style.css" />
             <script>
-                //script to display image on change and to show a picker on click
+                // script to display image on change and to show a picker on click
                 function triggerClick(e) {
                     document.querySelector('#profileImage').click();
                 }
+
                 function displayImage(e) {
                     if (e.files[0]) {
                         var reader = new FileReader();
-                        reader.onload = function(e){
+
+                        reader.onload = e => {
                             document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
-                        }
+                        };
+
                         reader.readAsDataURL(e.files[0]);
                     }
                 }
@@ -81,9 +85,11 @@ else{
             </div>
         </body>
         </html>
-        <?php
-    } else{
+<?php
+    } else {
         echo "<h2>Something went wrong on our side, please contact the administrator.</h2>";
         echo "<h3>We weren't able to verify what user you where trying to edit, sorry!</h3>";
     }
-} ?>
+}
+
+?>

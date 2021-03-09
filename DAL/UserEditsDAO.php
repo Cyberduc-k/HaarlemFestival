@@ -1,16 +1,16 @@
 <?php
+
 require_once ("Base.php");
 require_once ("DAOUtils.php");
-class UserEditsDAO extends DAOUtils
-{
+
+class UserEditsDAO extends DAOUtils {
     // table name
     private string $stashTable = "user_edits";
     private string $keyTable = "edit_verifications";
     private string $emailKeyTable = "edit_email_verifications";
 
     // create new stash entry
-    public function createEditStashAndEditKey(EditStash $stash, EditKey $editKey): bool
-    {
+    public function createEditStashAndEditKey(EditStash $stash, EditKey $editKey): bool {
         try {
             // query to insert stash
             $stashQuery = "INSERT INTO
@@ -63,7 +63,7 @@ class UserEditsDAO extends DAOUtils
             $stashStmt->execute();
             $keyStmt->execute();
 
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return true;
@@ -73,8 +73,7 @@ class UserEditsDAO extends DAOUtils
     }
 
     // create new stash entry
-    public function createEditStashAndEditEmailKey(EditStash $stash, EditEmailKey $editEmailKey): bool
-    {
+    public function createEditStashAndEditEmailKey(EditStash $stash, EditEmailKey $editEmailKey): bool {
         try {
             // query to insert stash
             $stashQuery = "INSERT INTO
@@ -138,7 +137,7 @@ class UserEditsDAO extends DAOUtils
             $stashStmt->execute();
             $keyStmt->execute();
 
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return true;
@@ -148,9 +147,8 @@ class UserEditsDAO extends DAOUtils
     }
 
     // get a stash for a user
-    public function getById(int $id): ?PDOStatement
-    {
-        try{
+    public function getById(int $id): ?PDOStatement {
+        try {
             // query to read single record, the most recent one
             $query = "SELECT
                 stashId, userId, firstname, lastname, password, salt, email, usertype, expDate
@@ -168,18 +166,17 @@ class UserEditsDAO extends DAOUtils
             // execute query
             $stmt->execute();
 
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return $stmt;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $this->handleNullError($e, true);
         }
     }
 
-    public function getNextId(): ?PDOStatement{
-        try{
+    public function getNextId(): ?PDOStatement {
+        try {
             // query to read single record
             $query = "SELECT
                 stashId
@@ -194,14 +191,14 @@ class UserEditsDAO extends DAOUtils
             // execute query
             $stmt->execute();
 
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return $stmt;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $this->handleNullError($e, true);
         }
     }
 }
+
 ?>

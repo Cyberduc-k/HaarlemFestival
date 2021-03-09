@@ -1,7 +1,6 @@
 <?php
 
-class MailService
-{
+class MailService {
     private static $instance = null;
 
     private const FROM = "assignment@bramsierhuis.nl";
@@ -10,24 +9,21 @@ class MailService
     private const PORT = 465;
     private const FROM_NAME = "Bram Bierhuis";
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
-    //Singleton
-    public static function getInstance()
-    {
-        if (self::$instance == null)
-        {
+    // Singleton
+    public static function getInstance() {
+        if (self::$instance == null) {
             self::$instance = new MailService();
         }
 
         return self::$instance;
     }
 
-    //Send an email using the PHPMailer library: https://github.com/PHPMailer/PHPMailer
-    public function sendMail(String $to, String $subject, String $body): bool{
+    // Send an email using the PHPMailer library: https://github.com/PHPMailer/PHPMailer
+    public function sendMail(String $to, String $subject, String $body): bool {
         require_once(__DIR__."/../libs/PHPMailer/PHPMailerAutoload.php");
+
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->SMTPSecure = "ssl";
@@ -57,4 +53,5 @@ class MailService
         }
     }
 }
+
 ?>

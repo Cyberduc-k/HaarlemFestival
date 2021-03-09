@@ -1,15 +1,15 @@
 <?php
+
 require_once("Base.php");
 require_once ("DAOUtils.php");
-//DAO for the passwords
-class PasswordDAO extends DAOUtils
-{
+
+// DAO for the passwords
+class PasswordDAO extends DAOUtils {
     // table name
     private string $resetTableName = "password_resets";
 
     // create new reset entry
-    public function create(ResetKey $resetKey): bool
-    {
+    public function create(ResetKey $resetKey): bool {
         try {
             // query to insert record
             $query = "INSERT INTO
@@ -34,7 +34,7 @@ class PasswordDAO extends DAOUtils
             // execute query
             $stmt->execute();
 
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return true;
@@ -44,8 +44,8 @@ class PasswordDAO extends DAOUtils
     }
 
     // Get reset key by user id
-    public function getByUserId(int $id): ?PDOStatement{
-        try{
+    public function getByUserId(int $id): ?PDOStatement {
+        try {
             // query to read single record
             $query = "SELECT
                 id, userId, `key`, expDate
@@ -63,14 +63,14 @@ class PasswordDAO extends DAOUtils
             // execute query
             $stmt->execute();
 
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return $stmt;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $this->handleNullError($e, true);
         }
     }
 }
+
 ?>

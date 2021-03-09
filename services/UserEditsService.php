@@ -1,31 +1,29 @@
 <?php
+
 require_once(__DIR__ . "/../models/EditStash.php");
 require_once(__DIR__ . "/../models/EditKey.php");
 require_once(__DIR__ . "/../DAL/UserEditsDAO.php");
 require_once(__DIR__ . "/../services/UserService.php");
 require_once("ServiceUtils.php");
 
-//Only start a session when necessary
-if(!isset($_SESSION)) session_start();
+// Only start a session when necessary
+if (!isset($_SESSION)) session_start();
 
-class UserEditsService extends ServiceUtils
-{
+class UserEditsService extends ServiceUtils {
     private UserEditsDAO $dao;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->dao = new UserEditsDAO();
     }
 
     // Add a new stash
-    public function createEditStashAndEditKey(EditStash $stash, EditKey $editKey): bool{
-        try{
-            if($this->dao->createEditStashAndEditKey($stash, $editKey))
+    public function createEditStashAndEditKey(EditStash $stash, EditKey $editKey): bool {
+        try {
+            if ($this->dao->createEditStashAndEditKey($stash, $editKey))
                 return true;
 
             return false;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
@@ -37,14 +35,13 @@ class UserEditsService extends ServiceUtils
     }
 
     // Add a new stash
-    public function createEditStashAndEditEmailKey(EditStash $stash, EditEmailKey $editEmailKey): bool{
-        try{
-            if($this->dao->createEditStashAndEditEmailKey($stash, $editEmailKey))
+    public function createEditStashAndEditEmailKey(EditStash $stash, EditEmailKey $editEmailKey): bool {
+        try {
+            if ($this->dao->createEditStashAndEditEmailKey($stash, $editEmailKey))
                 return true;
 
             return false;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
@@ -56,16 +53,17 @@ class UserEditsService extends ServiceUtils
     }
 
     // Add a new stash
-    public function performEdit(int $id): bool{
-        try{
+    public function performEdit(int $id): bool {
+        try {
             $stash = $this->getById($id);
-            if(!is_null($stash)){
+
+            if (!is_null($stash)) {
                 $userService = new UserService();
-                if($userService->update($stash))
+
+                if ($userService->update($stash))
                     return true;
             }
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
@@ -76,21 +74,20 @@ class UserEditsService extends ServiceUtils
         return false;
     }
 
-    //Try to get a stash by id
-    public function getById(int $id): ?EditStash{
-        try{
+    // Try to get a stash by id
+    public function getById(int $id): ?EditStash {
+        try {
             $stmt = $this->dao->getById($id);
             $num = $stmt->rowCount();
 
-            if($num > 0){
+            if ($num > 0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 return $this->rowToEditStash($row);
             }
 
             return null;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
@@ -101,21 +98,20 @@ class UserEditsService extends ServiceUtils
         }
     }
 
-    //Get next available id
-    public function getNextId(): ?int{
-        try{
+    // Get next available id
+    public function getNextId(): ?int {
+        try {
             $stmt = $this->dao->getNextId();
             $num = $stmt->rowCount();
 
-            if($num > 0){
+            if ($num > 0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 return (int)$row["stashId"] + 1;
             }
 
             return null;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
@@ -126,4 +122,5 @@ class UserEditsService extends ServiceUtils
         }
     }
 }
+
 ?>

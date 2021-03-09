@@ -1,15 +1,15 @@
 <?php
+
 require_once("Base.php");
 require_once(__DIR__ . "/../models/ErrorLog.php");
-//DAO for the errors
-class ErrorDAO
-{
+
+// DAO for the errors
+class ErrorDAO {
     // table name
     private string $tableName = "errors";
 
     // create new error
-    public function create(ErrorLog $error): bool
-    {
+    public function create(ErrorLog $error): bool {
         try {
             // query to insert record
             $query = "INSERT INTO
@@ -31,12 +31,12 @@ class ErrorDAO
 
             // execute query
             $stmt->execute();
-            //If we get tot this point there are no errors so we can commit
+            // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
 
             return true;
         }
-        //Uses own rollback code to avoid an stack overflow, cant call ErrorService here
+        // Uses own rollback code to avoid an stack overflow, cant call ErrorService here
         catch (Exception $e) {
             if (Base::getInstance()->conn->inTransaction()) {
                 //There was an error while performing a transaction so rollback
@@ -48,4 +48,5 @@ class ErrorDAO
         return false;
     }
 }
+
 ?>

@@ -1,11 +1,11 @@
 <?php
+
 require_once(__DIR__ . "/../models/User.php");
 
-class PasswordHasher
-{
+class PasswordHasher {
     private const SALT_LENGTH = 32;
 
-    //Hash the plaintext password of a user and store the used salt
+    // Hash the plaintext password of a user and store the used salt
     public function hash(&$user): bool{
         try {
             $salt = bin2hex(random_bytes(self::SALT_LENGTH));
@@ -27,4 +27,5 @@ class PasswordHasher
         }
     }
 }
+
 ?>

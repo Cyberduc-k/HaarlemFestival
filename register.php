@@ -1,4 +1,5 @@
-<?php if(!isset($_SESSION)) session_start(); ?>
+<?php if (!isset($_SESSION)) session_start(); ?>
+
 <html lang="en">
     <head>
         <title>Register</title>
@@ -15,24 +16,25 @@
     </head>
     <body>
         <div id="loginForm">
-
             <?php
+            
             require_once("services/UserService.php");
             require_once("models/User.php");
             require_once("models/UserTypes.php");
 
             // save the username and password
-            if($_POST){
-                //Clear the error message
+            if ($_POST) {
+                // Clear the error message
                 unset($_SESSION["registerError"]);
 
-                //First check if the captcha has been filled in
+                // First check if the captcha has been filled in
                 $captcha = null;
-                if(isset($_POST["g-recaptcha-response"])){
+                
+                if (isset($_POST["g-recaptcha-response"])) {
                     $captcha = $_POST["g-recaptcha-response"];
                 }
 
-                if(!$captcha){
+                if (!$captcha) {
                     $_SESSION["registerError"] = "Please complete the Captcha";
                     header("Location: register.php");
                     exit;
@@ -47,27 +49,28 @@
                 $responseKeys = json_decode($response,true);
 
                 // Don't sign in when captcha failed
-                if(!$responseKeys["success"]) {
+                if (!$responseKeys["success"]) {
                     $_SESSION["registerError"] = "Captcha incorrect, try again";
                     header("Location: register.php");
                     exit;
                 }
-                if(
+                
+                if (
                     !empty($_POST["firstname"]) &&
                     !empty($_POST["lastname"]) &&
                     !empty($_POST["email"]) &&
                     !empty($_POST["password"])
-                ){
+                ) {
                     $userService = new UserService();
 
-                    //Check if there already is a user with this mail address
-                    if($userService->mailExists(htmlentities($_POST["email"]))){
+                    // Check if there already is a user with this mail address
+                    if ($userService->mailExists(htmlentities($_POST["email"]))) {
                         $_SESSION["registerError"] = "An user is already registered with this email address";
                         header("Location: register.php");
                         exit;
                     }
 
-                    //Create a user with the specific variables
+                    // Create a user with the specific variables
                     $user = new User();
                     $user->setFirstname(htmlentities($_POST["firstname"]));
                     $user->setLastname(htmlentities($_POST["lastname"]));
@@ -75,24 +78,20 @@
                     $user->setPassword(htmlentities($_POST["password"]));
                     $user->setUsertype(UserTypes::USER);
 
-                    if($userService->create($user)){
+                    if ($userService->create($user)) {
                         echo "<div>Successful registration! <a href='index.php'>Login</a></div>";
-                    }
-                    else{
+                    } else {
                         echo "<div>Unable to register. <a href='register.php'>Please try again.</a></div>";
                     }
-                }
-                else{
+                } else {
                     $_SESSION["registerError"] = "Not all information was filled in";
                     header("Location: register.php");
                     exit;
                 }
-
             }
-
             // show the registration form
-            else{
-                ?>
+            else {
+?>
 
                 <form action="register.php" method="post">
                     <div id="formHeader">Registration Form</div>
@@ -130,10 +129,7 @@
                         </div>
                     </div>
                 </form>
-
-                <?php
-            }
-            ?>
+            <?php } ?>
         </div>
     </body>
 </html>
