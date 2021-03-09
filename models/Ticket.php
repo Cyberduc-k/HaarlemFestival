@@ -1,10 +1,8 @@
 <?php
 
-require_once("EventType.php");
-
 class Ticket {
     private int $id;
-    private EventType $event;
+    private int $event;
     private DateTime $date;
     private float $price;
 
@@ -16,11 +14,11 @@ class Ticket {
         $this->id = $id;
     }
 
-    public function getEvent(): EventType {
+    public function getEvent(): int {
         return $this->event;
     }
 
-    public function setEvent(EventType $event): void {
+    public function setEvent(int $event): void {
         $this->event = $event;
     }
 
