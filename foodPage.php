@@ -27,7 +27,7 @@
             </a>
         </li>
         <li>
-            <a href="home.php">
+            <a href="jazzPage.php">
                 Jazz
             </a>
         </li>

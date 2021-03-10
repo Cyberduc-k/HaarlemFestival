@@ -17,17 +17,17 @@
                     </a>
                 </li>
                 <li>
-                    <a href="home.php">
+                    <a href="foodPage.php">
                         Food
                     </a>
                 </li>
                 <li>
-                    <a href="home.php">
+                    <a href="historicPage.php">
                         Historic
                     </a>
                 </li>
                 <li>
-                    <a href="home.php">
+                    <a href="jazzPage.php">
                         Jazz
                     </a>
                 </li>
