@@ -15,20 +15,19 @@ $pdf->AddPage();
 $x = $pdf->GetX();
 $y = $pdf->GetY();
 $width = $pdf->getPageWidth();
-
-// draw shapes
-$pdf->SetLineStyle(['width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => [0, 0, 0]]);
-$pdf->RoundedRect($x, $y, $width - $x * 2, 60, 3.50, '1111', '');
-$pdf->RoundedRect($width - $x - 50, $y, 50, 6, 3.5, '1000', 'DF', [], [0, 0, 0]);
-$pdf->RoundedRect($x, $y, 10, 60, 3.5, '0011', 'DF', [], [255, 100, 0]);
-$pdf->RoundedRect($width - $x - 50, $y + 40, 50, 20, 3.5, '0100', 'DF', [], [255, 100, 0]);
-$pdf->Line($width - $x - 50, $y, $width - $x - 50, $y + 60, []);
-$pdf->Circle($width - $x - 50, $y - 0.272, 1.5, 180, 360, 'DF', [], [255, 255, 255]);
-$pdf->Circle($width - $x - 50, $y + 60 + 0.272, 1.5, 0, 180, 'DF', [], [255, 255, 255]);
-
 $white = [255, 255, 255];
 $gray = [100, 100, 100];
 $black = [0, 0, 0];
+
+// draw shapes
+$pdf->SetLineStyle(['width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $black]);
+$pdf->RoundedRect($x, $y, $width - $x * 2, 60, 3.50, '1111', '');
+$pdf->RoundedRect($width - $x - 50, $y, 50, 6, 3.5, '1000', 'DF', [], $black);
+$pdf->RoundedRect($x, $y, 10, 60, 3.5, '0011', 'DF', [], [255, 100, 0]);
+$pdf->RoundedRect($width - $x - 50, $y + 40, 50, 20, 3.5, '0100', 'DF', [], [255, 100, 0]);
+$pdf->Line($width - $x - 50, $y, $width - $x - 50, $y + 60, []);
+$pdf->Circle($width - $x - 50, $y - 0.272, 1.5, 180, 360, 'DF', [], $white);
+$pdf->Circle($width - $x - 50, $y + 60 + 0.272, 1.5, 0, 180, 'DF', [], $white);
 
 $pdf->SetFont('helvetica', 'B');
 
