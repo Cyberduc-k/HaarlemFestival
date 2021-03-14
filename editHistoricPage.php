@@ -1,6 +1,18 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Home</title>
+    <script src="https://cdn.tiny.cloud/1/dr4sffq9mze32bw2u01wp5edapqoq9qsjlrp2egutz2i8bvw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+            toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+            toolbar_mode: 'floating',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+        });
+    </script>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -92,28 +104,13 @@
             <h3>Guided Tour</h3>
         </header>
 
-        <script>
-            import {EditorState} from "/libs/Prosemirror/prosemirror-state-master"
-            import {EditorView} from "/libs/Prosemirror/prosemirror-view-master"
-            import {Schema, DOMParser} from "/libs/Prosemirror/prosemirror-model-master"
-            import {schema} from "/libs/Prosemirror/prosemirror-schema-basic-master"
-            import {addListNodes} from "/libs/Prosemirror/prosemirror-schema-list-master"
-            import {exampleSetup} from "/libs/Prosemirror/prosemirror-example-setup-master"
+        <h1>TinyMCE Quick Start Guide</h1>
+        <form method="post">
+            <textarea id="mytextarea" name="mytextarea">
+              Hello, World!
+            </textarea>
+        </form>
 
-            // Mix the nodes from prosemirror-schema-list into the basic schema to
-            // create a schema with list support.
-            const mySchema = new Schema({
-                nodes: addListNodes(schema.spec.nodes, "paragraph block*", "block"),
-                marks: schema.spec.marks
-            })
-
-            window.view = new EditorView(document.querySelector("#editor"), {
-                state: EditorState.create({
-                    doc: DOMParser.fromSchema(mySchema).parse(document.querySelector("#content")),
-                    plugins: exampleSetup({schema: mySchema})
-                })
-            })
-        </script>
     </article>
 </section>
 <section id="schedule" class="historicContent">

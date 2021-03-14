@@ -26,7 +26,7 @@ class ErrorService {
                 return true;
 
             return false;
-        } catch (Exception) {
+        } catch (Exception $e) {
             return false;
         }
     }
