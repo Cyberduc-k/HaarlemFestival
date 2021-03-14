@@ -2,18 +2,8 @@
 <html lang="en">
 <head>
     <title>Home</title>
-    <script src="https://cdn.tiny.cloud/1/dr4sffq9mze32bw2u01wp5edapqoq9qsjlrp2egutz2i8bvw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'a11ychecker casechange linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-            toolbar: 'a11ycheck addcomment showcomments casechange checklist formatpainter pageembed permanentpen table',
-            toolbar_mode: 'floating',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-        });
-    </script>
+    <script src="https://cdn.tiny.cloud/1/dr4sffq9mze32bw2u01wp5edapqoq9qsjlrp2egutz2i8bvw/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -100,27 +90,53 @@
 </script>
 
 <section id="about" class="historicContent">
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            plugins: 'a11ychecker casechange linkchecker autolink lists checklist media mediaembed pageembed ' +
+                'permanentpen powerpaste table advtable tinymcespellchecker',
+            toolbar: 'undo redo bullist numlist table',
+            toolbar_mode: 'floating',
+        });
+
+        function saveContent()
+        {
+            // edited content opslaan in variable.
+            var myContent = tinymce.get("mytextarea").getContent();
+
+            // content wegschrijven voor test
+            document.write(myContent);
+        }
+    </script>
     <article>
         <header>
             <h3>Guided Tour</h3>
         </header>
         <form method="post">
             <textarea id="mytextarea" name="mytextarea">
-              Allemaal info over de tours blabla
+              Joejoe
             </textarea>
         </form>
-
+        <button onclick="saveContent()">Save</button>
     </article>
 </section>
 <section id="schedule" class="historicContent">
-    <article>
+    <script>
+        tinymce.init({
+            selector: '#scheduletable',
+            plugins: 'a11ychecker casechange linkchecker autolink lists checklist media mediaembed pageembed ' +
+                'permanentpen powerpaste table advtable tinymcespellchecker',
+            toolbar: 'undo redo bullist numlist table',
+            toolbar_mode: 'floating',
+        });
+    </script>
         <header>
             <h3>
                 Schedule
             </h3>
         </header>
-
-        <table border="1">
+    <article id="scheduletable">
+        <table border="1" id="historicschedule" name="historicschedule">
             <tr>
                 <th>Date</th>
                 <th>Time</th>
