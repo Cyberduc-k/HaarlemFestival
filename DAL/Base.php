@@ -5,10 +5,10 @@ class Base{
     private static $instance = null;
 
     // Credentials
-    private String $host = "bramsierhuis.nl.mysql";
-    private String $db_name = "bramsierhuis_nl_workinghours";
-    private String $username = "bramsierhuis_nl_workinghours";
-    private String $password = "_#Br4manne1";
+    private String $host = "185.224.138.70";
+    private String $db_name = "u844582952_hf";
+    private String $username = "u844582952_hf_user";
+    private String $password = "HaarlemFestival2021";
     public ?PDO $conn = null;
 
     // Make connection on construction
