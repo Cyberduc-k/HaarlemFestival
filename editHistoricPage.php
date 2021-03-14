@@ -3,11 +3,12 @@
 <head>
     <title>Home</title>
     <script src="https://cdn.tiny.cloud/1/dr4sffq9mze32bw2u01wp5edapqoq9qsjlrp2egutz2i8bvw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
     <script>
         tinymce.init({
             selector: 'textarea',
-            plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-            toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+            plugins: 'a11ychecker casechange linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+            toolbar: 'a11ycheck addcomment showcomments casechange checklist formatpainter pageembed permanentpen table',
             toolbar_mode: 'floating',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
@@ -103,11 +104,9 @@
         <header>
             <h3>Guided Tour</h3>
         </header>
-
-        <h1>TinyMCE Quick Start Guide</h1>
         <form method="post">
             <textarea id="mytextarea" name="mytextarea">
-              Hello, World!
+              Allemaal info over de tours blabla
             </textarea>
         </form>
 
