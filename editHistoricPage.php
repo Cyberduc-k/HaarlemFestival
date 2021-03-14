@@ -1,6 +1,9 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Home</title>
+    <script src="https://cdn.tiny.cloud/1/dr4sffq9mze32bw2u01wp5edapqoq9qsjlrp2egutz2i8bvw/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -87,44 +90,53 @@
 </script>
 
 <section id="about" class="historicContent">
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            plugins: 'a11ychecker casechange linkchecker autolink lists checklist media mediaembed pageembed ' +
+                'permanentpen powerpaste table advtable tinymcespellchecker',
+            toolbar: 'undo redo bullist numlist table',
+            toolbar_mode: 'floating',
+        });
+
+        function saveContent()
+        {
+            // edited content opslaan in variable.
+            var myContent = tinymce.get("mytextarea").getContent();
+
+            // content wegschrijven voor test
+            document.write(myContent);
+        }
+    </script>
     <article>
         <header>
             <h3>Guided Tour</h3>
         </header>
-
-        <script>
-            import {EditorState} from "/libs/Prosemirror/prosemirror-state-master"
-            import {EditorView} from "/libs/Prosemirror/prosemirror-view-master"
-            import {Schema, DOMParser} from "/libs/Prosemirror/prosemirror-model-master"
-            import {schema} from "/libs/Prosemirror/prosemirror-schema-basic-master"
-            import {addListNodes} from "/libs/Prosemirror/prosemirror-schema-list-master"
-            import {exampleSetup} from "/libs/Prosemirror/prosemirror-example-setup-master"
-
-            // Mix the nodes from prosemirror-schema-list into the basic schema to
-            // create a schema with list support.
-            const mySchema = new Schema({
-                nodes: addListNodes(schema.spec.nodes, "paragraph block*", "block"),
-                marks: schema.spec.marks
-            })
-
-            window.view = new EditorView(document.querySelector("#editor"), {
-                state: EditorState.create({
-                    doc: DOMParser.fromSchema(mySchema).parse(document.querySelector("#content")),
-                    plugins: exampleSetup({schema: mySchema})
-                })
-            })
-        </script>
+        <form method="post">
+            <textarea id="mytextarea" name="mytextarea">
+              Joejoe
+            </textarea>
+        </form>
+        <button onclick="saveContent()">Save</button>
     </article>
 </section>
 <section id="schedule" class="historicContent">
-    <article>
+    <script>
+        tinymce.init({
+            selector: '#scheduletable',
+            plugins: 'a11ychecker casechange linkchecker autolink lists checklist media mediaembed pageembed ' +
+                'permanentpen powerpaste table advtable tinymcespellchecker',
+            toolbar: 'undo redo bullist numlist table',
+            toolbar_mode: 'floating',
+        });
+    </script>
         <header>
             <h3>
                 Schedule
             </h3>
         </header>
-
-        <table border="1">
+    <article id="scheduletable">
+        <table border="1" id="historicschedule" name="historicschedule">
             <tr>
                 <th>Date</th>
                 <th>Time</th>

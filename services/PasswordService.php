@@ -28,7 +28,7 @@ class PasswordService extends ServiceUtils {
             }
 
             return null;
-        } catch (Exception) {
+        } catch (Exception $e) {
             return null;
         }
     }
