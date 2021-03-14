@@ -6,6 +6,7 @@ class Ticket {
     private int $eventId;
     private DateTime $date;
     private float $price;
+    private int $inStock;
 
     public function getId(): int {
         return $this->id;
@@ -45,6 +46,14 @@ class Ticket {
 
     public function setPrice(float $price): void {
         $this->price = $price;
+    }
+
+    public function getInStock(): int {
+        return $this->inStock;
+    }
+
+    public function setInStock(int $inStock): void {
+        $this->inStock = $inStock;
     }
 }
 
