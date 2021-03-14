@@ -63,7 +63,7 @@ class EditEmailKey {
     // Get the reset link for this ResetKey for the new mail
     public function getNewLink(): ?String {
         if(!empty($this->getId()) && !empty($this->getNewKey()) && !empty($this->getExpDateString()))
-            return "bramsierhuis.nl/PHP/confirmEditHandler.php?type=new&editId=".$this->getId()."&key=".$this->getNewKey();
+            return "haarlemfestival2021.nl/confirmEditHandler.php?type=new&editId=".$this->getId()."&key=".$this->getNewKey();
 
         return null;
     }
@@ -71,7 +71,7 @@ class EditEmailKey {
     // Get the reset link for this ResetKey for the old mail
     public function getOldLink(): ?String {
         if(!empty($this->getId()) && !empty($this->getOldKey()) && !empty($this->getExpDateString()))
-            return "bramsierhuis.nl/PHP/confirmEditHandler.php?type=old&editId=".$this->getId()."&key=".$this->getOldKey();
+            return "haarlemfestival2021.nl/confirmEditHandler.php?type=old&editId=".$this->getId()."&key=".$this->getOldKey();
 
         return null;
     }

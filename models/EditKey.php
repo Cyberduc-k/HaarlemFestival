@@ -38,7 +38,7 @@ class EditKey {
     // Get the reset link for this ResetKey
     public function getLink(): ?String {
         if(!empty($this->getId()) && !empty($this->getKey()) && !empty($this->getExpDateString()))
-            return "bramsierhuis.nl/PHP/confirmEditHandler.php?editId=".$this->getId()."&key=".$this->getKey();
+            return "haarlemfestival2021.nl/confirmEditHandler.php?editId=".$this->getId()."&key=".$this->getKey();
 
         return null;
     }
