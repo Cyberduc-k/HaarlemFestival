@@ -2,7 +2,8 @@
 
 class Ticket {
     private int $id;
-    private int $event;
+    private int $eventType;
+    private int $eventId;
     private DateTime $date;
     private float $price;
 
@@ -14,12 +15,20 @@ class Ticket {
         $this->id = $id;
     }
 
-    public function getEvent(): int {
-        return $this->event;
+    public function getEventType(): int {
+        return $this->eventType;
     }
 
-    public function setEvent(int $event): void {
-        $this->event = $event;
+    public function setEventType(int $eventType): void {
+        $this->eventType = $eventType;
+    }
+
+    public function getEventId(): int {
+        return $this->eventId;
+    }
+
+    public function setEventId(int $eventId): void {
+        $this->eventId = $eventId;
     }
 
     public function getDate(): DateTime {
