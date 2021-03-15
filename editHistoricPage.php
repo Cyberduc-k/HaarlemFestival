@@ -91,12 +91,19 @@
 
 <section id="about" class="historicContent">
     <script>
+        var test = "test test joe joe";
+
         tinymce.init({
             selector: '#mytextarea',
             plugins: 'a11ychecker casechange linkchecker autolink lists checklist media mediaembed pageembed ' +
                 'permanentpen powerpaste table advtable tinymcespellchecker',
             toolbar: 'undo redo bullist numlist table',
             toolbar_mode: 'floating',
+            setup: function (editor) {
+                editor.on('init', function (e) {
+                    editor.setContent(test);
+                });
+            }
         });
 
         function saveContent()
@@ -114,7 +121,6 @@
         </header>
         <form method="post">
             <textarea id="mytextarea" name="mytextarea">
-              Joejoe
             </textarea>
         </form>
         <button onclick="saveContent()">Save</button>
