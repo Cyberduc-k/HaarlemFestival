@@ -2,6 +2,7 @@
 
 require_once(__DIR__ . "/../models/User.php");
 require_once(__DIR__ . "/../models/ResetKey.php");
+require_once(__DIR__ . "/../models/Content.php");
 
 // Functions often used throughout the service layer
 class ServiceUtils {
@@ -92,6 +93,18 @@ class ServiceUtils {
         $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
 
         return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+    }
+
+    protected function rowToContent(array $row): Content {
+        $content = new Content();
+
+        $content->setId((int)$row["id"]);
+        $content->setEventId((int)$row["eventId"]);
+        $content->setHeader((string)$row["header"]);
+        $content->setText((string)$row["text"]);
+        $content->setImagePath((string)$row["imagePath"]);
+
+        return $content;
     }
 }
 
