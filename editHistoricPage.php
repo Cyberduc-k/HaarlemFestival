@@ -93,16 +93,26 @@
     <?php
         require_once "services/ContentService.php";
 
-        function getContent()
+        function getAboutContent()
         {
+            // content halen uit db
             $cs = new ContentService();
             $content = $cs->getByEventId(3);
 
             return $content->getText();
         }
+
+        function updateContent(string $aboutText)
+        {
+            $cs = new ContentService();
+            $content = $cs->getByEventId(3);
+            $content->setText($aboutText);
+
+            $cs->update($content);
+            return true;
+        }
     ?>
     <script>
-        var test = "jojo";
 
         tinymce.init({
             selector: '#mytextarea',
@@ -112,24 +122,16 @@
             toolbar_mode: 'floating',
             setup: function (editor) {
                 editor.on('init', function (e) {
-                    editor.setContent(getContent());
+                    editor.setContent(getAboutContent());
                 });
             }
         });
 
-        function saveContent()
+        function getAboutContent()
         {
-            // edited content opslaan in variable.
-            var myContent = tinymce.get("mytextarea").getContent();
+            // content ophalen via php
+            var content = '<?php echo getAboutContent(); ?>';
 
-            // content wegschrijven voor test
-            document.write(myContent);
-        }
-
-        function getContent()
-        {
-            var content = '<?php echo getContent(); ?>';
-                
             return content;
         }
     </script>
@@ -142,6 +144,15 @@
             </textarea>
         </form>
         <button onclick="saveContent()">Save</button>
+        <script>
+            function saveContent()
+            {
+                // edited content opslaan in variable.
+                string myContent = tinymce.get("mytextarea").getContent();
+
+                var update = '<?php echo updateContent(); ?>';
+            }
+        </script>
     </article>
 </section>
 <section id="schedule" class="historicContent">
