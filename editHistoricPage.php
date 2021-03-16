@@ -90,13 +90,31 @@
 </script>
 
 <section id="about" class="historicContent">
+    <?php
+        require_once "services/ContentService.php";
+
+        function getContent()
+        {
+            $cs = new ContentService();
+            $content = $cs->getByEventId(3);
+
+            return $content->getText();
+        }
+    ?>
     <script>
+        var test = "jojo";
+
         tinymce.init({
             selector: '#mytextarea',
             plugins: 'a11ychecker casechange linkchecker autolink lists checklist media mediaembed pageembed ' +
                 'permanentpen powerpaste table advtable tinymcespellchecker',
             toolbar: 'undo redo bullist numlist table',
             toolbar_mode: 'floating',
+            setup: function (editor) {
+                editor.on('init', function (e) {
+                    editor.setContent(getContent());
+                });
+            }
         });
 
         function saveContent()
@@ -107,6 +125,13 @@
             // content wegschrijven voor test
             document.write(myContent);
         }
+
+        function getContent()
+        {
+            var content = '<?php echo getContent(); ?>';
+                
+            return content;
+        }
     </script>
     <article>
         <header>
@@ -114,7 +139,6 @@
         </header>
         <form method="post">
             <textarea id="mytextarea" name="mytextarea">
-              Joejoe
             </textarea>
         </form>
         <button onclick="saveContent()">Save</button>
