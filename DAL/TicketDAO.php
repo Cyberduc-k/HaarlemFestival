@@ -8,12 +8,13 @@ require_once("../models/Ticket.php");
 class TicketDAO extends DAOUtils {
     // table names
     private string $tableName = "tickets";
+    private string $userTable = "users";
 
     // get all tickets
     public function getAll(): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, eventType, eventId, date, price, inStock
+                          id, eventType, eventId, price, inStock
                       FROM " . $this->tableName . "
                       WHERE ";
 
@@ -35,7 +36,7 @@ class TicketDAO extends DAOUtils {
     public function getWithArgs(array $args): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, eventType, eventId, date, price, inStock
+                          id, eventType, eventId, price, inStock
                       FROM " . $this->tableName . "
                       WHERE ";
 
@@ -43,14 +44,7 @@ class TicketDAO extends DAOUtils {
 
             foreach ($args as $key => $value) {
                 if (!empty($value)) {
-                    if ($key == "date") {
-                        $query .= "DATE(date) = '";
-                    } else {
-                        $query .= "`$key`";
-                        $query .= " LIKE '";
-                    }
-
-                    $query .= $value . "' AND ";
+                    $query .= "`$key` LIKE `$value' AND ";
                 }
             }
 
@@ -92,6 +86,30 @@ class TicketDAO extends DAOUtils {
         }
     }
 
+    // get all tickets for a user
+    public function getAllForUser(int $userId): ?PDOStatement {
+        try {
+            $query = "SELECT
+                          tickets.id, ticketType, eventId, eventType, price, inStock, nTickets
+                      FROM tickets
+                      JOIN `schedule` ON `schedule`.ticketId = tickets.id
+                      WHERE `schedule`.userId = :userId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":userId", $userId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
     // create a new ticket
     public function create(Ticket $ticket): bool {
         try {
@@ -99,7 +117,6 @@ class TicketDAO extends DAOUtils {
                       SET
                           eventType=:eventType,
                           eventId=:eventId,
-                          date=:date,
                           price=:price,
                           inStock=:inStock";
 
@@ -110,14 +127,12 @@ class TicketDAO extends DAOUtils {
             // cast references into variables to avoid type errors
             $eventType = (int)$ticket->getEventType();
             $eventId = (int)$ticket->getEventId();
-            $date = $ticket->getDate();
             $price = (float)$ticket->getPrice();
             $inStock = (int)$ticket->getInStock();
 
             // bind values
             $stmt->bindParam(":eventType", $eventType);
             $stmt->bindParam(":eventId", $eventId);
-            $stmt->bindParam(":date", $date);
             $stmt->bindParam(":price", $price);
             $stmt->bindParam(":inStock", $inStock);
 
@@ -138,7 +153,6 @@ class TicketDAO extends DAOUtils {
                       SET
                           eventType=:eventType,
                           eventId=:eventId,
-                          date=:date,
                           price=:price,
                           inStock=:inStock
                       WHERE
@@ -152,7 +166,6 @@ class TicketDAO extends DAOUtils {
             $id = (int)$ticket->getId();
             $eventType = (int)$ticket->getEventType();
             $eventId = (int)$ticket->getEventId();
-            $date = $ticket->getDate();
             $price = (float)$ticket->getPrice();
             $inStock = (int)$ticket->getInStock();
 
@@ -160,7 +173,6 @@ class TicketDAO extends DAOUtils {
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":eventType", $eventType);
             $stmt->bindParam(":eventId", $eventId);
-            $stmt->bindParam(":date", $date);
             $stmt->bindParam(":price", $price);
             $stmt->bindParam(":inStock", $inStock);
 
