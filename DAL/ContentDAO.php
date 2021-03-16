@@ -51,6 +51,45 @@ class ContentDAO extends DAOUtils {
             return $this->handleNullError($e, true);
         }
     }
-}
 
+    // update content
+    public function update(Content $content): bool {
+        try {
+            // update query
+            // eventid ook updaten?
+            $query = "UPDATE
+                    " . $this->tableName . "
+                SET
+                    header=:header, text=:text, imagePath=:imagePath
+                WHERE
+                    id = :id";
+
+            // prepare query statement
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            // cast references into variables to avoid error
+            $id = (int)$content->getId();
+            $header = (string)$content->getHeader();
+            $text = (string)$content->getText();
+            $imagePath = (string)$content->getImagePath();
+
+            // bind values
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":header", $header);
+            $stmt->bindParam(":text", $text);
+            $stmt->bindParam(":imagePath", $imagePath);
+
+            // execute query
+            $stmt->execute();
+
+            // If we get tot this point there are no errors so we can commit
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+}
 ?>

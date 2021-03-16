@@ -64,6 +64,13 @@ class ContentService extends ServiceUtils {
             return null;
         }
     }
-}
 
+    // Update all columns of content
+    public function update(Content $content): bool {
+        if ($this->dao->update($content))
+            return true;
+
+        return false;
+    }
+}
 ?>
