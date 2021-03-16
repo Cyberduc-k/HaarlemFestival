@@ -93,8 +93,7 @@
     <?php
         require_once "services/ContentService.php";
 
-        function getAboutContent()
-        {
+        function getAboutContent() {
             // content halen uit db
             $cs = new ContentService();
             $content = $cs->getByEventId(3);
@@ -102,8 +101,7 @@
             return $content->getText();
         }
 
-        function updateContent(string $aboutText)
-        {
+        function updateContent(string $aboutText) {
             $cs = new ContentService();
             $content = $cs->getByEventId(3);
             $content->setText($aboutText);
@@ -127,8 +125,7 @@
             }
         });
 
-        function getAboutContent()
-        {
+        function getAboutContent() {
             // content ophalen via php
             var content = '<?php echo getAboutContent(); ?>';
 
@@ -145,8 +142,7 @@
         </form>
         <button onclick="saveContent()">Save</button>
         <script>
-            function saveContent()
-            {
+            function saveContent() {
                 // edited content opslaan in variable.
                 string myContent = tinymce.get("mytextarea").getContent();
 
