@@ -3,6 +3,8 @@
 require_once(__DIR__ . "/../models/User.php");
 require_once(__DIR__ . "/../models/ResetKey.php");
 require_once(__DIR__ . "/../models/Content.php");
+require_once(__DIR__ . "/../models/Ticket.php");
+require_once(__DIR__ . "/../models/TicketWithCount.php");
 
 // Functions often used throughout the service layer
 class ServiceUtils {
@@ -105,6 +107,28 @@ class ServiceUtils {
         $content->setImagePath((string)$row["imagePath"]);
 
         return $content;
+    }
+
+    protected function rowToTicket(array $row): Ticket {
+        $ticket = new Ticket();
+
+        $ticket->setId((int)$row["ticket"]);
+        $ticket->setType((int)$row["ticketType"]);
+        $ticket->setEventId((int)$row["eventId"]);
+        $ticket->setEventType((int)$row["eventtype"]);
+        $ticket->setPrice((float)$row["price"]);
+        $ticket->setInStock((int)$row["inStock"]);
+
+        return $ticket;
+    }
+
+    protected function rowToTicketWithCount(array $row): TicketWithCount {
+        $twc = new TicketWithCount();
+
+        $twc->ticket = $this->rowToTicket($row);
+        $twc->count = (int)$row["nTickets"];
+
+        return $twc;
     }
 }
 
