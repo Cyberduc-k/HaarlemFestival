@@ -3,12 +3,11 @@
 require_once("Base.php");
 require_once("DAOUtils.php");
 
-class ContentDAO extends DAOUtils
-{
+class ContentDAO extends DAOUtils {
     private string $tableName = "content_pages";
 
-    public function getAll(): ?PDOStatement{
-        try{
+    public function getAll(): ?PDOStatement {
+        try {
             $query = "SELECT id, eventId, header, text, imagePath
             FROM " . $this->tableName ;
 
@@ -21,12 +20,12 @@ class ContentDAO extends DAOUtils
             Base::getInstance()->conn->commit();
 
             return $stmt;
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             return $this->handleNullError($e, true);
         }
     }
 
-    public function getByEventId(int $id): ?PDOStatement{
+    public function getByEventId(int $id): ?PDOStatement {
         try {
             // query to read single record
             $query = "SELECT
@@ -53,3 +52,5 @@ class ContentDAO extends DAOUtils
         }
     }
 }
+
+?>

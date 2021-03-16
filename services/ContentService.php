@@ -1,10 +1,10 @@
 <?php
+
 require_once(__DIR__ . "/../DAL/ContentDAO.php");
 require_once(__DIR__ . "/../models/Content.php");
 require_once ("ServiceUtils.php");
 
-class ContentService extends ServiceUtils
-{
+class ContentService extends ServiceUtils {
     private ContentDAO $dao;
 
     public function __construct() {
@@ -12,8 +12,7 @@ class ContentService extends ServiceUtils
     }
 
     // Get all the content from database
-    public function getAll(): ?array
-    {
+    public function getAll(): ?array {
         try {
             $stmt = $this->dao->getAll();
             $num = $stmt->rowCount();
@@ -66,3 +65,5 @@ class ContentService extends ServiceUtils
         }
     }
 }
+
+?>

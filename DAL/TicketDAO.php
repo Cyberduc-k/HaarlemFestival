@@ -8,7 +8,6 @@ require_once("../models/Ticket.php");
 class TicketDAO extends DAOUtils {
     // table names
     private string $tableName = "tickets";
-    private string $userTable = "users";
 
     // get all tickets
     public function getAll(): ?PDOStatement {
