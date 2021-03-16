@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . "/../DAL/ContentDAO.php");
 require_once(__DIR__ . "/../models/Content.php");
+require_once ("ServiceUtils.php");
 
 class ContentService extends ServiceUtils
 {

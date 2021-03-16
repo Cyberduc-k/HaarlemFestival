@@ -90,8 +90,19 @@
 </script>
 
 <section id="about" class="historicContent">
+    <?php
+        require_once "services/ContentService.php";
+
+        function getContent()
+        {
+            $cs = new ContentService();
+            $content = $cs->getByEventId(3);
+
+            return $content->getText();
+        }
+    ?>
     <script>
-        var test = "test test joe joe";
+        var test = "jojo";
 
         tinymce.init({
             selector: '#mytextarea',
@@ -101,7 +112,7 @@
             toolbar_mode: 'floating',
             setup: function (editor) {
                 editor.on('init', function (e) {
-                    editor.setContent(test);
+                    editor.setContent(getContent());
                 });
             }
         });
@@ -113,6 +124,13 @@
 
             // content wegschrijven voor test
             document.write(myContent);
+        }
+
+        function getContent()
+        {
+            var content = '<?php echo getContent(); ?>';
+                
+            return content;
         }
     </script>
     <article>
