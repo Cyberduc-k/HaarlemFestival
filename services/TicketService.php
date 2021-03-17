@@ -67,6 +67,48 @@ class TicketService extends ServiceUtils {
             return null;
         }
     }
+
+    public function getLocation(Ticket $ticket): string {
+        switch ($ticket->getEventType()) {
+            case EventType::Dance:
+            case EventType::Jazz:
+                return "Patronaat"; // @TODO: pull from database
+                break;
+            case EventType::Historic:
+                return "Haarlem"; // @TODO: pull from database
+                break;
+            case EventType::Food:
+                return "Haarlem"; // @TODO: pull from databse
+                break;
+            default: die();
+        }
+    }
+
+    public function getStartDate(Ticket $ticket): DateTime {
+        switch ($ticket->getEventType()) {
+            case EventType::Dance:
+            case EventType::Jazz:
+                break;
+            case EventType::Historic:
+                break;
+            case EventType::Food:
+                break;
+            default: die();
+        }
+    }
+
+    public function getEndDate(Ticket $ticket): DateTime {
+        switch ($ticket->getEventType()) {
+            case EventType::Dance:
+            case EventType::Jazz:
+                break;
+            case EventType::Historic:
+                break;
+            case EventType::Food:
+                break;
+            default: die();
+        }
+    }
 }
 
 ?>

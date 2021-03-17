@@ -5,6 +5,8 @@ require_once("libs/TCPDF/tcpdf.php");
 require_once("models/User.php");
 require_once("models/UserTypes.php");
 require_once("models/Ticket.php");
+require_once("models/TicketType.php");
+require_once("models/EventType.php");
 require_once("services/TicketService.php");
 
 function generateTickets(User $user): void {
@@ -47,14 +49,14 @@ function generateTickets(User $user): void {
 
         $pdf->SetFontSize(12);
         $pdf->SetTextColorArray($black);
-        $pdf->Text($x + 12, $y + 8, $ticket->eventType->getType());
-        $pdf->Text($x + 12, $y + 23, "PATRONAAT (MAIN HALL)"); // TODO: $service->getLocation($ticket)
+        $pdf->Text($x + 12, $y + 8, strtoupper(EventType::getType($ticket->getEventType())));
+        $pdf->Text($x + 12, $y + 23, strtoupper($service->getLocation($ticket))); // TODO: $service->getLocation($ticket)
         $pdf->Text($x + 12, $y + 38, "AUG 9, 2021 AT 08:00 PM"); // TODO: $service->getStartDate($ticket)
         $pdf->Text($x + 12, $y + 50, "AUG 9, 2021 AT 09:00 PM"); // TODO: $service->getEndDate($ticket)
 
         $pdf->SetFontSize(8);
         $pdf->SetTextColorArray($white);
-        $pdf->Text($width - $x - 47, $y + 43, "SINGLE ACCESS PASS"); // TODO: add ticketType
+        $pdf->Text($width - $x - 47, $y + 43, strtoupper(TicketType::getType($ticket->getType()))); // TODO: add ticketType
 
         $pdf->SetTextColorArray($black);
         $pdf->Text($width - $x - 47, $y + 48, strtoupper(UserTypes::getType($user->getUsertype())));
