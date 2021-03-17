@@ -3,9 +3,7 @@
 class Musician {
     private int $id;
     private String $name;
-    private String $info;
-    private String $socials;
-    private bool $isJazz;
+    private int $eventId;
 
     public function getId(): int {
         return $this->id;
@@ -23,28 +21,12 @@ class Musician {
         $this->name = $name;
     }
 
-    public function getInfo(): String {
-        return $this->info;
+    public function getEventId(): int {
+        return $this->eventId;
     }
 
-    public function setInfo(String $info): void {
-        $this->info = $info;
-    }
-
-    public function getSocials(): String {
-        return $this->socials;
-    }
-
-    public function setSocials(String $socials): void {
-        $this->socials = $socials;
-    }
-
-    public function getIsJazz(): bool {
-        return $this->isJazz;
-    }
-
-    public function setIsJazz(bool $isJazz): void {
-        $this->isJazz = $isJazz;
+    public function setEventId(int $eventId): void {
+        $this->eventId = $eventId;
     }
 }
 
