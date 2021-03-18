@@ -100,15 +100,6 @@
 
             return $content->getText();
         }
-
-        function updateContent(string $aboutText) {
-            $cs = new ContentService();
-            $content = $cs->getByEventId(3);
-            $content->setText($aboutText);
-
-            $cs->update($content);
-            return true;
-        }
     ?>
     <script>
 
@@ -127,26 +118,27 @@
 
         function getAboutContent() {
             // content ophalen via php
-            var content = '<?php echo getAboutContent(); ?>';
+            var content = "<?php echo getAboutContent(); ?>";
 
             return content;
         }
+
     </script>
     <article>
         <header>
             <h3>Guided Tour</h3>
         </header>
-        <form method="post">
             <textarea id="mytextarea" name="mytextarea">
             </textarea>
-        </form>
         <button onclick="saveContent()">Save</button>
         <script>
             function saveContent() {
                 // edited content opslaan in variable.
-                string myContent = tinymce.get("mytextarea").getContent();
+                var myContent = tinymce.get("mytextarea").getContent();
 
-                var update = '<?php echo updateContent(); ?>';
+                alert(myContent);
+
+                //var update = '<?php //echo updateContent(); ?>';
             }
         </script>
     </article>
