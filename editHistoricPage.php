@@ -4,6 +4,7 @@
     <title>Home</title>
     <script src="https://cdn.tiny.cloud/1/dr4sffq9mze32bw2u01wp5edapqoq9qsjlrp2egutz2i8bvw/tinymce/5/tinymce.min.js"
             referrerpolicy="origin"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -138,7 +139,16 @@
 
                 alert(myContent);
 
-                //var update = '<?php //echo updateContent(); ?>';
+                var content = function(myContent) {
+                    $.ajax({
+                        url: 'getPageContent.php',
+                        type: 'POST',
+                        data: {id:myContent},
+                        success: function(data) {
+                            console.log(data); // Inspect this in your console
+                        }
+                    });
+                }
             }
         </script>
     </article>
