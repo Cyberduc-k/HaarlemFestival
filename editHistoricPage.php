@@ -131,7 +131,7 @@
         </header>
             <textarea id="mytextarea" name="mytextarea">
             </textarea>
-        <button onclick="saveContent()">Save</button>
+        <button onclick="saveContent()" id="savebtn">Save</button>
         <script>
             function saveContent() {
                 // edited content opslaan in variable.
@@ -139,15 +139,15 @@
 
                 alert(myContent);
 
-                var content = function(myContent) {
+                $("#savebtn").click(function() {
                     $.ajax({
                         url: 'getPageContent.php',
                         type: 'POST',
-                        data: {id:myContent},
+                        data: {var myContent : tinymce.get("mytextarea").getContent()},
                         success: function(data) {
                             console.log(data); // Inspect this in your console
                         }
-                    });
+                    })
                 }
             }
         </script>

@@ -15,7 +15,6 @@ if (isset($_POST['myContent'])) {
         $content->setText($aboutText);
 
         $cs->update($content);
-        return true;
     }
 
 }
