@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/../models/Ticket.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../DAL/TicketDAO.php");
+require_once("ActService.php");
 require_once("ServiceUtils.php");
 
 class TicketService extends ServiceUtils {
@@ -69,44 +70,82 @@ class TicketService extends ServiceUtils {
     }
 
     public function getLocation(Ticket $ticket): string {
-        switch ($ticket->getEventType()) {
-            case EventType::Dance:
-            case EventType::Jazz:
-                return "Patronaat"; // @TODO: pull from database
-                break;
-            case EventType::Historic:
-                return "Haarlem"; // @TODO: pull from database
-                break;
-            case EventType::Food:
-                return "Haarlem"; // @TODO: pull from databse
-                break;
-            default: die();
+        try {
+            switch ($ticket->getEventType()) {
+                case EventType::Dance:
+                case EventType::Jazz:
+                    $service = new ActService();
+                    $act = $service->getById($ticket->getEventId());
+
+                    return $act->getLocation();
+                case EventType::Historic:
+                    return "Haarlem"; // @TODO: pull from database
+                    break;
+                case EventType::Food:
+                    return "Haarlem"; // @TODO: pull from databse
+                    break;
+                default: die();
+            }
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage);
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
         }
     }
 
     public function getStartDate(Ticket $ticket): DateTime {
-        switch ($ticket->getEventType()) {
-            case EventType::Dance:
-            case EventType::Jazz:
-                break;
-            case EventType::Historic:
-                break;
-            case EventType::Food:
-                break;
-            default: die();
+        try {
+            switch ($ticket->getEventType()) {
+                case EventType::Dance:
+                case EventType::Jazz:
+                    $service = new ActService();
+                    $act = $service->getById($ticket->getEventId());
+
+                    return $act->getStartTime();
+                case EventType::Historic:
+                    break;
+                case EventType::Food:
+                    break;
+                default: die();
+            }
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage);
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
         }
     }
 
     public function getEndDate(Ticket $ticket): DateTime {
-        switch ($ticket->getEventType()) {
-            case EventType::Dance:
-            case EventType::Jazz:
-                break;
-            case EventType::Historic:
-                break;
-            case EventType::Food:
-                break;
-            default: die();
+        try {
+            switch ($ticket->getEventType()) {
+                case EventType::Dance:
+                case EventType::Jazz:
+                    $service = new ActService();
+                    $act = $service->getById($ticket->getEventId());
+
+                    return $act->getEndTime();
+                case EventType::Historic:
+                    break;
+                case EventType::Food:
+                    break;
+                default: die();
+            }
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage);
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
         }
     }
 }

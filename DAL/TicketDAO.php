@@ -14,8 +14,7 @@ class TicketDAO extends DAOUtils {
         try {
             $query = "SELECT
                           id, eventType, eventId, price, inStock
-                      FROM " . $this->tableName . "
-                      WHERE ";
+                      FROM " . $this->tableName;
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
@@ -43,7 +42,7 @@ class TicketDAO extends DAOUtils {
 
             foreach ($args as $key => $value) {
                 if (!empty($value)) {
-                    $query .= "`$key` LIKE `$value' AND ";
+                    $query .= "`$key` LIKE '$value' AND ";
                 }
             }
 

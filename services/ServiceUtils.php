@@ -5,6 +5,7 @@ require_once(__DIR__ . "/../models/ResetKey.php");
 require_once(__DIR__ . "/../models/Content.php");
 require_once(__DIR__ . "/../models/Ticket.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
+require_once(__DIR__ . "/../models/ACt.php");
 
 // Functions often used throughout the service layer
 class ServiceUtils {
@@ -129,6 +130,20 @@ class ServiceUtils {
         $twc->count = (int)$row["nTickets"];
 
         return $twc;
+    }
+
+    protected function rowToAct(array $row): Act {
+        $act = new Act();
+
+        $act->setId((int)$row["id"]);
+        $act->setEventId((int)$row["eventId"]);
+        $act->setDate($row["date"]);
+        $act->setStartTime($row["startTime"]);
+        $act->setEndTime($row["endTime"]);
+        $act->setLocation((string)$row["location"]);
+        $act->setImagePath((string)$row["imagePath"]);
+
+        return $act;
     }
 }
 

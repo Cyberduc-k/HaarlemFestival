@@ -56,7 +56,7 @@ function generateTickets(User $user): void {
 
         $pdf->SetFontSize(8);
         $pdf->SetTextColorArray($white);
-        $pdf->Text($width - $x - 47, $y + 43, strtoupper(TicketType::getType($ticket->getType()))); // TODO: add ticketType
+        $pdf->Text($width - $x - 47, $y + 43, strtoupper(TicketType::getType($ticket->getType())));
 
         $pdf->SetTextColorArray($black);
         $pdf->Text($width - $x - 47, $y + 48, strtoupper(UserTypes::getType($user->getUsertype())));
