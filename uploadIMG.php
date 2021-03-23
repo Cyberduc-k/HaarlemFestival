@@ -1,11 +1,13 @@
 <?php
-$statusMsg = '';
 
-//file upload path
+// NOG NIET UITGEBREID GESTEST, KAN NOG NIET HELEMAAL WERKEN!
+
+//file upload path and other variables like filename
 $targetDir = "uploads/uploadedIMG/";
-$fileName = basename($_FILES["file"]["name"]);
+$fileName = htmlspecialchars(basename($_FILES["file"]["name"]));
 $targetFilePath = $targetDir . $fileName;
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+$statusMsg = '';
 
 if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 
@@ -13,12 +15,31 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
     $allowTypes = array('jpg','png','jpeg');
 
     if(in_array($fileType, $allowTypes)){
-        //upload file to server
-        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
-            $statusMsg = "The file ".$fileName. " has been uploaded.";
-        }
-        else{
-            $statusMsg = "Sorry, there was an error uploading your file.";
+        // upload file to server
+        // Count # of uploaded files in array
+        $total = count($_FILES['upload']['name']);
+
+        // Loop through each file
+        for( $i=0 ; $i < $total ; $i++ ) {
+
+            // Get the temp file path
+            $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
+
+            // Make sure we have a file path
+            if ($tmpFilePath != ""){
+                // Setup our new file path
+                $newFilePath = $targetDir . $_FILES['upload']['name'][$i];
+
+                // Upload the file into the temp dir
+                if(move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                    $statusMsg = "The file ".$fileName. " has been uploaded.";
+
+                }
+                else{
+                    $statusMsg = "Sorry, there was an error uploading your file.";
+                }
+            }
         }
     }
     else{
@@ -37,9 +58,9 @@ echo $statusMsg;
 
 GEBRUIK DIT OM IMAGES TE UPLOADEN(nog niet naar de database)!!!
 
-<form action="uploadIMG.php" method="post" enctype="multipart/form-data">
-    Select File to Upload:
-    <input type="file" name="file">
-    <input type="submit" name="submit" value="Upload" required>
-</form>
+                <form action="uploadIMG.php" method="post" enctype="multipart/form-data">
+                    Select File to Upload:
+                    <input name="file" type="file" multiple>
+                    <input type="submit" name="submit" value="Upload" required>
+                </form>
 -->
