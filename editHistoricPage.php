@@ -100,8 +100,8 @@
 
         function getAboutContent() {
             // content halen uit db
-            $rc = new retreiveContent();
-            $content =  $rc->retreive(3);
+            $rc = new retrieveContent();
+            $content =  $rc->retrieve(3);
 
             return $content->getText();
         }

@@ -1,12 +1,18 @@
 <?php
 require_once "services/ContentService.php";
 
-class retreiveContent
+class retrieveContent
 {
-    function retreive($eventID)
+    private ContentService $cs;
+
+    public function __construct()
     {
-        $cs = new ContentService();
-        return $content = $cs->getByEventId($eventID);
+        $this->cs = new ContentService();
+    }
+
+    function retrieve($eventID)
+    {
+        return $content = $this->cs->getByEventId($eventID);
     }
 
 }
