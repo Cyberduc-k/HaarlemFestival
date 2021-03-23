@@ -114,6 +114,7 @@
                 'permanentpen powerpaste table advtable tinymcespellchecker',
             toolbar: 'undo redo bullist numlist table',
             toolbar_mode: 'floating',
+            height: 800,
             setup: function (editor) {
                 editor.on('init', function (e) {
                     editor.setContent(getAboutContent());
