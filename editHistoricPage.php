@@ -95,12 +95,13 @@
 
 <section id="about" class="historicContent">
     <?php
+        require_once "retreiveContent.php";
         require_once "services/ContentService.php";
 
         function getAboutContent() {
             // content halen uit db
-            $cs = new ContentService();
-            $content = $cs->getByEventId(3);
+            $rc = new retreiveContent();
+            $content =  $rc->retreive(3);
 
             return $content->getText();
         }
@@ -140,8 +141,9 @@
                 // edited content opslaan in variable.
                 var myContent = tinymce.get("mytextarea").getContent();
 
+                // edited content doorsturen naar php
                     $.ajax({
-                        url: 'getPageContent.php',
+                        url: 'updatePageContent.php',
                         type: 'POST',
                         data: {'var' : myContent,
                                 'eventID' : 3},
