@@ -122,7 +122,7 @@
 
         function getAboutContent() {
             // content ophalen via php
-            var content = "<?php echo getAboutContent(); ?>";
+            var content = `<?php echo getAboutContent(); ?>`;
 
             return content;
         }
@@ -143,12 +143,12 @@
                     $.ajax({
                         url: 'getPageContent.php',
                         type: 'POST',
-                        data: {'var' : myContent},
+                        data: {'var' : myContent,
+                                'eventID' : 3},
                         success: function(data) {
                             console.log(data); // Inspect this in your console
                         }
                     })
-
             }
         </script>
     </article>

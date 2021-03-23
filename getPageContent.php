@@ -2,13 +2,14 @@
 require_once "services/ContentService.php";
 
 $about = $_POST['var'];
-updateContent($about);
+$eventID = $_POST['eventID'];
+updateContent($about, $eventID);
 
-function updateContent($aboutText) {
+function updateContent($aboutText, $eventID) {
     echo $aboutText;
 
     $cs = new ContentService();
-    $content = $cs->getByEventId(3);
+    $content = $cs->getByEventId($eventID);
 
     $content->setText($aboutText);
 

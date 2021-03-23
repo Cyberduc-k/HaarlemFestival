@@ -60,7 +60,9 @@ class Content {
      * @param String $text
      */
     public function setText(string $text): void {
-        $this->text = $text;
+        $this->text = <<<EOD
+            $text
+        EOD;
     }
 
     /**
