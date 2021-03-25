@@ -5,6 +5,7 @@ class HistoricTour {
     private String $guide;
     private DateTime $date;
     private int $language;
+    private string $venue;
 
     public function getId(): int {
         return $this->id;
@@ -37,6 +38,18 @@ class HistoricTour {
     public function setLanguage(int $language): void {
         $this->language = $language;
     }
+
+    public function getVenue(): string
+    {
+        return $this->venue;
+    }
+
+    public function setVenue(string $venue): void
+    {
+        $this->venue = $venue;
+    }
+
+
 }
 
 ?>
