@@ -69,7 +69,7 @@ function generateTickets(User $user): void {
             'bgcolor' => [255, 255, 255],
         ];
 
-        $pdf->write2DBarcode("url", "QRCODE,H", 165, 22, 20, 20, $style, "N");
+        $pdf->write2DBarcode("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "QRCODE,H", 165, 22, 20, 20, $style, "N");
 
         $i++;
 
