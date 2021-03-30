@@ -32,11 +32,11 @@ class HistoricTourDAO extends DAOUtils
         try {
             $query = "SELECT A.date, 
             (SELECT COUNT(language) as Dutch FROM ". $this->tableName ." 
-            WHERE language LIKE 'Dutch' AND date=A.date) as Dutch, 
+            WHERE language=0 AND date=A.date) as Dutch, 
             (SELECT COUNT(language) as English FROM ". $this->tableName ." 
-            WHERE language LIKE 'English' AND date=A.date) as English,
+            WHERE language=1 AND date=A.date) as English,
             (SELECT COUNT(language) as Chinese FROM ". $this->tableName ." 
-            WHERE language LIKE 'Chinese' AND date=A.date) as Chinese
+            WHERE language=2 AND date=A.date) as Chinese
             FROM (SELECT DISTINCT date FROM ". $this->tableName .") A";
 
             $stmt = Base::getInstance()->conn->prepare($query);

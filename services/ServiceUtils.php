@@ -8,6 +8,9 @@ require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../models/Act.php");
 require_once(__DIR__ . "/../models/HistoricTour.php");
 require_once(__DIR__ . "/../models/Venue.php");
+require_once(__DIR__ . "/../models/ACt.php");
+require_once(__DIR__ . "/../models/HistoricSchedule.php");
+
 
 // Functions often used throughout the service layer
 class ServiceUtils {
@@ -167,6 +170,17 @@ class ServiceUtils {
         $venue->setName((string)$row["eventId"]);
 
         return $venue;
+    }
+
+    protected function rowToTourSchedule(array $row): HistoricSchedule{
+        $schedule = new HistoricSchedule();
+
+        $schedule->setDate($row["date"]);
+        $schedule->setNDutchTours((int)$row["Dutch"]);
+        $schedule->setNEnglishTours((int)$row["English"]);
+        $schedule->setNChineseTours((int)$row["Chinese"]);
+
+        return $schedule;
     }
 }
 
