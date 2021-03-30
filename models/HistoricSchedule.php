@@ -3,18 +3,18 @@
 
 class HistoricSchedule
 {
-    private DateTime $date;
+    private string $date;
     private int $nDutchTours;
     private int $nEnglishTours;
     private int $nChineseTours;
 
 
-    public function getDate(): DateTime
+    public function getDate(): string
     {
         return $this->date;
     }
 
-    public function setDate(DateTime $date): void
+    public function setDate(string $date): void
     {
         $this->date = $date;
     }

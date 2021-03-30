@@ -63,7 +63,7 @@ class HistoricTourService extends ServiceUtils {
 
     public function getSchedule(): ?array{
         try {
-            $stmt = $this->dao->getAll();
+            $stmt = $this->dao->getSchedule();
             $num = $stmt->rowCount();
 
             if ($num > 0) {

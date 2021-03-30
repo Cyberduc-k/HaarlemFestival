@@ -115,108 +115,35 @@
                 <table border="1">
                     <tr>
                         <th>Date</th>
-                        <th>Time</th>
                         <th>No of English tours</th>
                         <th>No of Dutch tours</th>
                         <th>No of Chinese tours</th>
-                        <th>Start Location</th>
                     </tr>
-                    <tr>
-                        <td>Thursday July 26</td>
-                        <td>10.00</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>&dash;</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>13.00</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>&dash;</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>16.00</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>&dash;</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td>Friday July 27</td>
-                        <td>10.00</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>&dash;</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>13.00</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>16.00</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>&dash;</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td>Saturday July 28</td>
-                        <td>10.00</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>&dash;</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>13.00</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>16.00</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td>Sunday July 29</td>
-                        <td>10.00</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>13.00</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>Bavo Church</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>16.00</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>&dash;</td>
-                        <td>Bavo Church</td>
-                    </tr>
+                    <?php
+                    require_once("services/HistoricTourService.php");
+                    require_once("models/HistoricSchedule.php");
+
+                    $hts = new HistoricTourService();
+                    $schedule = array();
+
+                    $schedule = $hts->getSchedule();
+
+                    // Show table
+                    if (!is_null($schedule) && !empty($schedule)) {
+                        foreach ($schedule as $timeSlot) {
+                        ?>
+                        <tr>
+                            <td><?php echo $timeSlot->getDate()?></td>
+                            <td><?php echo $timeSlot->getNDutchTours()?></td>
+                            <td><?php echo $timeSlot->getNEnglishTours()?></td>
+                            <td><?php echo $timeSlot->getNChineseTours()?></td>
+                        <tr>
+                        <?php }
+
+                    }
+                        else{
+                            echo "failed to import table";
+                        }?>
                 </table>
 
                 <header>
