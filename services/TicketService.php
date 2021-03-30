@@ -33,7 +33,7 @@ class TicketService extends ServiceUtils {
             return null;
         } catch (Exception $e) {
             $error = new ErrorLog();
-            $error->setMessage($e->getMessage);
+            $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
 
             ErrorService::getInstance()->create($error);
@@ -62,7 +62,7 @@ class TicketService extends ServiceUtils {
             return null;
         } catch (Exception $e) {
             $error = new ErrorLog();
-            $error->setMessage($e->getMessage);
+            $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
 
             ErrorService::getInstance()->create($error);
@@ -93,7 +93,7 @@ class TicketService extends ServiceUtils {
             }
         } catch (Exception $e) {
             $error = new ErrorLog();
-            $error->setMessage($e->getMessage);
+            $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
 
             ErrorService::getInstance()->create($error);
@@ -109,8 +109,10 @@ class TicketService extends ServiceUtils {
                 case EventType::Jazz:
                     $service = new ActService();
                     $act = $service->getById($ticket->getEventId());
+                    $date = $act->getDate();
+                    $time = $act->getStartTime();
 
-                    return $act->getStartTime();
+                    return $date->add(DateInterval::createFromDateString($time->format("H:i:s")));
                 case EventType::Historic:
                     $service = new HistoricTourService();
                     $tour = $service->getById($ticket->getEventId());
@@ -122,7 +124,7 @@ class TicketService extends ServiceUtils {
             }
         } catch (Exception $e) {
             $error = new ErrorLog();
-            $error->setMessage($e->getMessage);
+            $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
 
             ErrorService::getInstance()->create($error);
@@ -138,8 +140,10 @@ class TicketService extends ServiceUtils {
                 case EventType::Jazz:
                     $service = new ActService();
                     $act = $service->getById($ticket->getEventId());
+                    $date = $act->getDate();
+                    $time = $act->getStartTime();
 
-                    return $act->getEndTime();
+                    return $date->add(DateInterval::createFromDateString($time->format("H:i:s")));
                 case EventType::Historic:
                     $service = new HistoricTourService();
                     $tour = $service->getById($ticket->getEventId());
@@ -151,7 +155,7 @@ class TicketService extends ServiceUtils {
             }
         } catch (Exception $e) {
             $error = new ErrorLog();
-            $error->setMessage($e->getMessage);
+            $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
 
             ErrorService::getInstance()->create($error);

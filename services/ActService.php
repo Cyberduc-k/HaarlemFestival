@@ -29,7 +29,7 @@ class ActService extends ServiceUtils {
             return null;
         } catch (Exception $e) {
             $error = new ErrorLog();
-            $error->setMessage($e->getMessage);
+            $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
 
             ErrorService::getInstance()->create($error);
@@ -52,7 +52,7 @@ class ActService extends ServiceUtils {
             return null;
         } catch (Exception $e) {
             $error = new ErrorLog();
-            $error->setMessage($e->getMessage);
+            $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
 
             ErrorService::getInstance()->create($error);
@@ -79,7 +79,7 @@ class ActService extends ServiceUtils {
             return null;
         } catch (Exception $e) {
             $error = new ErrorLog();
-            $error->setMessage($e->getMessage);
+            $error->setMessage($e->getMessage());
             $error->setStackTrace($e->getTraceAsString());
 
             ErrorService::getInstance()->create($error);
