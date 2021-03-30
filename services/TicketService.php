@@ -4,6 +4,8 @@ require_once(__DIR__ . "/../models/Ticket.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../DAL/TicketDAO.php");
 require_once("ActService.php");
+require_once("VenueService.php");
+require_once("HistoricTourService.php");
 require_once("ServiceUtils.php");
 
 class TicketService extends ServiceUtils {
@@ -79,7 +81,10 @@ class TicketService extends ServiceUtils {
 
                     return $act->getLocation();
                 case EventType::Historic:
-                    return "Haarlem"; // @TODO: pull from database
+                    $service = new VenueService();
+                    $venue = $service->getForHistoricTour($ticket->getEventId());
+
+                    return $venue->getName();
                     break;
                 case EventType::Food:
                     return "Haarlem"; // @TODO: pull from databse
@@ -107,7 +112,10 @@ class TicketService extends ServiceUtils {
 
                     return $act->getStartTime();
                 case EventType::Historic:
-                    break;
+                    $service = new HistoricTourService();
+                    $tour = $service->getById($ticket->getEventId());
+
+                    return $tour->getDate();
                 case EventType::Food:
                     break;
                 default: die();
@@ -133,7 +141,10 @@ class TicketService extends ServiceUtils {
 
                     return $act->getEndTime();
                 case EventType::Historic:
-                    break;
+                    $service = new HistoricTourService();
+                    $tour = $service->getById($ticket->getEventId());
+
+                    return $tour->getDate()->add(new DateInterval("PT1H"));
                 case EventType::Food:
                     break;
                 default: die();

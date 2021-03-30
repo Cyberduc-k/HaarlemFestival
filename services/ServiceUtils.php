@@ -5,7 +5,9 @@ require_once(__DIR__ . "/../models/ResetKey.php");
 require_once(__DIR__ . "/../models/Content.php");
 require_once(__DIR__ . "/../models/Ticket.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
-require_once(__DIR__ . "/../models/ACt.php");
+require_once(__DIR__ . "/../models/Act.php");
+require_once(__DIR__ . "/../models/HistoricTour.php");
+require_once(__DIR__ . "/../models/Venue.php");
 
 // Functions often used throughout the service layer
 class ServiceUtils {
@@ -144,6 +146,27 @@ class ServiceUtils {
         $act->setImagePath((string)$row["imagePath"]);
 
         return $act;
+    }
+
+    protected function rowToHistoricTour(array $row): HistoricTour {
+        $tour = new HistoricTour();
+
+        $tour->setId((int)$row["id"]);
+        $tour->setVenue((int)$row["venueID"]);
+        $tour->setLanguage((int)$row["language"]);
+        $tour->setGuide((string)$row["guide"]);
+        $tour->setDate($row["date"]);
+
+        return $tour;
+    }
+
+    protected function rowToVenue(array $row): Venue {
+        $venue = new Venue();
+
+        $venue->setId((int)$row["id"]);
+        $venue->setName((string)$row["eventId"]);
+
+        return $venue;
     }
 }
 

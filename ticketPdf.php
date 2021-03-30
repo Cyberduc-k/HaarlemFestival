@@ -50,9 +50,9 @@ function generateTickets(User $user): void {
         $pdf->SetFontSize(12);
         $pdf->SetTextColorArray($black);
         $pdf->Text($x + 12, $y + 8, strtoupper(EventType::getType($ticket->getEventType())));
-        $pdf->Text($x + 12, $y + 23, strtoupper($service->getLocation($ticket))); // TODO: $service->getLocation($ticket)
-        $pdf->Text($x + 12, $y + 38, "AUG 9, 2021 AT 08:00 PM"); // TODO: $service->getStartDate($ticket)
-        $pdf->Text($x + 12, $y + 50, "AUG 9, 2021 AT 09:00 PM"); // TODO: $service->getEndDate($ticket)
+        $pdf->Text($x + 12, $y + 23, strtoupper($service->getLocation($ticket)));
+        $pdf->Text($x + 12, $y + 38, strtoupper($service->getStartDate($ticket)->format("M j, Y \A\T h:i A")));
+        $pdf->Text($x + 12, $y + 50, strtoupper($service->getEndDate($ticket)->format("M j, Y \A\T h:i A")));
 
         $pdf->SetFontSize(8);
         $pdf->SetTextColorArray($white);

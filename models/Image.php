@@ -2,7 +2,7 @@
 
 class Image {
     private int $id;
-    private EventType $contentPage;
+    private int $contentPage;
     private int $number;
 
     public function getId(): int {
@@ -13,22 +13,21 @@ class Image {
         $this->id = $id;
     }
 
-    public function getContentPage(): String {
+    public function getContentPage(): int {
         return $this->contentPage;
     }
 
-    public function setContentPage(EventType $contentPage): void {
+    public function setContentPage(int $contentPage): void {
         $this->contentPage = $contentPage;
     }
 
-    public function getNumber(): String {
+    public function getNumber(): int {
         return $this->number;
     }
 
-    public function setNumber(String $number): void {
+    public function setNumber(int $number): void {
         $this->number = $number;
     }
-
 }
 
 ?>

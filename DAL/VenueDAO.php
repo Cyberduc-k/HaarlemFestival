@@ -1,17 +1,18 @@
 <?php
+
 require_once("Base.php");
 require_once("DAOUtils.php");
+require_once("../models/Venue.php");
 
-class HistoricTourDAO extends DAOUtils
-{
-    // table names
-    private string $tableName = "historic_tours";
+// DAO for the venues
+class VenueDAO extends DAOUtils {
+    private string $tableName = "venues";
 
-    // get all tours
+    // get all venues
     public function getAll(): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, venueID, [language], guide, [date]
+                          id, name
                       FROM " . $this->tableName;
 
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -23,45 +24,21 @@ class HistoricTourDAO extends DAOUtils
             Base::getInstance()->conn->commit();
 
             return $stmt;
-        } catch (Exception $e) {
-            return $this->handleNullError($e, true);
-        }
+       } catch (Exception $e) {
+           return $this->handleNullError($e, true);
+       }
     }
 
-    public function getSchedule(): ?PDOStatement{
-        try {
-            $query = "SELECT A.date, 
-            (SELECT COUNT(language) as Dutch FROM ". $this->tableName ." 
-            WHERE language LIKE 'Dutch' AND date=A.date) as Dutch, 
-            (SELECT COUNT(language) as English FROM ". $this->tableName ." 
-            WHERE language LIKE 'English' AND date=A.date) as English,
-            (SELECT COUNT(language) as Chinese FROM ". $this->tableName ." 
-            WHERE language LIKE 'Chinese' AND date=A.date) as Chinese
-            FROM (SELECT DISTINCT date FROM ". $this->tableName .") A";
-
-            $stmt = Base::getInstance()->conn->prepare($query);
-
-            Base::getInstance()->conn->beginTransaction();
-
-            $stmt->execute();
-
-            Base::getInstance()->conn->commit();
-
-            return $stmt;
-        } catch (Exception $e) {
-            return $this->handleNullError($e, true);
-        }
-    }
-
+    // get a single venue by id
     public function getById(int $id): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, venueID, [language], guide, [date]
+                          id, name
                       FROM " . $this->tableName . "
                       WHERE id = :id";
-
+            
             $stmt = Base::getInstance()->conn->prepare($query);
-
+            
             Base::getInstance()->conn->beginTransaction();
 
             $stmt->bindParam(":id", $id);
@@ -74,4 +51,30 @@ class HistoricTourDAO extends DAOUtils
             return $this->handleNullError($e, true);
         }
     }
+
+    // get a single venue for the given historic tour
+    public function getForHistoricTour(int $tourId): ?PDOStatement {
+        try {
+            $query = "SELECT
+                          V.id, V.name
+                      FROM " . $this->tableName . " as V
+                      JOIN historic_tours as H ON H.venueID = V.id
+                      WHERE H.id = :tourId";
+            
+            $stmt = Base::getInstance()->conn->prepare($query);
+            
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":tourId", $tourId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
 }
+
+?>

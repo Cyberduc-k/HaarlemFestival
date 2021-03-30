@@ -2,10 +2,10 @@
 
 class HistoricTour {
     private int $id;
-    private String $guide;
+    private string $guide;
     private DateTime $date;
     private int $language;
-    private string $venue;
+    private int $venue;
 
     public function getId(): int {
         return $this->id;
@@ -15,11 +15,11 @@ class HistoricTour {
         $this->id = $id;
     }
 
-    public function getGuide(): String {
+    public function getGuide(): string {
         return $this->guide;
     }
 
-    public function setGuide(String $guide): void {
+    public function setGuide(string $guide): void {
         $this->guide = $guide;
     }
 
@@ -39,17 +39,15 @@ class HistoricTour {
         $this->language = $language;
     }
 
-    public function getVenue(): string
+    public function getVenue(): int
     {
         return $this->venue;
     }
 
-    public function setVenue(string $venue): void
+    public function setVenue(int $venue): void
     {
         $this->venue = $venue;
     }
-
-
 }
 
 ?>
