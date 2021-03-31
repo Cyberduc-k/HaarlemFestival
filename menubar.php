@@ -18,6 +18,9 @@ if (isset($_SESSION['userType'])) {
     // Show the menubar
     echo "<ul>";
     echo "<li><a ".getActiveString("home")." href='home.php'>Home</a></li>";
+    echo "<li><a ".getActiveString("foodPage")." href='foodPage.php'>Food</a></li>";
+    echo "<li><a ".getActiveString("historicPage")." href='historicPage.php'>Historic</a></li>";
+    echo "<li><a ".getActiveString("jazzPage")." href='jazzPage.php'>Jazz</a></li>";
     echo "<li><a ".getActiveString("edit")." href='edit.php?type=own'>Edit my information</a></li>";
     echo "<li><a ".getActiveString("changeAvatar")." href='changeAvatar.php'>Change Avatar</a></li>";
     

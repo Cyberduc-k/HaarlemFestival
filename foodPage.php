@@ -4,45 +4,9 @@
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-<nav>
-    <ul>
-        <li>
-            <a href="home.php">
-                Home
-            </a>
-        </li>
-        <li>
-            <a href="home.php">
-                Dance
-            </a>
-        </li>
-        <li>
-            <a href="home.php">
-                Food
-            </a>
-        </li>
-        <li>
-            <a href="historicPage.php">
-                Historic
-            </a>
-        </li>
-        <li>
-            <a href="jazzPage.php">
-                Jazz
-            </a>
-        </li>
-        <li>
-            <a href="home.php">
-                Contact
-            </a>
-        </li>
-        <li>
-            <a href="index.php">
-                Log in
-            </a>
-        </li>
-    </ul>
-</nav>
+<?php
+require_once ("menubar.php");
+?>
 
 <header>
     <h1>Food in Haarlem</h1>
