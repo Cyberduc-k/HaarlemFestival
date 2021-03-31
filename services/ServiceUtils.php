@@ -136,6 +136,21 @@ class ServiceUtils {
         return $twc;
     }
 
+    protected function rowToInvoice(array $row): Invoice {
+        $invoice = new Invoice();
+
+        $invoice->setId((int)$row["id"]);
+        $invoice->setUserId((int)$row["userId"]);
+        $invoice->setUserAddress((string)$row["userAddress"]);
+        $invoice->setUserPhone((string)$row["userAddress"]);
+        $invoice->setSubtotal((float)$row["subtotal"]);
+        $invoice->setTax((float)$row["tax"]);
+        $invoice->setDate($row["date"]);
+        $invoice->setDueDate($row["dueDate"]);
+
+        return $invoice;
+    }
+
     protected function rowToAct(array $row): Act {
         $act = new Act();
 
