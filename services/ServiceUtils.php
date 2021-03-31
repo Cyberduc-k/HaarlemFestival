@@ -181,6 +181,16 @@ class ServiceUtils {
 
         return $schedule;
     }
+
+    protected function rowToEvent(array $row): Event{
+        $event = new Event();
+
+        $event->setId($row["id"]);
+        $event->setName((int)$row["name"]);
+        $event->setColour((int)$row["colour"]);
+
+        return $event;
+    }
 }
 
 ?>
