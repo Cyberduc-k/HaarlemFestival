@@ -28,4 +28,26 @@ class EventDAO extends DAOUtils
             return $this->handleNullError($e, true);
         }
     }
+
+    public function getById(int $id): PDOStatement{
+        try {
+            $query = "SELECT
+                          id, name, colour
+                      FROM " . $this->tableName . "
+                      WHERE id = :id";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
 }

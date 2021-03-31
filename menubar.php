@@ -28,11 +28,12 @@ if (isset($_SESSION['userType'])) {
     {
         //get the event name and page name
         $eventName = ucfirst($event->getName());
+        $eventID = $event->getId();
         $eventPage = $event->getName()."Page";
 
         //create working menuitem for each event
-        echo "<li><a ".getActiveString($eventPage)." 
-        href='$eventPage.php'>$eventName</a></li>";
+        echo "<li><a ".getActiveString("eventPage")." 
+        href='eventPage.php?event=$eventID'>$eventName</a></li>";
     }
 
     echo "<li><a ".getActiveString("edit")." href='edit.php?type=own'>Edit my information</a></li>";
