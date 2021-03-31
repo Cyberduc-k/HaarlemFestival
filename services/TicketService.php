@@ -71,6 +71,35 @@ class TicketService extends ServiceUtils {
         }
     }
 
+    // get all ticets for a given invoice.
+    // NOTE: this returns an array of TicketWithCount
+    public function getAllForInvoice(int $invoiceId): ?array {
+        try {
+            $stmt = $this->dao->getAllForInvoice($invoiceId);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $tickets = [];
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    array_push($tickets, $this->rowToTicketWithCount($row));
+                }
+
+                return $tickets;
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
     public function getLocation(Ticket $ticket): string {
         try {
             switch ($ticket->getEventType()) {

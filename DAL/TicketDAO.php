@@ -108,6 +108,30 @@ class TicketDAO extends DAOUtils {
         }
     }
 
+    // get all tickets for a user
+    public function getAllForInvoice(int $invoiceId): ?PDOStatement {
+        try {
+            $query = "SELECT
+                          T.id, ticketType, eventId, eventType, price, inStock, I.nTickets
+                      FROM tickets as T
+                      JOIN invoice_ticket as I ON I.ticketId = T.id
+                      WHERE I.invoiceId = :invoiceId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":invoiceId", $invoiceId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
     // create a new ticket
     public function create(Ticket $ticket): bool {
         try {
