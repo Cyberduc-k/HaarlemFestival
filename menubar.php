@@ -1,6 +1,11 @@
 <?php
 
 require_once ("models/UserTypes.php");
+require_once ("models/Event.php");
+require_once ("services/EventService.php");
+
+$es = new EventService();
+$events = $es->getAll();
 
 // Only start a session when necessary
 if (!isset($_SESSION)) session_start();
@@ -18,9 +23,18 @@ if (isset($_SESSION['userType'])) {
     // Show the menubar
     echo "<ul>";
     echo "<li><a ".getActiveString("home")." href='home.php'>Home</a></li>";
-    echo "<li><a ".getActiveString("foodPage")." href='foodPage.php'>Food</a></li>";
-    echo "<li><a ".getActiveString("historicPage")." href='historicPage.php'>Historic</a></li>";
-    echo "<li><a ".getActiveString("jazzPage")." href='jazzPage.php'>Jazz</a></li>";
+
+    foreach ($events as $event)
+    {
+        //get the event name and page name
+        $eventName = ucfirst($event->getName());
+        $eventPage = $event->getName()."Page";
+
+        //create working menuitem for each event
+        echo "<li><a ".getActiveString($eventPage)." 
+        href='$eventPage.php'>$eventName</a></li>";
+    }
+
     echo "<li><a ".getActiveString("edit")." href='edit.php?type=own'>Edit my information</a></li>";
     echo "<li><a ".getActiveString("changeAvatar")." href='changeAvatar.php'>Change Avatar</a></li>";
     

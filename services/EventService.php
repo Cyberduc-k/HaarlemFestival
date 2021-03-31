@@ -20,7 +20,7 @@ class EventService extends ServiceUtils
                 $events = [];
 
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($tickets, $this->rowToEvent($row));
+                    array_push($events, $this->rowToEvent($row));
                 }
 
                 return $events;

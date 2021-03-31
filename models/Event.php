@@ -1,8 +1,7 @@
 <?php
 
 
-class Event
-{
+class Event {
     private int $id;
     private string $name;
     private string $colour;

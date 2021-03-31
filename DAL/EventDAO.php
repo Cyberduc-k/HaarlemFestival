@@ -1,7 +1,7 @@
 <?php
 require_once("Base.php");
 require_once("DAOUtils.php");
-require_once("../models/Event.php");
+require_once(__DIR__ . "/../models/Event.php");
 
 class EventDAO extends DAOUtils
 {
@@ -12,7 +12,7 @@ class EventDAO extends DAOUtils
     public function getAll(): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, 'name', colour
+                          id, name, colour
                       FROM " . $this->tableName;
 
             $stmt = Base::getInstance()->conn->prepare($query);

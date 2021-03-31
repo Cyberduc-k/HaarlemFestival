@@ -185,9 +185,9 @@ class ServiceUtils {
     protected function rowToEvent(array $row): Event{
         $event = new Event();
 
-        $event->setId($row["id"]);
-        $event->setName((int)$row["name"]);
-        $event->setColour((int)$row["colour"]);
+        $event->setId((int)$row["id"]);
+        $event->setName((string)$row["name"]);
+        $event->setColour((string)$row["colour"]);
 
         return $event;
     }
