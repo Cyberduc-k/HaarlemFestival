@@ -93,7 +93,7 @@
     }
 </script>
 
-<section id="about" class="historicContent">
+<section id="about">
     <?php
         require_once "retreiveContent.php";
         require_once "services/ContentService.php";
