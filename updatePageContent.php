@@ -2,7 +2,7 @@
 require_once "services/ContentService.php";
 require_once "retreiveContent.php";
 
-$about = htmlspecialchars($_POST['var']); // doorgestuurd van js
+$about = ($_POST['var']); // doorgestuurd van js
 $eventID = htmlspecialchars($_POST['eventID']);
 updateContent($about, $eventID);
 
