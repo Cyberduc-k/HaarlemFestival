@@ -128,4 +128,11 @@ class EventService extends ServiceUtils
             return null;
         }
     }
+
+    public function delete(int $id): bool {
+        if ($this->dao->delete($id))
+            return true;
+
+        return false;
+    }
 }

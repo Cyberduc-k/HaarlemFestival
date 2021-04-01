@@ -127,5 +127,33 @@ class ContentDAO extends DAOUtils {
             return $this->handleFalseError($e, true);
         }
     }
+
+    public function deleteByEventId(int $eventId): ?bool
+    {
+        try {
+            // update query
+            $query = "DELETE FROM
+                    " . $this->tableName . "
+                WHERE
+                    eventId = :eventId";
+
+            // prepare query statement
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            // bind values
+            $stmt->bindParam(":eventId", $eventId);
+
+            // execute query
+            $stmt->execute();
+
+            // If we get tot this point there are no errors so we can commit
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
 }
 ?>

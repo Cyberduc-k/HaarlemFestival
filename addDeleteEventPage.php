@@ -49,5 +49,37 @@
         }
     }
     ?>
+    <br/>
+    <h2>Delete Event page</h2>
+    <br/>
+    <form method="POST" >
+        <label for="Event"> Event : </label>
+        <select id="cmbEvent" name="Event"
+                onchange="document.getElementById('selected_text').value=this.options[this.selectedIndex].text">
+            <option value="0">Select Event</option>
+            <?php
+                $events = $es->getAll();
+
+                foreach ($events as $event)
+                {
+                    $id = $event->getId();
+                    $name = $event->getName();
+
+                    echo "<option value=$id>$name</option>";
+                }
+            ?>
+        </select>
+        <input type="hidden" name="selected_text" id="selected_text" value="" />
+        <input type="submit" name="delete" value="Delete"/>
+        <?php
+            if(isset($_POST["delete"]) && $_POST["Event"] != 0)
+            {
+                $eventId = htmlspecialchars($_POST["Event"]);
+
+                $cs->deleteByEventId($eventId);
+                $es->delete($eventId);
+            }
+        ?>
+    </form>
     </body>
 </hmtl>

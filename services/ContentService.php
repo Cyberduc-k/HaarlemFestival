@@ -92,5 +92,12 @@ class ContentService extends ServiceUtils {
             return false;
         }
     }
+
+    public function deleteByEventId(int $eventId): bool {
+        if ($this->dao->deleteByEventId($eventId))
+            return true;
+
+        return false;
+    }
 }
 ?>

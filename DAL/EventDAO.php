@@ -130,4 +130,31 @@ class EventDAO extends DAOUtils
             return $this->handleNullError($e, true);
         }
     }
+
+    public function delete(int $id): bool {
+        try {
+            // update query
+            $query = "DELETE FROM
+                    " . $this->tableName . "
+                WHERE
+                    id = :id";
+
+            // prepare query statement
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            // bind values
+            $stmt->bindParam(":id", $id);
+
+            // execute query
+            $stmt->execute();
+
+            // If we get tot this point there are no errors so we can commit
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
 }
