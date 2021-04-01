@@ -72,5 +72,25 @@ class ContentService extends ServiceUtils {
 
         return false;
     }
+
+    public function addContentPage(Content $content)
+    {
+        try {
+
+            if ($this->dao->addContentPage($content))
+                return true;
+
+            return false;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return false;
+        }
+    }
 }
 ?>

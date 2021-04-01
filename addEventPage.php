@@ -6,10 +6,7 @@
         <title>Document</title>
     </head>
     <body>
-    <a href="../index.php">
-        Back
-    </a>
-    <h2>Create account</h2>
+    <h2>Add event page</h2>
     <form method="post">
         <label>Event Name<input type="text" name="name"/></label>
         <br/>
@@ -30,14 +27,25 @@
 
     if(isset($_POST["name"]) && isset($_POST["colour"]) && isset($_POST["header"]) && isset($_POST["text"]))
     {
-        $event = new Event(htmlspecialchars($_POST["name"]), htmlspecialchars($_POST["colour"]));
+        $name = strtolower(htmlspecialchars($_POST["name"]));
+        $colour = htmlspecialchars($_POST["colour"]);
+
+        $event = new Event();
+        $event->setName($name);
+        $event->setColour($colour);
+
         $es->addEvent($event);
 
         $eventID = $es->getIdByName($event->getName());
 
         if($eventID != 0)
         {
-            $cs->addContent();
+            $content = new Content();
+            $content->setEventId($eventID);
+            $content->setHeader(htmlspecialchars($_POST["header"]));
+            $content->setText(htmlspecialchars($_POST["text"]));
+
+            $cs->addContentPage($content);
         }
     }
     ?>
