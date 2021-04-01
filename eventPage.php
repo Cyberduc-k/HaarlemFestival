@@ -51,24 +51,6 @@
     </ul>
 </nav>
 
-<script>
-    function hideAbout() {
-        var x = document.getElementById("about");
-        var y = document.getElementById("schedule");
-
-        x.style.display = "none";
-        y.style.display = "block";
-    }
-
-    function hideSchedule() {
-        var x = document.getElementById("schedule");
-        var y = document.getElementById("about");
-
-        x.style.display = "none";
-        y.style.display = "block";
-    }
-</script>
-
 <section id="about">
     <article>
         <?php
@@ -148,6 +130,26 @@
 
     </article>
 </section>
-</body>
 
+<script>
+    function hideAbout() {
+        var x = document.getElementById("about");
+        var y = document.getElementById("schedule");
+
+        x.style.display = "none";
+        y.style.display = "block";
+    }
+
+    function hideSchedule() {
+        var x = document.getElementById("schedule");
+        var y = document.getElementById("about");
+
+        x.style.display = "none";
+        y.style.display = "block";
+    }
+
+    hideSchedule();
+</script>
+
+</body>
 </html>
