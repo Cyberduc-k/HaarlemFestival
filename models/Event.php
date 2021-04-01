@@ -7,6 +7,13 @@ class Event {
     private string $colour;
 
 
+    public function __construct(string $name, string $colour)
+    {
+        $this->name = $name;
+        $this->colour = $colour;
+    }
+
+
     public function getId(): int
     {
         return $this->id;

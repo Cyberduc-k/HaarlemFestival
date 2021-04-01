@@ -61,4 +61,71 @@ class EventService extends ServiceUtils
             return null;
         }
     }
+
+    public function addEvent(Event $event): bool{
+        try {
+            // Check if there already is an event with this name
+            if ($this->nameExists($event->getName())){
+                $_SESSION["createError"] = "There is already an event with this name";
+                return false;
+            }
+
+            if ($this->dao->addEvent($event))
+                return true;
+
+            return false;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return false;
+        }
+    }
+
+    public function nameExists(String $name): bool {
+        try {
+            $stmt = $this->dao->nameExists($name);
+            $num = $stmt->rowCount();
+
+            // Rowcount is 1 when a record with that mail has been found
+            return ($num == 1);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return false;
+        }
+    }
+
+    public function getIdByName(string $name): ?int {
+        try {
+            $stmt = $this->dao->getIdByName($name);
+            $num = $stmt->rowCount();
+
+            // Return id if set, else return 0
+            if ($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                return (int)$row["id"];
+            } else {
+                return 0;
+            }
+        } catch(Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return null;
+        }
+    }
 }
