@@ -12,7 +12,7 @@ class InvoiceDAO extends DAOUtils {
     public function getAll(): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, userId, userAddress, userPhone, subtotal, tax, date, dueDate
+                          id, userId, userAddress, userPhone, tax, date, dueDate
                       FROM " . $this->tableName;
 
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -33,7 +33,7 @@ class InvoiceDAO extends DAOUtils {
     public function getById(int $id): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, userId, userAddress, userPhone, subtotal, tax, date, dueDate
+                          id, userId, userAddress, userPhone, tax, date, dueDate
                       FROM " . $this->tableName . "
                       WHERE id = :id";
 
@@ -50,6 +50,44 @@ class InvoiceDAO extends DAOUtils {
        } catch (Exception $e) {
            return $this->handleNullError($e, true);
        }
+    }
+
+    // create a new ticket
+    public function create(Invoice $invoice): bool {
+        try {
+            $query = "INSERT INTO " . $this->tableName . "
+                          (userId, userAddress, userPhone, tax, [date], dueDate)
+                      VALUES
+                          (:userId, :userAddress, :userPhone, :tax, :date, :dueDate)";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            // cast references into variables to avoid type errors
+            $userId = (int)$invoice->getUserId();
+            $userAddress = (string)$invoice->getUserAddress();
+            $userPhone = (string)$invoice->getUserPhone();
+            $tax = (float)$invoice->getTax();
+            $date = $invoice->getDate()->format("Y-m-d H:i:s");
+            $dueDate = $invoice->getDueDate()->format("Y-m-d H:i:s");
+
+            // bind values
+            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":userAddress", $userAddress);
+            $stmt->bindParam(":userPhone", $userPhone);
+            $stmt->bindParam(":tax", $tax);
+            $stmt->bindParam(":date", $date);
+            $stmt->bindParam(":dueDate", $dueDate);
+
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
     }
 }
 

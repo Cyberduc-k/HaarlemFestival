@@ -117,10 +117,10 @@ class ServiceUtils {
     protected function rowToTicket(array $row): Ticket {
         $ticket = new Ticket();
 
-        $ticket->setId((int)$row["ticket"]);
+        $ticket->setId((int)$row["id"]);
         $ticket->setType((int)$row["ticketType"]);
         $ticket->setEventId((int)$row["eventId"]);
-        $ticket->setEventType((int)$row["eventtype"]);
+        $ticket->setEventType((int)$row["eventType"]);
         $ticket->setPrice((float)$row["price"]);
         $ticket->setInStock((int)$row["inStock"]);
 
@@ -143,7 +143,6 @@ class ServiceUtils {
         $invoice->setUserId((int)$row["userId"]);
         $invoice->setUserAddress((string)$row["userAddress"]);
         $invoice->setUserPhone((string)$row["userAddress"]);
-        $invoice->setSubtotal((float)$row["subtotal"]);
         $invoice->setTax((float)$row["tax"]);
         $invoice->setDate($row["date"]);
         $invoice->setDueDate($row["dueDate"]);

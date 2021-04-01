@@ -65,12 +65,12 @@ if ($_POST) {
         <form name="editForm" action="create.php" method="post">
             <div class="formBody">
                 <div class="formField">
-                    <input type="text" name="firstname" required placeholder="Firstname""
+                    <input type="text" name="firstname" required placeholder="Firstname"
                            pattern="^[a-zA-Z]{2,}$"/>
                 </div>
 
                 <div class="formField">
-                    <input type="text" name="lastname" required placeholder="Lastname""
+                    <input type="text" name="lastname" required placeholder="Lastname"
                            pattern="^[a-zA-Z]{2,}$"/>
                 </div>
 

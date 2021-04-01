@@ -36,7 +36,7 @@ class UserService extends ServiceUtils {
                 $users = array();
 
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($users, $row);
+                    array_push($users, $this->rowToUser($row));
                 }
 
                 return $users;
@@ -140,7 +140,7 @@ class UserService extends ServiceUtils {
                 $users = array();
 
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($users, $row);
+                    array_push($users, $this->rowToUser($row));
                 }
 
                 return $users;

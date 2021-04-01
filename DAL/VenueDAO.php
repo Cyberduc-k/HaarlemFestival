@@ -2,7 +2,7 @@
 
 require_once("Base.php");
 require_once("DAOUtils.php");
-require_once("../models/Venue.php");
+require_once(__DIR__ . "/../models/Venue.php");
 
 // DAO for the venues
 class VenueDAO extends DAOUtils {

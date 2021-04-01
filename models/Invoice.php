@@ -5,7 +5,6 @@ class Invoice {
     private int $userId;
     private string $userAddress;
     private string $userPhone;
-    private float $subtotal;
     private float $tax;
     private DateTime $date;
     private DateTime $dueDate;
@@ -40,14 +39,6 @@ class Invoice {
 
     public function setUserPhone(string $userPhone): void {
         $this->userPhone = $userPhone;
-    }
-
-    public function getSubtotal(): float {
-        return $this->subtotal;
-    }
-
-    public function setSubtotal(float $subtotal): void {
-        $this->subtotal = $subtotal;
     }
 
     public function getTax(): float {

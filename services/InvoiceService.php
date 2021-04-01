@@ -60,6 +60,22 @@ class InvoiceService extends ServiceUtils {
             return null;
         }
     }
+
+    // Create a new invoice
+    public function create(Invoice $invoice): bool {
+        try {
+            return $this->dao->create($invoice);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return false;
+        }
+    }
 }
 
 ?>

@@ -7,7 +7,14 @@ abstract class UserTypes {
     const SUPERADMIN = 2;
 
     // Access levels of different pages
-    const ACCESSLEVELS = ["home.php" => 0, "create.php" => 2, "edit.php" => 0, "viewUsers.php" => 1, "changeAvatar.php" => 0];
+    const ACCESSLEVELS = [
+        "home.php" => self::USER,
+        "create.php" => self::SUPERADMIN,
+        "createInvoice.php" => self::SUPERADMIN,
+        "edit.php" => self::USER,
+        "viewUsers.php" => self::ADMIN,
+        "changeAvatar.php" => self::USER
+    ];
 
     // Int to type string
     public static function getType(int $type): String {
