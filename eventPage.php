@@ -1,19 +1,29 @@
 <html lang="en">
 <head>
-    <title>Home</title>
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-<?php
+    <?php
     require_once ("menubar.php");
     require_once ("services/EventService.php");
 
     $es = new EventService();
 
-    $eventID = $_GET["event"];
-    $event = $es->getById($eventID);
+    if (isset($_GET["event"]))
+    {
+        $eventID = $_GET["event"];
+        $event = $es->getById($eventID);
+    }
+    else{
+        header("Location: home.php");
+    }
 
     $eventName = ucfirst($event->getName());
+
+        echo "<title>$eventName</title>"
+    ?>
+
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<?php
 
     echo "<header>
     <h1>$eventName</h1>

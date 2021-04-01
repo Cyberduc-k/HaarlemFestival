@@ -91,5 +91,69 @@ class ContentDAO extends DAOUtils {
             return $this->handleFalseError($e, true);
         }
     }
+
+    public function addContentPage(Content $content): ?bool
+    {
+        try {
+            // query to insert record
+            $query = "INSERT INTO
+                " . $this->tableName . "
+            SET
+                eventId=:eventId, header=:header, text=:text";
+
+            // prepare query
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            // cast references into variables to avoid error
+            $eventId = (int)$content->getEventId();
+            $header = (string)$content->getHeader();
+            $text = (string)$content->getText();
+
+
+            // bind values
+            $stmt->bindParam(":eventId", $eventId);
+            $stmt->bindParam(":header", $header);
+            $stmt->bindParam(":text", $text);
+
+            // execute query
+            $stmt->execute();
+
+            // If we get tot this point there are no errors so we can commit
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
+    public function deleteByEventId(int $eventId): ?bool
+    {
+        try {
+            // update query
+            $query = "DELETE FROM
+                    " . $this->tableName . "
+                WHERE
+                    eventId = :eventId";
+
+            // prepare query statement
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            // bind values
+            $stmt->bindParam(":eventId", $eventId);
+
+            // execute query
+            $stmt->execute();
+
+            // If we get tot this point there are no errors so we can commit
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
 }
 ?>

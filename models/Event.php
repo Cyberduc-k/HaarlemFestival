@@ -6,7 +6,6 @@ class Event {
     private string $name;
     private string $colour;
 
-
     public function getId(): int
     {
         return $this->id;
