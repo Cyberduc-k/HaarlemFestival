@@ -20,14 +20,6 @@ class Image {
     public function setContentPage(int $contentPage): void {
         $this->contentPage = $contentPage;
     }
-
-    public function getNumber(): int {
-        return $this->number;
-    }
-
-    public function setNumber(int $number): void {
-        $this->number = $number;
-    }
 }
 
 ?>
