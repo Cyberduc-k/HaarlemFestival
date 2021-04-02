@@ -71,7 +71,8 @@
         ?>
     </article>
 </section>
-<section id="schedule" class="historicContent">
+
+<section id="schedule">
     <article>
         <header>
             <h3>
@@ -79,54 +80,24 @@
             </h3>
         </header>
 
-        <table border="1">
-            <tr>
-                <th>Date</th>
-                <th>No of English tours</th>
-                <th>No of Dutch tours</th>
-                <th>No of Chinese tours</th>
-            </tr>
-            <?php
-            require_once("services/HistoricTourService.php");
-            require_once("models/HistoricSchedule.php");
+        <?php
+            require_once ("EventSchedule.php");
 
-            $hts = new HistoricTourService();
-            $schedule = array();
+            $schedule = new EventSchedule();
 
-            $schedule = $hts->getSchedule();
+            switch ($eventName){
+                case "Food":
+                    break;
+                case "Historic":
+                    $schedule->getHistoricSchedule();
+                    break;
+                case "Jazz":
+                case "Dance":
+                    $schedule->getMusicEventSchedule($eventID);
+                    break;
+            }
 
-            // Show table
-            if (!is_null($schedule) && !empty($schedule)) {
-            foreach ($schedule as $timeSlot) {
-            ?>
-            <tr>
-                <td><?php echo $timeSlot->getDate()?></td>
-                <td><?php echo $timeSlot->getNDutchTours()?></td>
-                <td><?php echo $timeSlot->getNEnglishTours()?></td>
-                <td><?php echo $timeSlot->getNChineseTours()?></td>
-            <tr>
-                <?php }
-
-                }
-                else{
-                    echo "failed to import table";
-                }?>
-        </table>
-
-        <header>
-            <h3>Prices</h3>
-        </header>
-
-        <table border="1">
-            <tr>
-                <td>Single ticket</td>
-                <td>17,50</td>
-            </tr>
-            <tr>
-                <td>Family ticket (4 persons max.)</td>
-                <td>60,&dash;</td>
-            </tr>
-        </table>
+        ?>
 
     </article>
 </section>
