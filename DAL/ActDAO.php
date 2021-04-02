@@ -106,6 +106,31 @@ class ActDAO extends DAOUtils {
             return $this->handleNullError($e, true);
         }
     }
+
+    // get schedule for event
+    public function getScheduleForEvent(int $eventId): ?PDOStatement
+    {
+        try {
+            $query = "SELECT musicians.name, acts.startTime, acts.endTime, date acts.location 
+                        FROM `act_musician` 
+                        JOIN musicians ON musicians.id=musicianId
+                        JOIN acts ON acts.id=actId
+                        WHERE eventId = :eventId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":eventId", $eventId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
 }
 
 ?>
