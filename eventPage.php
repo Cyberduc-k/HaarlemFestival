@@ -79,8 +79,8 @@
 
 <section id="schedule">
     <article>
-        <nav>
-            <ul id="days">
+        <nav id="days">
+            <ul>
                 <li>
                     Thursday
                 </li>
@@ -100,6 +100,7 @@
 
             $('#days li').click(function() {
                 text = $(this).text();
+                console.log(text);
             });
 
             $.ajax({
@@ -121,9 +122,10 @@
         <?php
             require_once ("EventSchedule.php");
 
-            $day = "";
-            if(isset($_POST["day"]))
+            $day = "Sunday";
+            if(isset($_POST["day"])) {
                 $day = $_POST["day"];
+            }
 
             $schedule = new EventSchedule();
 
@@ -131,6 +133,7 @@
                 case "Food":
                     break;
                 case "Historic":
+                    echo "<script>hideDays()</script>";
                     $schedule->getHistoricSchedule();
                     break;
                 case "Jazz":
@@ -159,6 +162,12 @@
 
         x.style.display = "none";
         y.style.display = "block";
+    }
+
+    function hideDays(){
+        var x = document.getElementById("days");
+
+        x.style.display = "none";
     }
 
     hideSchedule();

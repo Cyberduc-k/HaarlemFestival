@@ -111,19 +111,21 @@ class ActDAO extends DAOUtils {
     public function getScheduleForEvent(int $eventId, $date): ?PDOStatement
     {
         try {
+            $day = "'%".$date."'";
+
             $query = "SELECT musicians.id, musicians.name, acts.startTime, acts.endTime, date, acts.location 
                         FROM `act_musician` 
                         JOIN musicians ON musicians.id=musicianId
                         JOIN acts ON acts.id=actId
-                        WHERE acts.eventId = :eventId AND date LIKE `%:day`";
+                        WHERE acts.eventId = :eventId AND date LIKE :dag";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
             Base::getInstance()->conn->beginTransaction();
 
             $stmt->bindParam(":eventId", $eventId);
-            $stmt->bindParam(":day", $date);
-
+            $stmt->bindParam(":dag", $day);
+            //hier tussen gaat iets fout, row count is 0
             $stmt->execute();
 
             Base::getInstance()->conn->commit();

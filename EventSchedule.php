@@ -101,6 +101,9 @@ class EventSchedule
                   </table>";
             }
         }
+        else{
+            echo "Something went wrong";
+        }
 
     }
 
