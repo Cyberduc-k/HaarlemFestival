@@ -58,15 +58,38 @@ class EventSchedule
             </table>";
     }
 
-    public function getMusicEventSchedule($eventId)
+    public function musicEvent($eventId, $day)
+    {
+        $date = "";
+
+        switch($day){
+            case "Thursday":
+                $date = "07-26";
+                break;
+            case "Friday":
+                $date = "07-27";
+                break;
+            case "Saturday":
+                $date = "07-28";
+                break;
+            case "Sunday":
+                $date = "07-29";
+                break;
+        }
+
+        $this->getMusicEventSchedule($eventId, $date);
+    }
+
+    public function getMusicEventSchedule($eventId, $date)
     {
         $as = new ActService();
 
-        $schedule = $as->getScheduleForEvent($eventId);
+        $schedule = $as->getScheduleForEvent($eventId, $date);
 
-        foreach($schedule as $mus=>$mus_value)
-        {
-            echo "<table>
+        if (is_array($schedule)){
+            foreach($schedule as $mus=>$mus_value)
+            {
+                echo "<table>
                     <tr>
                     <td>".$mus."</td>
                     <td>".$mus_value->getStartTime()." - ".$mus_value->getEndTime()."</td>
@@ -76,7 +99,9 @@ class EventSchedule
                     <td>".$mus_value->getLocation()."</td>
                   </tr>
                   </table>";
+            }
         }
+
     }
 
 }

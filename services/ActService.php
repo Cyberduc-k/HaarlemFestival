@@ -88,10 +88,10 @@ class ActService extends ServiceUtils {
         }
     }
 
-    public function getScheduleForEvent(int $eventId): ?array
+    public function getScheduleForEvent(int $eventId, $date): ?array
     {
         try {
-            $stmt = $this->dao->getScheduleForEvent($eventId);
+            $stmt = $this->dao->getScheduleForEvent($eventId, $date);
             $num = $stmt->rowCount();
 
             if ($num > 0) {

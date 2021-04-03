@@ -108,20 +108,22 @@ class ActDAO extends DAOUtils {
     }
 
     // get schedule for event
-    public function getScheduleForEvent(int $eventId): ?PDOStatement
+    public function getScheduleForEvent(int $eventId, $date): ?PDOStatement
     {
         try {
             $query = "SELECT musicians.id, musicians.name, acts.startTime, acts.endTime, date, acts.location 
                         FROM `act_musician` 
                         JOIN musicians ON musicians.id=musicianId
                         JOIN acts ON acts.id=actId
-                        WHERE acts.eventId = :eventId";
+                        WHERE acts.eventId = :eventId AND date LIKE `%:day`";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
             Base::getInstance()->conn->beginTransaction();
 
             $stmt->bindParam(":eventId", $eventId);
+            $stmt->bindParam(":day", $date);
+
             $stmt->execute();
 
             Base::getInstance()->conn->commit();

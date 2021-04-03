@@ -1,5 +1,10 @@
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+
     <?php
     require_once ("menubar.php");
     require_once ("services/EventService.php");
@@ -74,6 +79,39 @@
 
 <section id="schedule">
     <article>
+        <nav>
+            <ul id="days">
+                <li>
+                    Thursday
+                </li>
+                <li>
+                    Friday
+                </li>
+                <li>
+                     Saturday
+                </li>
+                <li>
+                    Sunday
+                </li>
+            </ul>
+        </nav>
+        <script>
+            var text
+
+            $('#days li').click(function() {
+                text = $(this).text();
+            });
+
+            $.ajax({
+                url: 'eventPage.php',
+                type: 'POST',
+                data: {'day' : text},
+                success: function(data) {
+                    console.log(data); // Inspect this in your console
+                }
+            })
+        </script>
+
         <header>
             <h3>
                 Schedule
@@ -82,6 +120,10 @@
 
         <?php
             require_once ("EventSchedule.php");
+
+            $day = "";
+            if(isset($_POST["day"]))
+                $day = $_POST["day"];
 
             $schedule = new EventSchedule();
 
@@ -93,7 +135,7 @@
                     break;
                 case "Jazz":
                 case "Dance":
-                    $schedule->getMusicEventSchedule($eventID);
+                    $schedule->musicEvent($eventID, $day);
                     break;
             }
 
