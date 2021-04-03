@@ -1,4 +1,5 @@
 <?php
+set_include_path(__DIR__);
 require_once ("services/HistoricTourService.php");
 require_once ("models/HistoricSchedule.php");
 require_once ("models/Act.php");
@@ -63,16 +64,18 @@ class EventSchedule
 
         $schedule = $as->getScheduleForEvent($eventId);
 
-        foreach($schedule as $mus => $mus_value)
+        foreach($schedule as $mus=>$mus_value)
         {
-            echo "<tr>
-                    <td>".$mus->getName()."</td>
+            echo "<table>
+                    <tr>
+                    <td>".$mus."</td>
                     <td>".$mus_value->getStartTime()." - ".$mus_value->getEndTime()."</td>
                     </tr>
                     <tr>
                     <td></td>
                     <td>".$mus_value->getLocation()."</td>
-                  </tr>";
+                  </tr>
+                  </table>";
         }
     }
 

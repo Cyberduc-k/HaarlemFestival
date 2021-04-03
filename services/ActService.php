@@ -1,6 +1,6 @@
 <?php
-
-require_once(__DIR__ . "/../models/Act.php");
+set_include_path(__DIR__);
+require_once("models/Act.php");
 require_once(__DIR__ . "/../DAL/ActDAO.php");
 require_once("ServiceUtils.php");
 
@@ -91,7 +91,7 @@ class ActService extends ServiceUtils {
     public function getScheduleForEvent(int $eventId): ?array
     {
         try {
-            $stmt = $this->dao->getForEvent($eventId);
+            $stmt = $this->dao->getScheduleForEvent($eventId);
             $num = $stmt->rowCount();
 
             if ($num > 0) {
@@ -108,8 +108,9 @@ class ActService extends ServiceUtils {
                     $musician = new Musician();
 
                     $musician->setName($row["name"]);
+                    $musician->setId($row["id"]);
 
-                    $acts += [$musician=>$act];
+                    $acts += [$musician->getName()=>$act];
                 }
 
                 return $acts;
