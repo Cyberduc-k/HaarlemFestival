@@ -108,10 +108,10 @@ class ActDAO extends DAOUtils {
     }
 
     // get schedule for event
-    public function getScheduleForEvent(int $eventId, $date): ?PDOStatement
+    public function getScheduleForEvent(int $eventId, string $date): ?PDOStatement
     {
         try {
-            $day = "'%".$date."'";
+            $day = "%".$date;
 
             $query = "SELECT musicians.id, musicians.name, acts.startTime, acts.endTime, date, acts.location 
                         FROM `act_musician` 
@@ -125,7 +125,7 @@ class ActDAO extends DAOUtils {
 
             $stmt->bindParam(":eventId", $eventId);
             $stmt->bindParam(":dag", $day);
-            //hier tussen gaat iets fout, row count is 0
+
             $stmt->execute();
 
             Base::getInstance()->conn->commit();

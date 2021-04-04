@@ -8,6 +8,9 @@
     <?php
     require_once ("menubar.php");
     require_once ("services/EventService.php");
+    require_once ("EventSchedule.php");
+
+    $schedule = new EventSchedule();
 
     $es = new EventService();
 
@@ -82,35 +85,50 @@
         <nav id="days">
             <ul>
                 <li>
-                    Thursday
+                    <a onclick="daySchedule('Thursday')">
+                        Thursday
+                    </a>
                 </li>
                 <li>
-                    Friday
+                    <a onclick="daySchedule('Friday')">
+                        Friday
+                    </a>
                 </li>
                 <li>
-                     Saturday
+                    <a onclick="daySchedule('Saturday')">
+                        Saturday
+                    </a>
                 </li>
                 <li>
-                    Sunday
+                    <a onclick="daySchedule('Sunday')">
+                        Sunday
+                    </a>
                 </li>
             </ul>
         </nav>
         <script>
-            var text
+            function hideDays(){
+                var x = document.getElementById("days");
 
-            $('#days li').click(function() {
-                text = $(this).text();
-                console.log(text);
-            });
+                x.style.display = "none";
+            }
 
-            $.ajax({
-                url: 'eventPage.php',
-                type: 'POST',
-                data: {'day' : text},
-                success: function(data) {
-                    console.log(data); // Inspect this in your console
-                }
-            })
+            function daySchedule(day)
+            {
+                var eventID = `<?php echo $eventID ?>`;
+                console.log(day);
+
+                $.ajax({
+                    url: 'getDayScheduleMusic.php,
+                    type: 'POST',
+                    data: {'day' : day,
+                        'eventID' : eventID},
+                    success: function(data) {
+                        console.log(data); // Inspect this in your console
+                    }
+                })
+            }
+
         </script>
 
         <header>
@@ -120,25 +138,17 @@
         </header>
 
         <?php
-            require_once ("EventSchedule.php");
-
-            $day = "Sunday";
-            if(isset($_POST["day"])) {
-                $day = $_POST["day"];
-            }
-
-            $schedule = new EventSchedule();
 
             switch ($eventName){
                 case "Food":
                     break;
                 case "Historic":
-                    echo "<script>hideDays()</script>";
+                    echo '<script type="text/javascript">hideDays();</script>';
                     $schedule->getHistoricSchedule();
                     break;
                 case "Jazz":
                 case "Dance":
-                    $schedule->musicEvent($eventID, $day);
+                    $schedule->musicEvent($eventID, "Thursday");
                     break;
             }
 
@@ -162,12 +172,6 @@
 
         x.style.display = "none";
         y.style.display = "block";
-    }
-
-    function hideDays(){
-        var x = document.getElementById("days");
-
-        x.style.display = "none";
     }
 
     hideSchedule();

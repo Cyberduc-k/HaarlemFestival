@@ -102,7 +102,7 @@ class EventSchedule
             }
         }
         else{
-            echo "Something went wrong";
+            echo "No schedule found or this day";
         }
 
     }
