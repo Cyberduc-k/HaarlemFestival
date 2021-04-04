@@ -77,6 +77,8 @@ class EventSchedule
                 break;
         }
 
+        echo $day."</br>";
+
         $this->getMusicEventSchedule($eventId, $date);
     }
 

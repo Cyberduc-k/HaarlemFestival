@@ -81,7 +81,6 @@
 </section>
 
 <section id="schedule">
-    <article>
         <nav id="days">
             <ul>
                 <li>
@@ -119,12 +118,13 @@
                 console.log(day);
 
                 $.ajax({
-                    url: 'getDayScheduleMusic.php,
+                    url: 'getDayScheduleMusic.php',
                     type: 'POST',
                     data: {'day' : day,
                         'eventID' : eventID},
                     success: function(data) {
                         console.log(data); // Inspect this in your console
+                        document.getElementById("daySchedule").innerHTML = data;
                     }
                 })
             }
@@ -136,6 +136,7 @@
                 Schedule
             </h3>
         </header>
+    <article id="daySchedule">
 
         <?php
 
