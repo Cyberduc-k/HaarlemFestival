@@ -26,18 +26,19 @@
     $eventName = ucfirst($event->getName());
 
         echo "<title>$eventName</title>"
+
     ?>
 
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 <?php
+    echo "<a href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
 
     echo "<header>
     <h1>$eventName</h1>
         </header>";
 ?>
-
 
 <nav>
     <ul>
@@ -123,7 +124,6 @@
                     data: {'day' : day,
                         'eventID' : eventID},
                     success: function(data) {
-                        console.log(data); // Inspect this in your console
                         document.getElementById("daySchedule").innerHTML = data;
                     }
                 })
