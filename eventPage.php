@@ -1,26 +1,24 @@
 <html lang="en">
 <head>
     <?php
-    require_once ("services/EventService.php");
-    require_once ("EventSchedule.php");
+        require_once ("services/EventService.php");
+        require_once ("EventSchedule.php");
 
-    $schedule = new EventSchedule();
+        $schedule = new EventSchedule();
+        $es = new EventService();
 
-    $es = new EventService();
+        if (isset($_GET["event"]))
+        {
+            $eventID = $_GET["event"];
+            $event = $es->getById($eventID);
+        }
+        else{
+            header("Location: home.php");
+        }
 
-    if (isset($_GET["event"]))
-    {
-        $eventID = $_GET["event"];
-        $event = $es->getById($eventID);
-    }
-    else{
-        header("Location: home.php");
-    }
-
-    $eventName = ucfirst($event->getName());
+        $eventName = ucfirst($event->getName());
 
         echo "<title>$eventName</title>"
-
     ?>
 
     <link type="text/css" rel="stylesheet" href="css/style.css" />

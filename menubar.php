@@ -31,15 +31,14 @@ if (isset($_SESSION['userType'])) {
 
 echo '<ul><li><a '.getActiveString("home").' href="home.php">Home</a></li>';
 
-foreach ($events as $event) {
+foreach ($events as $ev) {
     //get the event name and page name
-    $eventName = ucfirst($event->getName());
-    $eventID = $event->getId();
-    $eventPage = $event->getName()."Page";
+    $en = ucfirst($ev->getName());
+    $eid = $ev->getId();
 
     //create working menuitem for each event
     echo "<li><a ".getActiveString("eventPage")." 
-    href='eventPage.php?event=$eventID'>$eventName</a></li>";
+    href='eventPage.php?event=$eid'>$en</a></li>";
 }
 
 echo '<li><a href="ticketPage.php">Tickets</a></li>';
