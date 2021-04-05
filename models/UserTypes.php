@@ -5,6 +5,8 @@ abstract class UserTypes {
     const USER = 0;
     const ADMIN = 1;
     const SUPERADMIN = 2;
+    const CLIENT = 3;
+    const VOLUNTEER = 4;
 
     // Access levels of different pages
     const ACCESSLEVELS = [
@@ -25,6 +27,10 @@ abstract class UserTypes {
                 return "Admin";
             case 2:
                 return "Superadmin";
+            case 3:
+                return "Client";
+            case 4:
+                return "Volunteer";
         }
 
         return "Couldn't get type";
