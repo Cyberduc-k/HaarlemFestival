@@ -1,0 +1,35 @@
+.content {
+    max-width: 600px;
+    margin: auto;
+}
+
+form {
+    border: 1px solid white;
+    padding: 20px;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+fieldset label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+table {
+    border-spacing: 0;
+    margin-left: -1px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+table input {
+    border: none;
+}
+
+input, select, table {
+    width: 100%;
+}

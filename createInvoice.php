@@ -3,7 +3,8 @@
 <html lang="en">
 <head>
     <title>Create an invoice</title>
-    <!--link type="text/css" rel="stylesheet" href="css/style.css" /-->
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/createInvoice.css" />
 </head>
 </html>
 
@@ -69,7 +70,7 @@ if ($_POST) {
             </fieldset>
 
             <fieldset>
-                <table id="ticketTable">
+                <table id="ticketTable" border="1">
                     <thead>
                         <th>Ticket</th>
                         <th>Count</th>
@@ -97,7 +98,7 @@ if ($_POST) {
                 <select name="tax" required>
                     <option value="9" selected>9%</option>
                     <option value="21">21%</option>
-                </selct>
+                </select>
             </fieldset>
 
             <fieldset>
