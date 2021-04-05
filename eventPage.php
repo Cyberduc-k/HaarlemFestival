@@ -1,36 +1,51 @@
+<?php
+
+require_once ("services/EventService.php");
+require_once ("EventSchedule.php");
+require_once "retreiveContent.php";
+require_once "services/ContentService.php";
+
+$schedule = new EventSchedule();
+$es = new EventService();
+
+if (isset($_GET["event"]))
+{
+    $eventID = $_GET["event"];
+    $event = $es->getById($eventID);
+}
+else{
+    header("Location: home.php");
+}
+
+$eventName = ucfirst($event->getName());
+
+// content halen uit db
+$rc = new retrieveContent();
+$content =  $rc->retrieve($eventID);
+
+?>
+
 <html lang="en">
 <head>
-    <?php
-        require_once ("services/EventService.php");
-        require_once ("EventSchedule.php");
-
-        $schedule = new EventSchedule();
-        $es = new EventService();
-
-        if (isset($_GET["event"]))
-        {
-            $eventID = $_GET["event"];
-            $event = $es->getById($eventID);
-        }
-        else{
-            header("Location: home.php");
-        }
-
-        $eventName = ucfirst($event->getName());
-
-        echo "<title>$eventName</title>"
-    ?>
-
+    <title><?php echo $eventName; ?></title>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/eventPage.css" />
 </head>
-<body>
+<body class="<?php echo $event->getColour(); ?>" >
 <?php
     require_once ("menubar.php");
-    echo "<a href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
 
-    echo "<header>
-    <h1>$eventName</h1>
-        </header>";
+    if (isset($_SESSION["userType"])) {
+        echo "<a href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
+    }
+
+    $image = $content->getImagePath();
+
+    echo <<<END
+        <header id="header" style="background-image: url('$image')">
+            <h1>$eventName</h1>
+        </header>
+    END;
 ?>
 
 <nav>
@@ -56,79 +71,77 @@
 <section id="about">
     <article>
         <?php
-        require_once "retreiveContent.php";
-        require_once "services/ContentService.php";
+            $header = $content->getHeader();
 
-        // content halen uit db
-        $rc = new retrieveContent();
-        $content =  $rc->retrieve($eventID);
-        $header = $content->getHeader();
+            echo <<<END
+                <header>
+                    <h2>$header</h2>
+                </header>
+            END;
 
-        echo " <header>
-            <h3>$header</h3>
-            </header>";
-
-        echo $content->getText();
+            echo $content->getText();
 
         ?>
     </article>
 </section>
 
 <section id="schedule">
-        <nav id="days">
-            <ul>
-                <li>
-                    <a onclick="daySchedule('Thursday')">
-                        Thursday
-                    </a>
-                </li>
-                <li>
-                    <a onclick="daySchedule('Friday')">
-                        Friday
-                    </a>
-                </li>
-                <li>
-                    <a onclick="daySchedule('Saturday')">
-                        Saturday
-                    </a>
-                </li>
-                <li>
-                    <a onclick="daySchedule('Sunday')">
-                        Sunday
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <script>
-            function hideDays(){
-                const x = document.getElementById("days");
+    <nav id="days">
+        <ul>
+            <li>
+                <a onclick="daySchedule('Thursday')">
+                    Thursday
+                </a>
+            </li>
+            <li>
+                <a onclick="daySchedule('Friday')">
+                    Friday
+                </a>
+            </li>
+            <li>
+                <a onclick="daySchedule('Saturday')">
+                    Saturday
+                </a>
+            </li>
+            <li>
+                <a onclick="daySchedule('Sunday')">
+                    Sunday
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-                x.style.display = "none";
-            }
+    <script>
+        function hideDays(){
+            const x = document.getElementById("days");
 
-            function daySchedule(day) {
-                const eventID = `<?php echo $eventID ?>`;
-                console.log(day);
+            x.style.display = "none";
+        }
 
-                const body = new FormData();
+        function daySchedule(day) {
+            const eventID = `<?php echo $eventID ?>`;
+            console.log(day);
 
-                body.append("day", day);
-                body.append("eventID", eventID);
+            const body = new FormData();
 
-                fetch("getDayScheduleMusic.php", {
-                    method: "POST",
-                    body,
-                }).then(async (res) => {
-                    document.getElementById("daySchedule").innerHTML = await res.text();
-                });
-            }
-        </script>
+            body.append("day", day);
+            body.append("eventID", eventID);
 
-        <header>
-            <h3>
-                Schedule
-            </h3>
-        </header>
+            fetch("getDayScheduleMusic.php", {
+                method: "POST",
+                body,
+            }).then(async (res) => {
+                document.getElementById("daySchedule").innerHTML = await res.text();
+            });
+        }
+    </script>
+
+    <header>
+        <h2>
+            Schedule
+        </h2>
+    </header>
+
     <article id="daySchedule">
 
         <?php

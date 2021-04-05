@@ -118,11 +118,28 @@ class TicketService extends ServiceUtils {
                             else
                                 return "Jazz Three Day Ticket";
                         case TicketType::Normal:
+                            $service = new ActService();
+                            $musicians = $service->getMusiciansForAct($ticket->getEventId()) or [];
+                            $description = "";
+
+                            for ($i = 0; $i < count($musicians); $i++) {
+                                if ($i != 0) {
+                                    $description .= " & ";
+                                }
+
+                                $description .= $musicians[$i]->getName();
+                            }
+
+                            return $description;
+                        default: die();
                     }
                 case EventType::Historic:
-                    break;
+                    $service = new HistoricTourService();
+                    $tour = $service->getById($ticket->getEventId());
+
+                    return "Historic Tour By " . $tour->getGuide();
                 case EventType::Food:
-                    break;
+                    return "Restaurant reservation";
                 default: die();
             }
         } catch (Exception $e) {

@@ -29,8 +29,9 @@ function generateInvoice(Invoice $invoice): TCPDF {
     foreach ($tickets as $ticket) {
         $count = $ticket->count;
         $ticket = $ticket->ticket;
+        $description = $service->getDescription($ticket);
 
-        $table .= "<tr><td>"
+        $table .= "<tr><td>" . $description
                . "</td><td>" . $count
                . "</td><td>" . $ticket->price
                . "</td><td>" . $ticket->price * $count

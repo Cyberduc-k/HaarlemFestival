@@ -1,13 +1,14 @@
 #menubar {
     height: 100px;
-    width: 100vw;
+    width: 100%;
     background: #242424;
-    border: 1px solid #707070;
-    margin-top: -1px;
-    margin-left: -1px;
+    border-bottom: 1px solid #707070;
     display: grid;
     grid-template-columns: 100px 1fr;
     grid-template-rows: 50px 50px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 #menubar img {

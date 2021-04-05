@@ -88,6 +88,38 @@ class ActService extends ServiceUtils {
         }
     }
 
+    public function getMusiciansForAct(int $actId): ?array {
+        try {
+            $stmt = $this->dao->getMusiciansForAct($actId);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $musicians = [];
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $musician = new Musician();
+
+                    $musician->setName($row["name"]);
+                    $musician->setId($row["id"]);
+
+                    array_push($musicians, $musician);
+                }
+
+                return $musicians;
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
     public function getScheduleForEvent(int $eventId, $date): ?array {
         try {
             $stmt = $this->dao->getScheduleForEvent($eventId, $date);
