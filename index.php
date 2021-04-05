@@ -7,6 +7,34 @@ if (!isset($_SESSION)) session_start();
 if ($_POST) {
     unset($_SESSION["loginError"]);
 
+    // First check if the captcha has been filled in
+    $captcha = null;
+    if (isset($_POST["g-recaptcha-response"])) {
+        $captcha = $_POST["g-recaptcha-response"];
+    }
+
+    if (!$captcha) {
+        $_SESSION["loginError"] = "Please complete the Captcha";
+        header("Location: index.php");
+        exit;
+    }
+
+    // Verify the captcha
+    $secretKey = "6Lezlz0aAAAAAN4GQdN0V26BkQZHey2vKBCF1R8D";
+    $ip = $_SERVER['REMOTE_ADDR'];
+    // post request to server
+    $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
+    $response = file_get_contents($url);
+    $responseKeys = json_decode($response,true);
+
+    // Don't sign in when captcha failed
+    if (!$responseKeys["success"]) {
+        $_SESSION["loginError"] = "Captcha incorrect, try again";
+        header("Location: index.php");
+        exit;
+    }
+
+    //Login with supplied credentials
     if (!empty($_POST["email"]) && !empty($_POST["password"])) {
         require_once("services/UserService.php");
         require_once("models/User.php");
@@ -39,6 +67,16 @@ else {
     <head>
         <title>Login</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+        <!-- Only enable the login button when captcha is succesfully filled in. -->
+        <!-- Another server-side check is performed that the captcha is ok to avoid hackers manually enabling the button -->
+        <script type="text/javascript">
+            function recaptchaCallback() {
+                document.getElementById("submitBtn").disabled = false;
+            }
+        </script>
     </head>
     <body>
         <div id="loginForm">
@@ -56,8 +94,10 @@ else {
                     </div>
 
                     <div>
-                        <input id="submitBtn" type="submit" value="Login" class="customButton"/>
+                        <input id="submitBtn" type="submit" value="Login" class="customButton" disabled/>
                     </div>
+
+                    <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Lezlz0aAAAAAFwW9tFtLphdlXVJ6qJ5ut-WBXVn"></div>
 
                     <div class="formField red">
                         <p><?php if(isset($_SESSION["loginError"])){echo $_SESSION["loginError"];}?></p>

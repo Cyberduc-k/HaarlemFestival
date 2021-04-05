@@ -205,6 +205,15 @@ class ServiceUtils {
 
         return $event;
     }
+
+    protected function rowToApiKey(array $row): ApiKey{
+        $key = new ApiKey();
+
+        $key->setEmail((string)$row["email"]);
+        $key->setApiKey((string)$row["api_key"]);
+
+        return $key;
+    }
 }
 
 ?>
