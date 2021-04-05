@@ -60,39 +60,42 @@
             // Show table
             if (!is_null($users) && !empty($users)) {
                 foreach ($users as $user) {
+                    $service = new UserService();
+                    $users = $service->getAll();
+
                     ?>
                     <tr>
-                        <td><?php echo $user["id"]?></td>
-                        <td><?php echo $user["firstname"]?></td>
-                        <td><?php echo $user["lastname"]?></td>
-                        <td><?php echo $user["email"]?></td>
-                        <td><?php echo $user["register_date"]?></td>
-                        <td><?php echo UserTypes::getType((int)$user["usertype"])?></td>
+                        <td><?php echo $user->getId()?></td>
+                        <td><?php echo $user->getFirstname()?></td>
+                        <td><?php echo $user->getLastname()?></td>
+                        <td><?php echo $user->getEmail()?></td>
+                        <td><?php echo $user->getRegisterDateString()?></td>
+                        <td><?php echo UserTypes::getType($user->getUserType())?></td>
                         <td>
                             <?php
                             //Show edit/login/delete based on what usertype is logged in
                             $loggedInUserType = (int)$_SESSION["userType"];
-                            $shownUserType = (int)$user["usertype"];
+                            $shownUserType = $user->getUserType();
                             
                             if ($shownUserType == UserTypes::USER ||
                                 ($shownUserType == UserTypes::ADMIN && $loggedInUserType == UserTypes::SUPERADMIN)
                             ) {
                                 ?>
-                                <form class="tableForm" name="tableEditForm<?php echo $user["id"]?>" action="editOtherUser.php" method="post">
-                                    <input type="hidden" name="id" value="<?php echo $user["id"]?>"/>
+                                <form class="tableForm" name="tableEditForm<?php echo $user->getId()?>" action="editOtherUser.php" method="post">
+                                    <input type="hidden" name="id" value="<?php echo $user->getId()?>"/>
 
                                     <input class='tableBtn' type="submit" value="Edit"/>
                                 </form>
-                                <form class="tableForm" name="tableLoginForm<?php echo $user["id"]?>" action="loginForUser.php" method="post">
-                                    <input type="hidden" name="id" value="<?php echo $user["id"]?>"/>
+                                <form class="tableForm" name="tableLoginForm<?php echo $user->getId()?>" action="loginForUser.php" method="post">
+                                    <input type="hidden" name="id" value="<?php echo $user->getId()?>"/>
 
                                     <input class='tableBtn' type="submit" value="Login"/>
                                 </form>
                                 <?php
                                 if ($loggedInUserType == UserTypes::SUPERADMIN) {
                                     ?>
-                                    <form class="tableForm" name="tableDeleteForm<?php echo $user["id"]?>" action="deleteUser.php" method="post">
-                                        <input type="hidden" name="id" value="<?php echo $user["id"]?>"/>
+                                    <form class="tableForm" name="tableDeleteForm<?php echo $user->getId()?>" action="deleteUser.php" method="post">
+                                        <input type="hidden" name="id" value="<?php echo $user->getId()?>"/>
 
                                         <input class='tableBtn' type="submit" value="Delete"/>
                                     </form>
@@ -107,7 +110,6 @@
             else {
                 echo "<h2>Sorry, we couldnt find any users</h2>";
             }
-            
             ?>
         </table>
         <form action="viewUsers.php" method="post">

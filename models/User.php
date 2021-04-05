@@ -115,6 +115,13 @@ class user {
     }
 
     /**
+     * @return DateTime
+     */
+    public function getRegisterDateString(): string {
+        return $this->getRegisterDate()->format('Y-m-d H:i:s');
+    }
+
+    /**
      * @param DateTime $registerDate
      */
     public function setRegisterDate(DateTime $registerDate): void {
