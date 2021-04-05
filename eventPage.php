@@ -1,7 +1,6 @@
 <html lang="en">
 <head>
     <?php
-    require_once ("menubar.php");
     require_once ("services/EventService.php");
     require_once ("EventSchedule.php");
 
@@ -28,6 +27,7 @@
 </head>
 <body>
 <?php
+    require_once ("menubar.php");
     echo "<a href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
 
     echo "<header>

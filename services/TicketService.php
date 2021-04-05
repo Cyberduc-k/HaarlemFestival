@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__ . "/../models/Ticket.php");
+require_once(__DIR__ . "/../models/TicketType.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../DAL/TicketDAO.php");
 require_once("ActService.php");
@@ -101,7 +102,38 @@ class TicketService extends ServiceUtils {
     }
 
     public function getDescription(Ticket $ticket): string {
-        return "no description";
+        try {
+            switch ($ticket->getEventType()) {
+                case EventType::Dance:
+                case EventType::Jazz:
+                    switch ($ticket->getType()) {
+                        case TicketType::SingleDay:
+                            if ($ticket->getEventType() == EventType::Dance)
+                                return "Dance Single Day Ticket";
+                            else
+                                return "Jazz Single Day Ticket";
+                        case TicketType::ThreeDay:
+                            if ($ticket->getEventType() == EventType::Dance)
+                                return "Dance Three Day Ticket";
+                            else
+                                return "Jazz Three Day Ticket";
+                        case TicketType::Normal:
+                    }
+                case EventType::Historic:
+                    break;
+                case EventType::Food:
+                    break;
+                default: die();
+            }
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return "";
+        }
     }
 
     public function getLocation(Ticket $ticket): string {
@@ -118,10 +150,8 @@ class TicketService extends ServiceUtils {
                     $venue = $service->getForHistoricTour($ticket->getEventId());
 
                     return $venue->getName();
-                    break;
                 case EventType::Food:
                     return "Haarlem"; // @TODO: pull from databse
-                    break;
                 default: die();
             }
         } catch (Exception $e) {

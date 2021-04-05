@@ -1,0 +1,75 @@
+#menubar {
+    height: 100px;
+    width: 100vw;
+    background: #242424;
+    border: 1px solid #707070;
+    margin-top: -1px;
+    margin-left: -1px;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: 50px 50px;
+}
+
+#menubar img {
+    width: 100px;
+    height: 100px;
+    margin-top: -6px;
+    grid-row: 1/3;
+}
+
+#menubar ul {
+    grid-column: 2/3;
+    justify-self: end;
+    background: none;
+    list-style: none;
+    margin: 0 50px 0 0;
+}
+
+#menubar ul:nth-of-type(1) {
+    align-self: end;
+    margin-bottom: 4px;
+}
+
+#menubar ul:nth-of-type(2) {
+    align-self: start;
+    margin-top: 4px;
+}
+
+#menubar li {
+    float: left;
+    margin-right: 30px;
+    padding: 0;
+    font-size: 22px;
+}
+
+#menubar li a.active {
+    font-style: italic;
+    color: #00FEFE;
+}
+
+#menubar ul:nth-of-type(1) > :nth-child(1) {
+    margin-right: 10px;
+}
+
+#menubar a {
+    color: #EAE6E6;
+    text-decoration: none;
+}
+
+.icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+
+.icon.instagram {
+    background-image: url("instagram-brands.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon.facebook {
+    background-image: url("facebook-square-brands.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}

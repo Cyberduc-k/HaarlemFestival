@@ -1,9 +1,7 @@
-body{
-    font: 20px "Lucida Grande", Tahoma, Verdana, sans-serif;
-    color: #404040;
-}
+@import url("base.css");
+@import url("menubar.css");
 
-ul {
+/*ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -145,8 +143,8 @@ input[type=email]{
     height: 100%;
 }
 
-.searchButton{
-    width: 20%; !important;
+.searchButton {
+    width: 20% !important;
     float: right;
 }
 
@@ -160,4 +158,4 @@ input[type=email]{
     width: 45%;
     margin: 5px;
     float: left;
-}
+}*/

@@ -19,11 +19,19 @@ function getActiveString(String $page): String {
 }
 
 // Show the menubar
-echo "<ul>";
-echo "<li><a ".getActiveString("home")." href='home.php'>Home</a></li>";
+echo '<header id="menubar">';
+echo '<img src="css/Logo.png" />';
+echo '<ul><li><a href="" class="icon instagram"></a></li><li><a href="" class="icon facebook"></a></li>';
 
-foreach ($events as $event)
-{
+if (isset($_SESSION['userType'])) {
+    echo '<li><a href="account.php">Account</a></li></ul>';
+} else {
+    echo '<li><a href="login.php">Login</a></li></ul>';
+}
+
+echo '<ul><li><a '.getActiveString("home").' href="home.php">Home</a></li>';
+
+foreach ($events as $event) {
     //get the event name and page name
     $eventName = ucfirst($event->getName());
     $eventID = $event->getId();
@@ -33,6 +41,9 @@ foreach ($events as $event)
     echo "<li><a ".getActiveString("eventPage")." 
     href='eventPage.php?event=$eventID'>$eventName</a></li>";
 }
+
+echo '<li><a href="ticketPage.php">Tickets</a></li>';
+echo '<li><a href="contact.php">Contact</a></li>';
 
 // first validate if user is logged in, only then allow access
 if (isset($_SESSION['userType'])) {
@@ -51,6 +62,6 @@ if (isset($_SESSION['userType'])) {
     echo "<li class='right'><a href='logout.php'>Logout</a></li>";
 }
 
-echo "</ul>";
+echo "</ul></header>";
     
 ?>

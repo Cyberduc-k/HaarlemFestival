@@ -108,8 +108,7 @@ class ActDAO extends DAOUtils {
     }
 
     // get schedule for event
-    public function getScheduleForEvent(int $eventId, string $date): ?PDOStatement
-    {
+    public function getScheduleForEvent(int $eventId, string $date): ?PDOStatement {
         try {
             $day = "%".$date;
 
@@ -117,14 +116,14 @@ class ActDAO extends DAOUtils {
                         FROM `act_musician` 
                         JOIN musicians ON musicians.id=musicianId
                         JOIN acts ON acts.id=actId
-                        WHERE acts.eventId = :eventId AND date LIKE :dag";
+                        WHERE acts.eventId = :eventId AND date LIKE :day";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
             Base::getInstance()->conn->beginTransaction();
 
             $stmt->bindParam(":eventId", $eventId);
-            $stmt->bindParam(":dag", $day);
+            $stmt->bindParam(":day", $day);
 
             $stmt->execute();
 
