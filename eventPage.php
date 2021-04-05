@@ -1,10 +1,5 @@
 <html lang="en">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-            crossorigin="anonymous"></script>
-
     <?php
     require_once ("menubar.php");
     require_once ("services/EventService.php");
@@ -108,27 +103,27 @@
         </nav>
         <script>
             function hideDays(){
-                var x = document.getElementById("days");
+                const x = document.getElementById("days");
 
                 x.style.display = "none";
             }
 
-            function daySchedule(day)
-            {
-                var eventID = `<?php echo $eventID ?>`;
+            function daySchedule(day) {
+                const eventID = `<?php echo $eventID ?>`;
                 console.log(day);
 
-                $.ajax({
-                    url: 'getDayScheduleMusic.php',
-                    type: 'POST',
-                    data: {'day' : day,
-                        'eventID' : eventID},
-                    success: function(data) {
-                        document.getElementById("daySchedule").innerHTML = data;
-                    }
-                })
-            }
+                const body = new FormData();
 
+                body.append("day", day);
+                body.append("eventID", eventID);
+
+                fetch("getDayScheduleMusic.php", {
+                    method: "POST",
+                    body,
+                }).then(async (res) => {
+                    document.getElementById("daySchedule").innerHTML = await res.text();
+                });
+            }
         </script>
 
         <header>
@@ -160,16 +155,16 @@
 
 <script>
     function hideAbout() {
-        var x = document.getElementById("about");
-        var y = document.getElementById("schedule");
+        const x = document.getElementById("about");
+        const y = document.getElementById("schedule");
 
         x.style.display = "none";
         y.style.display = "block";
     }
 
     function hideSchedule() {
-        var x = document.getElementById("schedule");
-        var y = document.getElementById("about");
+        const x = document.getElementById("schedule");
+        const y = document.getElementById("about");
 
         x.style.display = "none";
         y.style.display = "block";
