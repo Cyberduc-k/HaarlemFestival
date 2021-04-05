@@ -7,20 +7,23 @@
     </head>
     <body>
         <?php
-        
-        $page = "home";
-        
-        require_once("validate.php");
-        require_once("menubar.php");
-        require_once("services/UserService.php");
+        require_once ("menubar.php");
+        require_once ("services/EventService.php");
 
-        $userType = (int) $_SESSION['userType'];
-        $userService = new UserService();
+        $es = new EventService();
+        $events = $es->getAll();
 
-        // Show a basic welcome message and the users avatar
-        echo "<h1 style='float: left'>Welcome to the ".UserTypes::getType($userType)."'s area, " . $_SESSION['firstname'] . "!</h1>";
-        echo "<img class='avatar' src=".$userService->getAvatarByEmail($_SESSION["email"])." alt='avatar' style='float: left; margin: 40px 0px 0px 40px'>";
-        
+            echo "<h1>Haarlem Festival</h1>";
+
+            foreach ($events as $ev)
+            {
+                $en = ucfirst($ev->getName());
+                $eid = $ev->getId();
+
+                echo "<h3>$en</h3>";
+                echo "<a href='/eventPage.php?event=$eid'>More...</a>";
+            }
+
         ?>
     </body>
 </html>
