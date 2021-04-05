@@ -29,7 +29,17 @@ if ($_POST) {
     $invoice->setDate(new DateTime());
     $invoice->setDueDate(new DateTime($_POST["dueDate"]));
 
+    $ticketIds = $_POST["ticketId"];
+    $ticketCounts = $_POST["ticketCount"];
+
     if ($service->create($invoice)) {
+        for ($i = 0; $i < count($ticketIds); $i++) {
+            if (!$service->addTicket($invoice->getId(), (int)$ticketIds[$i], (int)$ticketCounts[$i])) {
+                header("Location: createInvoice.php");
+                exit;
+            }
+        }
+
         echo "Succesfully created invoice";
     } else {
         header("Location: createInvoice.php");
@@ -85,7 +95,7 @@ if ($_POST) {
                     $tickets = $service->getAll();
 
                     foreach ($tickets as $ticket) {
-                        echo '<option value="' . $ticket->getId() . '">' . EventType::getType($ticket->getEventType()) . '</option>';
+                        echo '<option value="' . $ticket->getId() . '">' . $service->getDescription($ticket) . '</option>';
                     }
 
                     ?>
@@ -125,17 +135,18 @@ if ($_POST) {
             const remove = document.createElement("input");
 
             ticket.type = "text";
-            ticket.id = `ticket${ticketIds++}`;
-            ticket.name = "ticketId[]";
+            ticket.id = `ticket${ticketIds}`;
+            ticket.name = `ticketId[${ticketIds}]`;
             ticket.required = true;
             ticket.setAttribute("list", "ticketList");
 
             count.type = "number";
             count.min = "1";
             count.value = "1";
-            count.name = "ticketCount[]";
+            count.name = `ticketCount[${ticketIds}]`;
             count.required = true;
 
+            ticketIds++;
             remove.type = "button";
             remove.value = "Remove";
 

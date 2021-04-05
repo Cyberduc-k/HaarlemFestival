@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/../models/Ticket.php");
 require_once(__DIR__ . "/../models/TicketType.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
+require_once(__DIR__ . "/../models/EventType.php");
 require_once(__DIR__ . "/../DAL/TicketDAO.php");
 require_once("ActService.php");
 require_once("VenueService.php");

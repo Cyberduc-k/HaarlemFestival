@@ -84,6 +84,32 @@ class InvoiceDAO extends DAOUtils {
             $stmt->bindParam(":dueDate", $dueDate);
 
             $stmt->execute();
+            $invoice->setId((int)Base::getInstance()->conn->lastInsertId());
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
+    // add a ticket to an invoice
+    public function addTicket(int $invoiceId, int $ticketId, int $count): bool {
+        try {
+            $query = "INSERT INTO `invoice_ticket`
+                      SET invoiceId = :invoiceId,
+                          ticketId = :ticketId,
+                          nTickets = :nTickets";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":invoiceId", $invoiceId);
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->bindParam(":nTickets", $count);
+            $stmt->execute();
 
             Base::getInstance()->conn->commit();
 

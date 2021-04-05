@@ -1,6 +1,7 @@
 <?php
 set_include_path(__DIR__);
 require_once("models/Act.php");
+require_once("models/Musician.php");
 require_once(__DIR__ . "/../DAL/ActDAO.php");
 require_once("ServiceUtils.php");
 

@@ -76,6 +76,22 @@ class InvoiceService extends ServiceUtils {
             return false;
         }
     }
+
+    // add a ticket to an invoice
+    public function addTicket(int $invoiceId, int $ticketId, int $count): bool {
+        try {
+            return $this->dao->addTicket($invoiceId, $ticketId, $count);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return false;
+        }
+    }
 }
 
 ?>
