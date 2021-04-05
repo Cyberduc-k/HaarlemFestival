@@ -3,7 +3,7 @@ if(!isset($_SESSION)) session_start();
 ?>
 <html lang="en">
     <head>
-        <title>Home</title>
+        <title>Account</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
     </head>
     <body>
