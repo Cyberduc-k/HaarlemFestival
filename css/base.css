@@ -8,3 +8,23 @@ body {
     color: #EAE6E6;
     background: #333333;
 }
+
+body.orange {
+    --color: rgb(255, 146, 0);
+    --color-transparent: rgba(255, 146, 0, 0);
+}
+
+body.pink {
+    --color: rgb(240, 74, 252);
+    --color-transparent: rgba(240, 74, 252, 0);
+}
+
+body.green {
+    --color: rgb(32, 165, 0);
+    --color-transparent: rgba(32, 164, 0, 0);
+}
+
+body.purple {
+    --color: rgb(124, 58, 181);
+    --color-transparent: rgba(124, 58, 181, 0);
+}
