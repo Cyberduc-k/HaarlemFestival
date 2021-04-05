@@ -16,6 +16,7 @@ function generateTickets(User $user): void {
 
     $pdf->setPrintHeader(false);
     $pdf->setPrintFooter(false);
+    $pdf->SetFont('helvetica', 'B');
     $pdf->AddPage();
 
     $white = [255, 255, 255];
@@ -37,8 +38,6 @@ function generateTickets(User $user): void {
         $pdf->Line($width - $x - 50, $y, $width - $x - 50, $y + 60, []);
         $pdf->Circle($width - $x - 50, $y - 0.272, 1.5, 180, 360, 'DF', [], $white);
         $pdf->Circle($width - $x - 50, $y + 60 + 0.272, 1.5, 0, 180, 'DF', [], $white);
-
-        $pdf->SetFont('helvetica', 'B');
 
         $pdf->SetFontSize(10);
         $pdf->SetTextColorArray($gray);

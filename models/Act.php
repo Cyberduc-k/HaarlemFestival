@@ -3,9 +3,9 @@
 class Act {
     private int $id;
     private int $eventId;
-    private string $date;
-    private string $startTime;
-    private string $endTime;
+    private DateTime $date;
+    private DateTime $startTime;
+    private DateTime $endTime;
     private string $location;
     private string $imagePath;
 
@@ -25,27 +25,27 @@ class Act {
         $this->eventId = $eventId;
     }
 
-    public function getDate(): string {
+    public function getDate(): DateTime {
         return $this->date;
     }
 
-    public function setDate(string $date): void {
+    public function setDate(DateTime $date): void {
         $this->date = $date;
     }
 
-    public function getStartTime(): string {
+    public function getStartTime(): DateTime {
         return $this->startTime;
     }
 
-    public function setStartTime(string $startTime): void {
+    public function setStartTime(DateTime $startTime): void {
         $this->startTime = $startTime;
     }
 
-    public function getEndTime(): string {
+    public function getEndTime(): DateTime {
         return $this->endTime;
     }
 
-    public function setEndTime(string $endTime): void {
+    public function setEndTime(DateTime $endTime): void {
         $this->endTime = $endTime;
     }
 

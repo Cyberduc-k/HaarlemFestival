@@ -144,8 +144,8 @@ class ServiceUtils {
         $invoice->setUserAddress((string)$row["userAddress"]);
         $invoice->setUserPhone((string)$row["userAddress"]);
         $invoice->setTax((float)$row["tax"]);
-        $invoice->setDate($row["date"]);
-        $invoice->setDueDate($row["dueDate"]);
+        $invoice->setDate(new DateTime($row["date"]));
+        $invoice->setDueDate(new DateTime($row["dueDate"]));
 
         return $invoice;
     }
@@ -155,9 +155,9 @@ class ServiceUtils {
 
         $act->setId((int)$row["id"]);
         $act->setEventId((int)$row["eventId"]);
-        $act->setDate($row["date"]);
-        $act->setStartTime($row["startTime"]);
-        $act->setEndTime($row["endTime"]);
+        $act->setDate(new DateTime($row["date"]));
+        $act->setStartTime(new DateTime($row["startTime"]));
+        $act->setEndTime(new DateTime($row["endTime"]));
         $act->setLocation((string)$row["location"]);
         $act->setImagePath((string)$row["imagePath"]);
 
@@ -171,7 +171,7 @@ class ServiceUtils {
         $tour->setVenue((int)$row["venueID"]);
         $tour->setLanguage((int)$row["language"]);
         $tour->setGuide((string)$row["guide"]);
-        $tour->setDate($row["date"]);
+        $tour->setDate(new DateTime($row["date"]));
 
         return $tour;
     }
@@ -188,7 +188,7 @@ class ServiceUtils {
     protected function rowToTourSchedule(array $row): HistoricSchedule{
         $schedule = new HistoricSchedule();
 
-        $schedule->setDate($row["date"]);
+        $schedule->setDate(new DateTime($row["date"]));
         $schedule->setNDutchTours((int)$row["Dutch"]);
         $schedule->setNEnglishTours((int)$row["English"]);
         $schedule->setNChineseTours((int)$row["Chinese"]);

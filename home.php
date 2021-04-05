@@ -10,9 +10,9 @@
         
         $page = "home";
         
-        require_once ("validate.php");
-        require_once ("menubar.php");
-        require_once ("services/UserService.php");
+        require_once("validate.php");
+        require_once("menubar.php");
+        require_once("services/UserService.php");
 
         $userType = (int) $_SESSION['userType'];
         $userService = new UserService();

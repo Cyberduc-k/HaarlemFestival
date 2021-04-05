@@ -100,9 +100,9 @@ class ActService extends ServiceUtils {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $act = new Act();
 
-                    $act->setDate($row["date"]);
-                    $act->setStartTime($row["startTime"]);
-                    $act->setEndTime($row["endTime"]);
+                    $act->setDate(new DateTime($row["date"]));
+                    $act->setStartTime(new DateTime($row["startTime"]));
+                    $act->setEndTime(new DateTime($row["endTime"]));
                     $act->setLocation($row["location"]);
 
                     $musician = new Musician();
@@ -110,7 +110,7 @@ class ActService extends ServiceUtils {
                     $musician->setName($row["name"]);
                     $musician->setId($row["id"]);
 
-                    $acts += [$musician->getName()=>$act];
+                    $acts[$musician->getName()] = $act;
                 }
 
                 return $acts;

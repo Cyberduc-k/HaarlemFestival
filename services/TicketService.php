@@ -100,6 +100,10 @@ class TicketService extends ServiceUtils {
         }
     }
 
+    public function getDescription(Ticket $ticket): string {
+        return "no description";
+    }
+
     public function getLocation(Ticket $ticket): string {
         try {
             switch ($ticket->getEventType()) {

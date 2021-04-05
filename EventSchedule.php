@@ -29,7 +29,7 @@ class EventSchedule
             foreach ($schedule as $timeSlot) {
 
             echo "<tr>
-                <td>".$timeSlot->getDate()."</td>
+                <td>".$timeSlot->getDate()->format("d-m-Y")."</td>
                 <td>".$timeSlot->getNDutchTours()."</td>
                 <td>".$timeSlot->getNEnglishTours()."</td>
                 <td>".$timeSlot->getNChineseTours()."</td>
@@ -94,7 +94,7 @@ class EventSchedule
                 echo "<table>
                     <tr>
                     <td>".$mus."</td>
-                    <td>".$mus_value->getStartTime()." - ".$mus_value->getEndTime()."</td>
+                    <td>".$mus_value->getStartTime()->format("H:i:s")." - ".$mus_value->getEndTime()->format("H:i:s")."</td>
                     </tr>
                     <tr>
                     <td></td>
