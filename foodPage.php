@@ -73,6 +73,7 @@ require_once ("menubar.php");
                 <form action="uploadIMG.php" method="post" enctype="multipart/form-data">
                     Select File to Upload:
                     <input name="file" type="file" multiple>
+                    <input name="contentPageId" type="text" required>
                     <input type="submit" name="submit" value="Upload" required>
                 </form>
 

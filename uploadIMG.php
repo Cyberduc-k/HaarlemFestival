@@ -1,4 +1,6 @@
 <?php
+require_once("models/Image.php");
+require_once("services/ImageService.php");
 
 // NOG NIET UITGEBREID GESTEST, KAN NOG NIET HELEMAAL WERKEN!
 
@@ -7,11 +9,15 @@ $targetDir = "uploads/uploadedIMG/";
 $fileName = htmlspecialchars(basename($_FILES["file"]["name"]));
 $targetFilePath = $targetDir . $fileName;
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+$contentPageId = $_POST["contentPageId"];
 $statusMsg = '';
 
 if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 
-    //allow certain file formats
+    // Create new instance of the image service
+    $service = new ImageService();
+
+    // Allow certain file formats
     $allowTypes = array('jpg','png','jpeg');
 
     if(in_array($fileType, $allowTypes)){
@@ -35,6 +41,15 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 
                     $statusMsg = "The file ".$fileName. " has been uploaded.";
 
+                    // Upload image data to database
+                    $images = $service->getAll();
+                    $id = end($images)->getId() + 1;
+                    // Create image to upload
+                    $image = new Image();
+                    $image->setId($id);
+                    $image->setContentPage($contentPageId);
+                    // Upload using service
+                    $service->addImage($image);
                 }
                 else{
                     $statusMsg = "Sorry, there was an error uploading your file.";
@@ -61,6 +76,7 @@ GEBRUIK DIT OM IMAGES TE UPLOADEN(nog niet naar de database)!!!
                 <form action="uploadIMG.php" method="post" enctype="multipart/form-data">
                     Select File to Upload:
                     <input name="file" type="file" multiple>
+                    <input name="contentPageId" type="text" required>
                     <input type="submit" name="submit" value="Upload" required>
                 </form>
 -->
