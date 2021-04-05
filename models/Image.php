@@ -3,7 +3,6 @@
 class Image {
     private int $id;
     private int $contentPage;
-    private int $number;
 
     public function getId(): int {
         return $this->id;
