@@ -2,7 +2,6 @@
 
 require_once("Base.php");
 require_once("DAOUtils.php");
-require_once(__DIR__ . "/../models/Image.php");
 
 // DAO for the images
 class ImageDAO extends DAOUtils
@@ -80,20 +79,25 @@ class ImageDAO extends DAOUtils
         }
     }
 
-    public function addImage(int $contentPageId): ?bool
+    public function addImage(Image $image): ?bool
     {
         try {
             // query to insert record
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                contentPageId=:contentPageId";
+                id=:id, contentPageId=:contentPageId";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
             Base::getInstance()->conn->beginTransaction();
 
+            // cast references into variables to avoid error
+            $id = (int)$image->getId();
+            $contentPageId = (int)$image->getContentPage();
+
             // bind values
+            $stmt->bindParam(":id", $id);
             $stmt->bindParam(":contentPageId", $contentPageId);
 
             // execute query

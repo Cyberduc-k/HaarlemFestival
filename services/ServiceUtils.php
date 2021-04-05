@@ -185,6 +185,15 @@ class ServiceUtils {
         return $venue;
     }
 
+    protected function rowToImage(array $row): Image {
+        $image = new Image();
+
+        $image->setId((int)$row["id"]);
+        $image->setContentPage((string)$row["contentPageId"]);
+
+        return $image;
+    }
+
     protected function rowToTourSchedule(array $row): HistoricSchedule{
         $schedule = new HistoricSchedule();
 
