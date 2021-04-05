@@ -56,9 +56,12 @@ class InvoiceDAO extends DAOUtils {
     public function create(Invoice $invoice): bool {
         try {
             $query = "INSERT INTO " . $this->tableName . "
-                          (userId, userAddress, userPhone, tax, [date], dueDate)
-                      VALUES
-                          (:userId, :userAddress, :userPhone, :tax, :date, :dueDate)";
+                      SET userId = :userId,
+                          userAddress = :userAddress,
+                          userPhone = :userPhone,
+                          tax = :tax,
+                          `date` = :date,
+                          dueDate = :dueDate";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
