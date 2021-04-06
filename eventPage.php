@@ -187,8 +187,14 @@ $content =  $rc->retrieve($eventID);
         y.style.display = "block";
 
         document.getElementById("aboutNav").className = "";
+
+        <?php if ($eventName == "Food") { ?>
+        document.getElementById("restaurantsNav").className = "active";
+        location.hash = "restaurants";
+        <?php } else { ?>
         document.getElementById("scheduleNav").className = "active";
         location.hash = "schedule";
+        <?php } ?>
     }
 
     function hideSchedule() {
@@ -199,7 +205,13 @@ $content =  $rc->retrieve($eventID);
         y.style.display = "block";
 
         document.getElementById("aboutNav").className = "active";
+
+        <?php if ($eventName == "Food") { ?>
+        document.getElementById("restaurantsNav").className = "";
+        <?php } else { ?>
         document.getElementById("scheduleNav").className = "";
+        <?php } ?>
+
         location.hash = "about";
     }
 
@@ -210,6 +222,7 @@ $content =  $rc->retrieve($eventID);
     else {
         switch (prevPage) {
             case "#schedule": hideAbout(); break;
+            case "#restaurants": hideAbout(); break;
             default: hideSchedule();
         }
     }
