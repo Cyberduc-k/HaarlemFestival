@@ -8,7 +8,7 @@ class ImageDAO extends DAOUtils
 {
     private string $tableName = "images";
 
-    // get all venues
+    // get all images
     public function getAll(): ?PDOStatement
     {
         try {
