@@ -20,7 +20,7 @@ function getActiveString(String $page): String {
 
 // Show the menubar
 echo '<header id="menubar">';
-echo '<a href="home.php" id="logo">' . file_get_contents('css/Logo.svg') . '</a>';
+echo '<a href="./" id="logo">' . file_get_contents('css/Logo.svg') . '</a>';
 echo '<ul><li><a href="" class="icon instagram"></a></li><li><a href="" class="icon facebook"></a></li>';
 
 if (isset($_SESSION['userType'])) {
@@ -29,7 +29,7 @@ if (isset($_SESSION['userType'])) {
     echo '<li><a href="login.php">Login</a></li></ul>';
 }
 
-echo '<ul><li><a '.getActiveString("home").' href="home.php">Home</a></li>';
+echo '<ul><li><a '.getActiveString("home").' href="./">Home</a></li>';
 
 foreach ($events as $ev) {
     //get the event name and page name
