@@ -55,11 +55,22 @@ $content =  $rc->retrieve($eventID);
                 About
             </a>
         </li>
+        <?php
+        if ($eventName == "Food"){ ?>
+        <li id="restaurantsNav">
+            <a onclick="hideAbout()">
+                Restaurants
+            </a>
+        </li>
+        <?php } else{ ?>
         <li id="scheduleNav">
             <a onclick="hideAbout()">
                 Schedule
             </a>
         </li>
+        <?php
+        }
+        ?>
         <li>
             <a href="home.php">
                 Tickets
@@ -86,36 +97,16 @@ $content =  $rc->retrieve($eventID);
 </section>
 
 <section id="schedule">
-    <?php if($eventName == "Dance"){ ?>
-        <nav id="days">
-            <ul>
-                <li>
-                    <a onclick="daySchedule('Friday')">
-                        Friday
-                    </a>
-                </li>
-                <li>
-                    <a onclick="daySchedule('Saturday')">
-                        Saturday
-                    </a>
-                </li>
-                <li>
-                    <a onclick="daySchedule('Sunday')">
-                        Sunday
-                    </a>
-                </li>
-            </ul>
-        </nav>
 
-    <?php }
-    else { ?>
         <nav id="days">
             <ul>
+                <?php if ($eventName == "Jazz"){ ?>
                 <li>
                     <a onclick="daySchedule('Thursday')">
                         Thursday
                     </a>
                 </li>
+                <?php } ?>
                 <li>
                     <a onclick="daySchedule('Friday')">
                         Friday
@@ -133,7 +124,6 @@ $content =  $rc->retrieve($eventID);
                 </li>
             </ul>
         </nav>
-    <?php } ?>
 
     <script>
         function hideDays(){
