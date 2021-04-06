@@ -50,12 +50,12 @@ $content =  $rc->retrieve($eventID);
 
 <nav>
     <ul>
-        <li>
+        <li id="aboutNav">
             <a onclick="hideSchedule()">
                 About
             </a>
         </li>
-        <li>
+        <li id="scheduleNav">
             <a onclick="hideAbout()">
                 Schedule
             </a>
@@ -171,6 +171,9 @@ $content =  $rc->retrieve($eventID);
 
         x.style.display = "none";
         y.style.display = "block";
+
+        document.getElementById("aboutNav").className = "";
+        document.getElementById("scheduleNav").className = "active";
     }
 
     function hideSchedule() {
@@ -179,6 +182,9 @@ $content =  $rc->retrieve($eventID);
 
         x.style.display = "none";
         y.style.display = "block";
+
+        document.getElementById("aboutNav").className = "active";
+        document.getElementById("scheduleNav").className = "";
     }
 
     hideSchedule();
