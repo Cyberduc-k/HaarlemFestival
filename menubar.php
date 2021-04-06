@@ -41,7 +41,7 @@ foreach ($events as $ev) {
     href='eventPage.php?event=$eid'>$en</a></li>";
 }
 
-echo '<li><a href="ticketPage.php">Tickets</a></li>';
+echo '<li><a ' . getActiveString("tickets") . ' href="tickets.php?event=2">Tickets</a></li>';
 echo '<li><a href="contact.php">Contact</a></li>';
 
 // first validate if user is logged in, only then allow access
