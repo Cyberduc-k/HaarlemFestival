@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__ . "/../DAL/ContentDAO.php");
-require_once(__DIR__ . "/../models/Content.php");
+require_once(__DIR__ . "/../DAL/ImageDAO.php");
+require_once(__DIR__ . "/../models/Image.php");
 require_once ("ServiceUtils.php");
 
 class ImageService extends ServiceUtils {
