@@ -138,9 +138,9 @@ echo "<header>
                 })
             }
         </script>
-        <form action="uploadIMG.php?contentId='<?php echo $content->getId(); ?>'" method="post" enctype="multipart/form-data">
+        <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>" method="post" enctype="multipart/form-data">
             Select File to Upload:
-            <input name="file" type="file" multiple>
+            <input name="file[]" type="file" multiple>
             <input type="submit" name="submit" value="Upload" required>
         </form>
     </article>

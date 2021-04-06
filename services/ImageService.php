@@ -21,13 +21,13 @@ class ImageService extends ServiceUtils {
                 $contents = array();
 
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($contents, $row);
+                    array_push($contents, $this->rowToImage($row));
                 }
 
                 return $contents;
             }
 
-            return null;
+            return array();
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
