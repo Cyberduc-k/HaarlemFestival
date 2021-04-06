@@ -130,12 +130,6 @@ $content =  $rc->retrieve($eventID);
     ?>
 
     <script>
-        function hideDays(){
-            const x = document.getElementById("days");
-
-            x.style.display = "none";
-        }
-
         function daySchedule(day) {
             const eventID = `<?php echo $eventID ?>`;
             console.log(day);

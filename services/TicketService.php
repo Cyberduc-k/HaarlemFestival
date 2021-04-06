@@ -272,6 +272,62 @@ class TicketService extends ServiceUtils {
             return null;
         }
     }
+
+    public function getMusicTicketsPerDay($eventId, $date) {
+        try {
+            $stmt = $this->dao->getTicketsMusicPerDay($eventId, $date);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $tickets = [];
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    // variable bepalen voor RowTo
+                    array_push($tickets, $this->rowToTicket($row));
+                }
+
+                return $tickets;
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
+    public function getHistoricTicketsPerDay($date)
+    {
+        try {
+            $stmt = $this->dao->getTicketsForHistoricPerDay($date);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $tickets = [];
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    array_push($tickets, $this->rowToTicket($row));
+                }
+
+                return $tickets;
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
 }
 
 ?>
