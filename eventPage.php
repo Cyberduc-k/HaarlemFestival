@@ -97,7 +97,8 @@ $content =  $rc->retrieve($eventID);
 </section>
 
 <section id="schedule">
-
+        <?php if ($eventName == "Jazz" || $eventName == "Dance"){
+            ?>
         <nav id="days">
             <ul>
                 <?php if ($eventName == "Jazz"){ ?>
@@ -124,6 +125,9 @@ $content =  $rc->retrieve($eventID);
                 </li>
             </ul>
         </nav>
+    <?php
+        }
+    ?>
 
     <script>
         function hideDays(){
@@ -151,9 +155,21 @@ $content =  $rc->retrieve($eventID);
     </script>
 
     <header>
-        <h2>
-            Schedule
-        </h2>
+        <?php
+            if ($eventName == "Food")
+            { ?>
+            <h2>
+                Restaurants
+            </h2>
+        <?php
+            }else{ ?>
+                <h2>
+                    Schedule
+                </h2>
+        <?php
+            }
+        ?>
+
     </header>
 
     <article id="daySchedule">
@@ -164,15 +180,15 @@ $content =  $rc->retrieve($eventID);
                 case "Food":
                     break;
                 case "Historic":
-                    echo '<script type="text/javascript">hideDays();</script>';
                     $schedule->getHistoricSchedule();
                     break;
                 case "Jazz":
-                case "Dance":
                     $schedule->musicEvent($eventID, "Thursday");
                     break;
+                case "Dance":
+                    $schedule->musicEvent($eventID, "Friday");
+                    break;
             }
-
         ?>
 
     </article>
