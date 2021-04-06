@@ -189,7 +189,8 @@ class ServiceUtils {
         $image = new Image();
 
         $image->setId((int)$row["id"]);
-        $image->setContentPage((string)$row["contentPageId"]);
+        $image->setContentPage((int)$row["contentPageId"]);
+        $image->setName((string)$row["name"]);
 
         return $image;
     }
