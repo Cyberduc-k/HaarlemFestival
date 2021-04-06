@@ -35,8 +35,14 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 
             // Make sure we have a file path
             if ($tmpFilePath != "") {
+
+                if (empty($images))
+                    $id = 1;
+                else
+                    $id = array_pop($images)->getId() + 1;
+                
                 // Setup our new file path
-                $newFilePath = $targetDir . $_FILES['file']['name'][$i];
+                $newFilePath = $targetDir . $id . "-" . $_FILES['file']['name'][$i];
 
                 // Upload the file into the temp dir
                 if (move_uploaded_file($tmpFilePath, $newFilePath)) {
@@ -45,13 +51,6 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 
                     // Upload image data to database
                     $images = $service->getAll();
-
-                    if (empty($images))
-                        $id = 1;
-                    else
-                        $id = array_pop($images)->getId() + 1;
-
-                    //rename($fileName, $id);
 
                     // Create image to upload
                     $image = new Image();

@@ -13,7 +13,7 @@ class ImageDAO extends DAOUtils
     {
         try {
             $query = "SELECT
-                          id, contentPageId
+                          id, contentPageId, name
                       FROM " . $this->tableName;
 
             // prepare query statement
@@ -37,7 +37,7 @@ class ImageDAO extends DAOUtils
     {
         try {
             $query = "SELECT
-                          id, contentPageId
+                          id, contentPageId, name
                       FROM " . $this->tableName . "
                       WHERE id = :id";
 
@@ -60,7 +60,7 @@ class ImageDAO extends DAOUtils
     {
         try {
             $query = "SELECT
-                          id, contentPageId
+                          id, contentPageId, name
                       FROM " . $this->tableName . "
                       WHERE contentPageId = :contentPageId";
 
