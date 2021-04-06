@@ -35,25 +35,6 @@ echo "<header>
     <h1>$eventName</h1>
         </header>";
 ?>
-<nav>
-    <ul>
-        <li>
-            <a onclick="hideSchedule()">
-                About
-            </a>
-        </li>
-        <li>
-            <a onclick="hideAbout()">
-                Schedule
-            </a>
-        </li>
-        <li>
-            <a href="home.php">
-                Tickets
-            </a>
-        </li>
-    </ul>
-</nav>
 
 <script>
     function hideAbout() {
