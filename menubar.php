@@ -20,7 +20,7 @@ function getActiveString(String $page): String {
 
 // Show the menubar
 echo '<header id="menubar">';
-echo '<a href="home.php" id="logo"></a>';
+echo '<a href="home.php" id="logo">' . file_get_contents('css/Logo.svg') . '</a>';
 echo '<ul><li><a href="" class="icon instagram"></a></li><li><a href="" class="icon facebook"></a></li>';
 
 if (isset($_SESSION['userType'])) {
