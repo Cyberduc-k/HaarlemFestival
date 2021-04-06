@@ -9,7 +9,7 @@ $targetDir = "uploads/uploadedIMG/";
 $fileName = htmlspecialchars(basename($_FILES["file"]["name"]));
 $targetFilePath = $targetDir . $fileName;
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
-$contentPageId = $_GET["contentId"];
+$contentPageId = $_POST["contentPageId"];
 $statusMsg = '';
 
 if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
@@ -23,18 +23,18 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
     if(in_array($fileType, $allowTypes)){
         // upload file to server
         // Count # of uploaded files in array
-        $total = count($_FILES['upload']['name']);
+        $total = count($_FILES['file']['name']);
 
         // Loop through each file
         for( $i=0 ; $i < $total ; $i++ ) {
 
             // Get the temp file path
-            $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
+            $tmpFilePath = $_FILES['file']['tmp_name'][$i];
 
             // Make sure we have a file path
             if ($tmpFilePath != ""){
                 // Setup our new file path
-                $newFilePath = $targetDir . $_FILES['upload']['name'][$i];
+                $newFilePath = $targetDir . $_FILES['file']['name'][$i];
 
                 // Upload the file into the temp dir
                 if(move_uploaded_file($tmpFilePath, $newFilePath)) {
