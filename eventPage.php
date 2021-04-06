@@ -174,6 +174,7 @@ $content =  $rc->retrieve($eventID);
 
         document.getElementById("aboutNav").className = "";
         document.getElementById("scheduleNav").className = "active";
+        location.hash = "schedule";
     }
 
     function hideSchedule() {
@@ -185,9 +186,19 @@ $content =  $rc->retrieve($eventID);
 
         document.getElementById("aboutNav").className = "active";
         document.getElementById("scheduleNav").className = "";
+        location.hash = "about";
     }
 
-    hideSchedule();
+    const prevPage = location.hash;
+
+    if (prevPage.length == 0)
+        hideSchedule();
+    else {
+        switch (prevPage) {
+            case "#schedule": hideAbout(); break;
+            default: hideSchedule();
+        }
+    }
 </script>
 
 </body>
