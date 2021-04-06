@@ -11,9 +11,17 @@ $events = $es->getAll();
 if (!isset($_SESSION)) session_start();
 
 // A function to add class=active to the appropriate menu bar item
-function getActiveString(String $page): String {
+function getActiveString(string $page): string {
     if ($page.".php" == basename($_SERVER['PHP_SELF']))
         return "class='active'";
+
+    return "";
+}
+
+// A function to add class=active to the appropriate menu bar item
+function getActiveStringEvent(int $event): string {
+    if (isset($_GET["event"]) && (int)$_GET["event"] == $event)
+        return getActiveString("eventPage");
 
     return "";
 }
@@ -29,7 +37,7 @@ if (isset($_SESSION['userType'])) {
     echo '<li><a href="login.php">Login</a></li></ul>';
 }
 
-echo '<ul><li><a '.getActiveString("home").' href="./">Home</a></li>';
+echo '<ul><li><a '.getActiveString("index").' href="./">Home</a></li>';
 
 foreach ($events as $ev) {
     //get the event name and page name
@@ -37,7 +45,7 @@ foreach ($events as $ev) {
     $eid = $ev->getId();
 
     //create working menuitem for each event
-    echo "<li><a ".getActiveString("eventPage")." 
+    echo "<li><a " . getActiveStringEvent($eid) . " 
     href='eventPage.php?event=$eid'>$en</a></li>";
 }
 

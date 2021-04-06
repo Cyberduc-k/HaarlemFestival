@@ -84,6 +84,29 @@ class TicketDAO extends DAOUtils {
         }
     }
 
+    // get all tickets for the given event type
+    public function getAllForEvent(int $eventType): ?PDOStatement {
+        try {
+            $query = "SELECT
+                          id, ticketType, eventType, eventId, date, price, inStock
+                      FROM " . $this->tableName . "
+                      WHERE eventType = :eventType";
+            
+            $stmt = Base::getInstance()->conn->prepare($query);
+            
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":eventType", $eventType);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
     // get all tickets for a user
     public function getAllForUser(int $userId): ?PDOStatement {
         try {
