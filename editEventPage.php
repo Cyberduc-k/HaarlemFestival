@@ -78,10 +78,11 @@ echo "<header>
     require_once "retreiveContent.php";
     require_once "services/ContentService.php";
 
-    function getAboutContent($eventID) {
-        // content halen uit db
+    // content halen uit db
         $rc = new retrieveContent();
         $content =  $rc->retrieve($eventID);
+
+    function getAboutContent($content){
 
         return $content->getText();
     }
@@ -104,7 +105,7 @@ echo "<header>
 
         function getAboutContent() {
             // content ophalen via php
-            var content = `<?php echo getAboutContent($eventID); ?>`;
+            var content = `<?php echo getAboutContent($content); ?>`;
 
             return content;
         }
@@ -137,10 +138,9 @@ echo "<header>
                 })
             }
         </script>
-        <form action="uploadIMG.php" method="post" enctype="multipart/form-data">
+        <form action="uploadIMG.php?contentId='<?php echo $content->getId(); ?>'" method="post" enctype="multipart/form-data">
             Select File to Upload:
             <input name="file" type="file" multiple>
-            <input name="contentPageId" type="text" required>
             <input type="submit" name="submit" value="Upload" required>
         </form>
     </article>

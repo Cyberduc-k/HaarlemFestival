@@ -21,7 +21,7 @@
                 $eid = $ev->getId();
 
                 echo "<h3>$en</h3>";
-                echo "<a href='/eventPage.php?event=$eid'>More...</a>";
+                echo "<a id='eventMore' href='/eventPage.php?event=$eid'>More...</a>";
             }
 
         ?>

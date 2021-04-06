@@ -9,7 +9,7 @@ $targetDir = "uploads/uploadedIMG/";
 $fileName = htmlspecialchars(basename($_FILES["file"]["name"]));
 $targetFilePath = $targetDir . $fileName;
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
-$contentPageId = $_POST["contentPageId"];
+$contentPageId = $_GET["contentId"];
 $statusMsg = '';
 
 if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
