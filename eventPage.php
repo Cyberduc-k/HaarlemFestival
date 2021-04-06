@@ -72,7 +72,7 @@ $content =  $rc->retrieve($eventID);
         }
         ?>
         <li>
-            <a href="home.php">
+            <a href="tickets.php?event=<?php echo $eventID; ?>">
                 Tickets
             </a>
         </li>
