@@ -59,23 +59,23 @@ $eventName = ucfirst($event->getName());
             <nav id="days">
                 <ul>
                     <?php if ($eventName == "Jazz"){ ?>
-                        <li class="active">
+                        <li id="thursday">
                             <a onclick="dayTickets(this, 'Thursday')">
                                 Thursday
                             </a>
                         </li>
                     <?php } ?>
-                    <li <?php if ($eventName == "Dance") echo 'class="active"'; ?> >
+                    <li id="friday" >
                         <a onclick="dayTickets(this, 'Friday')">
                             Friday
                         </a>
                     </li>
-                    <li>
+                    <li id="saturday">
                         <a onclick="dayTickets(this, 'Saturday')">
                             Saturday
                         </a>
                     </li>
-                    <li>
+                    <li id="sunday">
                         <a onclick="dayTickets(this, 'Sunday')">
                             Sunday
                         </a>
@@ -101,6 +101,21 @@ $eventName = ucfirst($event->getName());
             }
 
             self.parentElement.classList.add("active");
+            location.hash = day;
+        }
+
+        if (location.hash !== "") {
+            const day = location.hash.substring(1);
+            const x = document.getElementById(day.toLowerCase());
+
+            dayTickets(x.firstElementChild, day);
+        } else {
+            <?php if ($eventName == "Jazz" || $eventName == "Dance") { ?>
+                const day = "<?php if ($eventName == "Jazz") echo "Thursday"; else echo "Friday"; ?>";
+                const x = document.getElementById(day.toLowerCase());
+
+                dayTickets(x.firstElementChild, day);
+            <?php } ?>
         }
     </script>
 </body>
