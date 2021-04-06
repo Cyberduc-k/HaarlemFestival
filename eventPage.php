@@ -86,30 +86,54 @@ $content =  $rc->retrieve($eventID);
 </section>
 
 <section id="schedule">
-    <nav id="days">
-        <ul>
-            <li>
-                <a onclick="daySchedule('Thursday')">
-                    Thursday
-                </a>
-            </li>
-            <li>
-                <a onclick="daySchedule('Friday')">
-                    Friday
-                </a>
-            </li>
-            <li>
-                <a onclick="daySchedule('Saturday')">
-                    Saturday
-                </a>
-            </li>
-            <li>
-                <a onclick="daySchedule('Sunday')">
-                    Sunday
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <?php if($eventName == "Dance"){ ?>
+        <nav id="days">
+            <ul>
+                <li>
+                    <a onclick="daySchedule('Friday')">
+                        Friday
+                    </a>
+                </li>
+                <li>
+                    <a onclick="daySchedule('Saturday')">
+                        Saturday
+                    </a>
+                </li>
+                <li>
+                    <a onclick="daySchedule('Sunday')">
+                        Sunday
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    <?php }
+    else { ?>
+        <nav id="days">
+            <ul>
+                <li>
+                    <a onclick="daySchedule('Thursday')">
+                        Thursday
+                    </a>
+                </li>
+                <li>
+                    <a onclick="daySchedule('Friday')">
+                        Friday
+                    </a>
+                </li>
+                <li>
+                    <a onclick="daySchedule('Saturday')">
+                        Saturday
+                    </a>
+                </li>
+                <li>
+                    <a onclick="daySchedule('Sunday')">
+                        Sunday
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    <?php } ?>
 
     <script>
         function hideDays(){
