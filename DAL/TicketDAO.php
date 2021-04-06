@@ -257,6 +257,58 @@ class TicketDAO extends DAOUtils {
             return $this->handleFalseError($e, true);
         }
     }
+
+    public function getTicketsMusicPerDay(int $eventId, $date): PDOStatement {
+        try {
+            $day = "%".$date;
+
+            $query = "SELECT language, guide, inStock FROM `tickets` 
+                            JOIN events ON eventId=events.id
+                            JOIN historic_tours ON events.id=historic_tours.eventId
+                            WHERE historic_tours.date LIKE :day";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":eventId", $eventId);
+            $stmt->bindParam(":day", $day);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
+    public function getTicketsForHistoricPerDay($date): PDOStatement {
+        try {
+            $day = "%".$date."%";
+
+            $query = "SELECT musicians.name, acts.startTime, acts.endTime, acts.location, inStock 
+                            FROM `act_musician` 
+                            JOIN musicians ON musicians.id=musicianId
+                            JOIN acts ON acts.id=actId
+                            JOIN tickets ON acts.eventId=tickets.eventId
+                            WHERE acts.eventId = :eventId AND acts.date LIKE :day";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":eventId", $eventId);
+            $stmt->bindParam(":day", $day);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
 }
 
 ?>
