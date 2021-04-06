@@ -9,7 +9,7 @@ $targetDir = "uploads/uploadedIMG/";
 $fileName = htmlspecialchars(basename($_FILES["file"]["name"]));
 $targetFilePath = $targetDir . $fileName;
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
-$contentPageId = $_POST["contentPageId"];
+$contentPageId = $_GET["contentId"];
 $statusMsg = '';
 
 if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
@@ -23,7 +23,7 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
     if(in_array($fileType, $allowTypes)){
         // upload file to server
         // Count # of uploaded files in array
-        $total = count($_FILES['file']['name']);
+        $total = count($_FILES['file']["name"]);
 
         // Loop through each file
         for( $i=0 ; $i < $total ; $i++ ) {
@@ -73,10 +73,5 @@ echo $statusMsg;
 
 GEBRUIK DIT OM IMAGES TE UPLOADEN(nog niet naar de database)!!!
 
-                <form action="uploadIMG.php" method="post" enctype="multipart/form-data">
-                    Select File to Upload:
-                    <input name="file" type="file" multiple>
-                    <input name="contentPageId" type="text" required>
-                    <input type="submit" name="submit" value="Upload" required>
-                </form>
+                ----------
 -->
