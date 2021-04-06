@@ -55,11 +55,22 @@ $content =  $rc->retrieve($eventID);
                 About
             </a>
         </li>
+        <?php
+        if ($eventName == "Food"){ ?>
+        <li id="restaurantsNav">
+            <a onclick="hideAbout()">
+                Restaurants
+            </a>
+        </li>
+        <?php } else{ ?>
         <li id="scheduleNav">
             <a onclick="hideAbout()">
                 Schedule
             </a>
         </li>
+        <?php
+        }
+        ?>
         <li>
             <a href="home.php">
                 Tickets
@@ -86,30 +97,37 @@ $content =  $rc->retrieve($eventID);
 </section>
 
 <section id="schedule">
-    <nav id="days">
-        <ul>
-            <li>
-                <a onclick="daySchedule('Thursday')">
-                    Thursday
-                </a>
-            </li>
-            <li>
-                <a onclick="daySchedule('Friday')">
-                    Friday
-                </a>
-            </li>
-            <li>
-                <a onclick="daySchedule('Saturday')">
-                    Saturday
-                </a>
-            </li>
-            <li>
-                <a onclick="daySchedule('Sunday')">
-                    Sunday
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <?php if ($eventName == "Jazz" || $eventName == "Dance"){
+            ?>
+        <nav id="days">
+            <ul>
+                <?php if ($eventName == "Jazz"){ ?>
+                <li>
+                    <a onclick="daySchedule('Thursday')">
+                        Thursday
+                    </a>
+                </li>
+                <?php } ?>
+                <li>
+                    <a onclick="daySchedule('Friday')">
+                        Friday
+                    </a>
+                </li>
+                <li>
+                    <a onclick="daySchedule('Saturday')">
+                        Saturday
+                    </a>
+                </li>
+                <li>
+                    <a onclick="daySchedule('Sunday')">
+                        Sunday
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    <?php
+        }
+    ?>
 
     <script>
         function hideDays(){
@@ -137,9 +155,21 @@ $content =  $rc->retrieve($eventID);
     </script>
 
     <header>
-        <h2>
-            Schedule
-        </h2>
+        <?php
+            if ($eventName == "Food")
+            { ?>
+            <h2>
+                Restaurants
+            </h2>
+        <?php
+            }else{ ?>
+                <h2>
+                    Schedule
+                </h2>
+        <?php
+            }
+        ?>
+
     </header>
 
     <article id="daySchedule">
@@ -150,15 +180,15 @@ $content =  $rc->retrieve($eventID);
                 case "Food":
                     break;
                 case "Historic":
-                    echo '<script type="text/javascript">hideDays();</script>';
                     $schedule->getHistoricSchedule();
                     break;
                 case "Jazz":
-                case "Dance":
                     $schedule->musicEvent($eventID, "Thursday");
                     break;
+                case "Dance":
+                    $schedule->musicEvent($eventID, "Friday");
+                    break;
             }
-
         ?>
 
     </article>
@@ -173,7 +203,14 @@ $content =  $rc->retrieve($eventID);
         y.style.display = "block";
 
         document.getElementById("aboutNav").className = "";
+
+        <?php if ($eventName == "Food") { ?>
+        document.getElementById("restaurantsNav").className = "active";
+        location.hash = "restaurants";
+        <?php } else { ?>
         document.getElementById("scheduleNav").className = "active";
+        location.hash = "schedule";
+        <?php } ?>
     }
 
     function hideSchedule() {
@@ -184,10 +221,27 @@ $content =  $rc->retrieve($eventID);
         y.style.display = "block";
 
         document.getElementById("aboutNav").className = "active";
+
+        <?php if ($eventName == "Food") { ?>
+        document.getElementById("restaurantsNav").className = "";
+        <?php } else { ?>
         document.getElementById("scheduleNav").className = "";
+        <?php } ?>
+
+        location.hash = "about";
     }
 
-    hideSchedule();
+    const prevPage = location.hash;
+
+    if (prevPage.length == 0)
+        hideSchedule();
+    else {
+        switch (prevPage) {
+            case "#schedule": hideAbout(); break;
+            case "#restaurants": hideAbout(); break;
+            default: hideSchedule();
+        }
+    }
 </script>
 
 </body>
