@@ -262,10 +262,12 @@ class TicketDAO extends DAOUtils {
         try {
             $day = "%".$date;
 
-            $query = "SELECT language, guide, inStock FROM `tickets` 
-                            JOIN events ON eventId=events.id
-                            JOIN historic_tours ON events.id=historic_tours.eventId
-                            WHERE historic_tours.date LIKE :day";
+            $query = "SELECT musicians.name, acts.startTime, acts.endTime, acts.location, inStock 
+                            FROM `act_musician` 
+                            JOIN musicians ON musicians.id=musicianId
+                            JOIN acts ON acts.id=actId
+                            JOIN tickets ON acts.eventId=tickets.eventId
+                            WHERE acts.eventId = :eventId AND acts.date LIKE :day";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
@@ -287,12 +289,10 @@ class TicketDAO extends DAOUtils {
         try {
             $day = "%".$date."%";
 
-            $query = "SELECT musicians.name, acts.startTime, acts.endTime, acts.location, inStock 
-                            FROM `act_musician` 
-                            JOIN musicians ON musicians.id=musicianId
-                            JOIN acts ON acts.id=actId
-                            JOIN tickets ON acts.eventId=tickets.eventId
-                            WHERE acts.eventId = :eventId AND acts.date LIKE :day";
+            $query = "SELECT language, guide, inStock FROM `tickets` 
+                            JOIN events ON eventId=events.id
+                            JOIN historic_tours ON events.id=historic_tours.eventId
+                            WHERE historic_tours.date LIKE :day";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
