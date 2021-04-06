@@ -86,7 +86,7 @@ class ImageDAO extends DAOUtils
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                id = :id, contentPageId = :contentPageId";
+                id = :id, contentPageId = :contentPageId, name = :name";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -95,6 +95,7 @@ class ImageDAO extends DAOUtils
             // cast references into variables to avoid error
             $id = (int)$image->getId();
             $contentPageId = (int)$image->getContentPage();
+            $name = (string)$image->getName();
 
             echo $id;
             echo $contentPageId;
@@ -102,6 +103,7 @@ class ImageDAO extends DAOUtils
             // bind values
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":contentPageId", $contentPageId);
+            $stmt->bindParam(":name", $name);
 
             // execute query
             $stmt->execute();

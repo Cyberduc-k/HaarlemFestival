@@ -3,6 +3,7 @@
 class Image {
     private int $id;
     private int $contentPage;
+    private string $name;
 
     public function getId(): int {
         return $this->id;
@@ -18,6 +19,14 @@ class Image {
 
     public function setContentPage(int $contentPage): void {
         $this->contentPage = $contentPage;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function setName(string $name): void {
+        $this->name = $name;
     }
 }
 

@@ -51,10 +51,13 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
                     else
                         $id = array_pop($images)->getId() + 1;
 
+                    //rename($fileName, $id);
+
                     // Create image to upload
                     $image = new Image();
                     $image->setId($id);
                     $image->setContentPage((int)$contentPageId);
+                    $image->setName((string)$fileName);
                     // Upload using service
                     $service->addImage($image);
                 } else {
