@@ -1,0 +1,34 @@
+.content {
+    max-width: 1200px;
+    margin: auto;
+    position: relative;
+}
+
+#schedule {
+    width: 100%;
+    table-layout: fixed;
+}
+
+#schedule th:first-child {
+    width: 120px;
+}
+
+#schedule tr {
+    height: 80px;
+}
+
+#schedule tbody td:not(:first-child) {
+    background: white;
+}
+
+#schedule tbody td:nth-child(2n) {
+    border-top: 1px solid #707070;
+    border-bottom: 1px solid #707070;
+    border-left: 1px solid #707070;
+}
+
+#schedule tbody td:nth-child(2n + 3) {
+    border-top: 1px solid #707070;
+    border-bottom: 1px solid #707070;
+    border-right: 1px solid #707070;
+}
