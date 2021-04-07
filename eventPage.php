@@ -75,11 +75,22 @@ $content =  $rc->retrieve($eventID);
         <?php
         }
         ?>
-        <li>
-            <a href="tickets.php?event=<?php echo $eventID; ?>">
-                Tickets
-            </a>
-        </li>
+        <?php
+        if ($eventName == "Food"){ ?>
+            <li id="restaurantsNav">
+                <a onclick="hideAbout()">
+                    Reservations
+                </a>
+            </li>
+        <?php } else{ ?>
+            <li>
+                <a href="tickets.php?event=<?php echo $eventID; ?>">
+                    Tickets
+                </a>
+            </li>
+        <?php
+        }
+        ?>
     </ul>
 </nav>
 
@@ -169,6 +180,25 @@ $content =  $rc->retrieve($eventID);
         ?>
 
     </header>
+
+    <?php
+    // Restaurant list
+    if ($eventName == "Food") { ?>
+    <article id ="restaurantList">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>FoodType</th>
+            </tr>
+            <tr>
+                <td> ... </td>
+                <td> ... </td>
+                <td> ... </td>
+            </tr>
+        </table>
+    </article>
+    <?php } ?>
 
     <article id="daySchedule">
 
