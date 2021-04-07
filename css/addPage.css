@@ -1,4 +1,32 @@
+fieldset{
+    border: none;
+}
+
+.container {
+    width: 500px;
+    clear: both;
+}
+
+.container input {
+    width: 100%;
+    clear: both;
+}
+
 #textForm{
     height: 200px;
     width: 500px;
 }
+
+#addForm{
+    float: left;
+    padding-left: 120px;
+}
+
+#deleteForm{
+    float: right;
+    padding-right: 300px;
+    margin: auto;
+}
+
+
+

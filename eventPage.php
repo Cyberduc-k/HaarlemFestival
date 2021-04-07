@@ -36,7 +36,11 @@ $content =  $rc->retrieve($eventID);
     require_once ("menubar.php");
 
     if (isset($_SESSION["userType"])) {
-        echo "<a href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
+        switch ((int)$_SESSION['userType']){
+            case 2:
+                echo "<a id='editPageBtn' href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
+                break;
+        }
     }
 
     $image = $content->getImagePath();

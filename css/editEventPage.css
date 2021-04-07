@@ -1,0 +1,24 @@
+body{
+    margin: auto;
+}
+
+#about{
+    max-width: 80%;
+    margin: auto;
+}
+
+#mytextarea{
+    size: 1000px;
+    margin: auto;
+    height: 600px;
+    max-width: 80%;
+}
+
+#saveBtn{
+    height: 40px;
+    font-size: 20px;
+}
+
+fieldset{
+    border: none;
+}
