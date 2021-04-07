@@ -55,6 +55,35 @@ class UserService extends ServiceUtils {
         }
     }
 
+    // Get all users as array
+    public function getAllAsArray(): ?array {
+        try {
+            $stmt = $this->dao->getAll();
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $users = array();
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    array_push($users, $row);
+                }
+
+                return $users;
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return null;
+        }
+    }
+
     // Try to get a user by id
     public function getById(int $id): ?User {
         try {

@@ -1,6 +1,5 @@
 <?php if (!isset($_SESSION)) session_start();
 require_once ("validate.php");
-
 if ($_POST) {
     require_once ("services/ApiKeyService.php");
     require_once ("services/UserService.php");

@@ -37,3 +37,13 @@ input, select {
     padding: 5px;
     vertical-align: top;
 }
+
+.block{
+    display: inline-block;
+}
+
+.exportForm {
+    width: 25%;
+    display: inline;
+    float: left;
+}
