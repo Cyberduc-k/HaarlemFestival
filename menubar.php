@@ -32,9 +32,9 @@ echo '<a href="./" id="logo">' . file_get_contents('css/Logo.svg') . '</a>';
 echo '<ul><li><a href="" class="icon instagram"></a></li><li><a href="" class="icon facebook"></a></li>';
 
 if (isset($_SESSION['userType'])) {
-    echo '<li><a href="account.php">Account</a></li></ul>';
+    echo '<li><a href="account.php" ' . getActiveString("account") . '>Account</a></li></ul>';
 } else {
-    echo '<li><a href="login.php">Login</a></li></ul>';
+    echo '<li><a href="login.php" ' . getActiveString("login") . '>Login</a></li></ul>';
 }
 
 echo '<ul><li><a '.getActiveString("index").' href="./">Home</a></li>';
@@ -54,6 +54,7 @@ echo '<li><a href="contact.php">Contact</a></li>';
 
 // first validate if user is logged in, only then allow access
 if (isset($_SESSION['userType'])) {
+    echo "<li><a ".getActiveString("userSchedule")." href='userSchedule.php'>Programme</a></li>";
     echo "<li><a ".getActiveString("edit")." href='edit.php?type=own'>Edit my information</a></li>";
     echo "<li><a ".getActiveString("changeAvatar")." href='changeAvatar.php'>Change Avatar</a></li>";
     

@@ -155,6 +155,50 @@ class TicketDAO extends DAOUtils {
         }
     }
 
+    public function addToCart(int $userId, int $ticketId, int $count): bool {
+        try {
+            $query = "INSERT INTO cart
+                      SET userId = :userId, ticketId = :ticketId, nTickets = :count";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->bindParam(":count", $count);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
+    public function addToSchedule(int $userId, int $ticketId, int $count): bool {
+        try {
+            $query = "INSERT INTO schedule
+                      SET userId = :userId, ticketId = :ticketId, nTickets = :count";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->bindParam(":count", $count);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
     // create a new ticket
     public function create(Ticket $ticket): bool {
         try {

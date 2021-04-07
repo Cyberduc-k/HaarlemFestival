@@ -101,7 +101,7 @@ $eventName = ucfirst($event->getName());
         <article id="tickets">
         </article>
 
-        <form id="options" method="post" action="addToCart.php">
+        <form id="options" method="post" action="addToCart.php?next=tickets.php?event=<?php echo $eventID; ?>">
             <fieldset>
                 <label for="ticketType">Type:</label>
                 <select name="ticketType" onchange="changeTicketType(this)">
@@ -126,8 +126,8 @@ $eventName = ucfirst($event->getName());
                 <input id="ticketId" type="number" name="ticketId" required />
             </fieldset>
 
-            <input id="addToCart" type="submit" value="Add to cart" />
-            <input id="addToProgramme" type="submit" value="Add to programme" />
+            <input id="addToCart" type="submit" name="addToCart" value="Add to cart" />
+            <input id="addToProgramme" type="submit" name="addToProgramme" value="Add to programme" />
         </form>
     </section>
 

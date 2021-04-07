@@ -130,6 +130,34 @@ class TicketService extends ServiceUtils {
         }
     }
 
+    public function addToCart(int $userId, int $ticketId, int $count) {
+        try {
+            return $this->dao->addToCart($userId, $ticketId, $count);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
+    public function addToSchedule(int $userId, int $ticketId, int $count) {
+        try {
+            return $this->dao->addToSchedule($userId, $ticketId, $count);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
     public function getDescription(Ticket $ticket): string {
         try {
             switch ($ticket->getEventType()) {
