@@ -9,7 +9,7 @@
         <?php require_once("menubar.php"); ?>
     </head>
     <body>
-    <form method="post">
+    <form id="addForm" method="post">
         <fieldset>
             <h2>Add event page</h2>
             <div class="container">
@@ -60,7 +60,7 @@
         }
     }
     ?>
-    <form method="POST" >
+    <form id="deleteForm" method="POST" >
         <fieldset>
             <h2>Delete Event page</h2>
             <label for="Event"> Event : </label>
