@@ -45,3 +45,13 @@ input, select {
 label {
     line-height: calc(1em + 12px);
 }
+
+.block{
+    display: inline-block;
+}
+
+.exportForm {
+    width: 25%;
+    display: inline;
+    float: left;
+}

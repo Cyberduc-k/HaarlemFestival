@@ -15,7 +15,7 @@ if ($_POST) {
 
     if (!$captcha) {
         $_SESSION["loginError"] = "Please complete the Captcha";
-        header("Location: index.php");
+        header("Location: login.php");
         exit;
     }
 
@@ -30,7 +30,7 @@ if ($_POST) {
     // Don't sign in when captcha failed
     if (!$responseKeys["success"]) {
         $_SESSION["loginError"] = "Captcha incorrect, try again";
-        header("Location: index.php");
+        header("Location: login.php");
         exit;
     }
 
@@ -50,9 +50,9 @@ if ($_POST) {
             $_SESSION["userId"] = $user->getId();
             $_SESSION["userType"] = $user->getUsertype();
             $_SESSION["email"] = $user->getEmail();
-            header("Location: home.php");
-        } else {
             header("Location: index.php");
+        } else {
+            header("Location: login.php");
             exit;
         }
     } else {
@@ -80,7 +80,7 @@ else {
     </head>
     <body>
         <div id="loginForm">
-            <form action="index.php" method="post">
+            <form action="login.php" method="post">
 
                 <div id="formHeader">Login</div>
 

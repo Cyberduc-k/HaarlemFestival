@@ -15,7 +15,9 @@ abstract class UserTypes {
         "createInvoice.php" => self::SUPERADMIN,
         "edit.php" => self::USER,
         "viewUsers.php" => self::ADMIN,
-        "changeAvatar.php" => self::USER
+        "changeAvatar.php" => self::USER,
+        "exportToAPI.php" => self::SUPERADMIN,
+        "export.php" => self::SUPERADMIN
     ];
 
     // Int to type string
@@ -36,5 +38,4 @@ abstract class UserTypes {
         return "Couldn't get type";
     }
 }
-
 ?>
