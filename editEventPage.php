@@ -28,13 +28,9 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/editEventPage.css" />
 </head>
 <body>
-<?php
-echo "<header>
-    <h1>$eventName</h1>
-        </header>";
-?>
 
 <script>
     function hideAbout() {
@@ -59,6 +55,10 @@ echo "<header>
     require_once "retreiveContent.php";
     require_once "services/ContentService.php";
 
+    echo "<header>
+    <h1>$eventName</h1>
+        </header>";
+
     // content halen uit db
         $rc = new retrieveContent();
         $content =  $rc->retrieve($eventID);
@@ -76,7 +76,6 @@ echo "<header>
                 'permanentpen powerpaste table advtable tinymcespellchecker',
             toolbar: 'undo redo bullist numlist table',
             toolbar_mode: 'floating',
-            height: 600,
             setup: function (editor) {
                 editor.on('init', function (e) {
                     editor.setContent(getAboutContent());
@@ -100,7 +99,9 @@ echo "<header>
         </header>
         <textarea id="mytextarea" name="mytextarea">
             </textarea>
-        <button onclick="saveContent()" id="savebtn">Save</button>
+        <p>
+            <button id="saveBtn" onclick="saveContent()" id="savebtn">Save</button>
+        </p>
         <script>
             function saveContent() {
                 // edited content opslaan in variable.
@@ -120,10 +121,18 @@ echo "<header>
             }
         </script>
         <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>" method="post" enctype="multipart/form-data">
-            Select File to Upload:
-            <input name="file[]" type="file" multiple>
-            <input type="submit" name="submit" value="Upload" required>
+            <fieldset>
+                <p>
+                    Select File to Upload:
+                </p>
+                <p>
+                    <input name="file[]" type="file" multiple>
+                    <input type="submit" name="submit" value="Upload" required>
+                </p>
+            </fieldset>
         </form>
     </article>
 </section>
+</body>
+</html>
 

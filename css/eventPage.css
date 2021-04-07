@@ -27,6 +27,16 @@
     z-index: 1;
 }
 
+#editPageBtn{
+    display: block;
+    text-decoration: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    float: right;
+    padding-right: 80px;
+}
+
 nav {
     position: sticky;
     top: 100px;
