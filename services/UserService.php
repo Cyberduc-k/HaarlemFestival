@@ -55,6 +55,36 @@ class UserService extends ServiceUtils {
         }
     }
 
+    //Get these specific columns from all users
+    public function getColumns(array $args): ?array
+    {
+        try{
+            $stmt = $this->dao->getColumns($args);
+            $num = $stmt->rowCount();
+
+            if($num > 0){
+                $users = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    array_push($users, $row);
+                }
+
+                return $users;
+            }
+
+            return null;
+        }
+        catch (Exception $e){
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            //Return an empty stmt
+            return null;
+        }
+    }
+
     // Get all users as array
     public function getAllAsArray(): ?array {
         try {
