@@ -262,12 +262,13 @@ class TicketDAO extends DAOUtils {
         try {
             $day = "%".$date;
 
-            $query = "SELECT musicians.name, acts.startTime, acts.endTime, acts.location, inStock 
+            $query = "SELECT musicians.name, acts.startTime, acts.endTime, acts.location, inStock, tickets.id
                             FROM `act_musician` 
                             JOIN musicians ON musicians.id=musicianId
                             JOIN acts ON acts.id=actId
-                            JOIN tickets ON acts.eventId=tickets.eventId
-                            WHERE acts.eventId = :eventId AND acts.date LIKE :day";
+                            JOIN tickets ON acts.id=tickets.eventId
+                            WHERE acts.eventId = :eventId AND acts.date LIKE :day
+                            ORDER BY acts.startTime";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
@@ -285,11 +286,11 @@ class TicketDAO extends DAOUtils {
         }
     }
 
-    public function getTicketsForHistoricPerDay($date): PDOStatement {
+    public function getTicketsForHistoricPerDay(int $eventId, $date): PDOStatement {
         try {
             $day = "%".$date."%";
 
-            $query = "SELECT language, guide, inStock FROM `tickets` 
+            $query = "SELECT language, guide, inStock, tickets.id FROM `tickets` 
                             JOIN events ON eventId=events.id
                             JOIN historic_tours ON events.id=historic_tours.eventId
                             WHERE historic_tours.date LIKE :day";

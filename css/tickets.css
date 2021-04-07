@@ -74,10 +74,6 @@ nav {
     border-bottom: 1px solid #707070;
 }
 
-nav#days {
-    top: 161px;
-}
-
 nav ul {
     list-style: none;
     margin: 0;
@@ -116,7 +112,28 @@ nav ul a {
     cursor: pointer;
 }
 
-article {
+#tickets {
     margin: auto;
+    margin-top: 50px;
     max-width: 1200px;
+}
+
+.ticket {
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 4fr 3fr 2fr 1fr;
+    color: black;
+    background: white;
+    border: 1px solid #707070;
+    border-left: 6px solid var(--color);
+}
+
+.ticket .name {
+    color: var(--color);
+}
+
+.ticket .stock {
+    justify-self: end;
 }

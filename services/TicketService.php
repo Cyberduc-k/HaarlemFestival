@@ -276,20 +276,13 @@ class TicketService extends ServiceUtils {
     public function getMusicTicketsPerDay($eventId, $date) {
         try {
             $stmt = $this->dao->getTicketsMusicPerDay($eventId, $date);
-            $num = $stmt->rowCount();
+            $tickets = [];
 
-            if ($num > 0) {
-                $tickets = [];
-
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    // variable bepalen voor RowTo
-                    array_push($tickets, $this->rowToTicket($row));
-                }
-
-                return $tickets;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($tickets, $row);
             }
 
-            return null;
+            return $tickets;
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
