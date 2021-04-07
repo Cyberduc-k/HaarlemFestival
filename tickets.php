@@ -45,13 +45,29 @@ $eventName = ucfirst($event->getName());
         <span class="prices">Prices</span>
         <a class="cart" href="cart.php">Cart</a>
 
-        <span class="row1">Single Ticket</span>
-        <span class="row2">All-Access for this day</span>
-        <span class="row3">All-Access for Thu, Fri, Sat</span>
+        <?php if ($eventName == "Jazz") { ?>
+            <span class="row1">Single Ticket</span>
+            <span class="row2">All-Access for this day</span>
+            <span class="row3">All-Access for Thu, Fri, Sat</span>
 
-        <span class="val1">€ 10.00 - 15.00</span>
-        <span class="val2">€ 35,-</span>
-        <span class="val3">€ 80,-</span>
+            <span class="val1">€ 10,00 - 15,00</span>
+            <span class="val2">€ 35,-</span>
+            <span class="val3">€ 80,-</span>
+        <?php } else if ($eventName == "Dance") { ?>
+            <span class="row1">Single Ticket</span>
+            <span class="row2">All-Access for this day</span>
+            <span class="row3">All-Access for Fri, Sat, Sun</span>
+
+            <span class="val1">€ 60,00 - 110,00</span>
+            <span class="val2">€ 125,-</span>
+            <span class="val3">€ 250,-</span>
+        <?php } else if ($eventName == "Historic") { ?>
+            <span class="row1">Single Ticket</span>
+            <span class="row2">Family Ticket (max 4 persons)</span>
+
+            <span class="val1">€ 17,50</span>
+            <span class="val2">€ 60,-</span>
+        <?php } ?>
     </header>
 
     <section>
@@ -107,7 +123,7 @@ $eventName = ucfirst($event->getName());
                 <span class="price" id="price">€ __.__</span>
                 <label class="price">Price:</label>
                 
-                <input id="ticketId" type="number" name="ticketId" />
+                <input id="ticketId" type="number" name="ticketId" required />
             </fieldset>
 
             <input id="addToCart" type="submit" value="Add to cart" />
