@@ -55,34 +55,32 @@ $eventName = ucfirst($event->getName());
     </header>
 
     <section>
-        <?php if ($eventName == "Jazz" || $eventName == "Dance"){ ?>
-            <nav id="days">
-                <ul>
-                    <?php if ($eventName == "Jazz"){ ?>
-                        <li id="thursday">
-                            <a onclick="dayTickets(this, 'Thursday')">
-                                Thursday
-                            </a>
-                        </li>
-                    <?php } ?>
-                    <li id="friday" >
-                        <a onclick="dayTickets(this, 'Friday')">
-                            Friday
+        <nav id="days">
+            <ul>
+                <?php if ($eventName != "Dance"){ ?>
+                    <li id="thursday">
+                        <a onclick="dayTickets(this, 'Thursday')">
+                            Thursday
                         </a>
                     </li>
-                    <li id="saturday">
-                        <a onclick="dayTickets(this, 'Saturday')">
-                            Saturday
-                        </a>
-                    </li>
-                    <li id="sunday">
-                        <a onclick="dayTickets(this, 'Sunday')">
-                            Sunday
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        <?php } ?>
+                <?php } ?>
+                <li id="friday" >
+                    <a onclick="dayTickets(this, 'Friday')">
+                        Friday
+                    </a>
+                </li>
+                <li id="saturday">
+                    <a onclick="dayTickets(this, 'Saturday')">
+                        Saturday
+                    </a>
+                </li>
+                <li id="sunday">
+                    <a onclick="dayTickets(this, 'Sunday')">
+                        Sunday
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
         <article id="tickets">
         </article>
@@ -202,12 +200,10 @@ $eventName = ucfirst($event->getName());
 
             dayTickets(x.firstElementChild, day);
         } else {
-            <?php if ($eventName == "Jazz" || $eventName == "Dance") { ?>
-                const day = "<?php if ($eventName == "Jazz") echo "Thursday"; else echo "Friday"; ?>";
-                const x = document.getElementById(day.toLowerCase());
+            const day = "<?php if ($eventName != "Dance") echo "Thursday"; else echo "Friday"; ?>";
+            const x = document.getElementById(day.toLowerCase());
 
-                dayTickets(x.firstElementChild, day);
-            <?php } ?>
+            dayTickets(x.firstElementChild, day);
         }
     </script>
 </body>
