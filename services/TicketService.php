@@ -210,7 +210,7 @@ class TicketService extends ServiceUtils {
         }
     }
 
-    public function getLocation(Ticket $ticket): string {
+    public function getLocation(Ticket $ticket): ?string {
         try {
             switch ($ticket->getEventType()) {
                 case EventType::Dance:
@@ -239,7 +239,37 @@ class TicketService extends ServiceUtils {
         }
     }
 
-    public function getStartDate(Ticket $ticket): DateTime {
+    //Get these specific columns from all tickets
+    public function getColumns(array $args): ?array
+    {
+        try{
+            $stmt = $this->dao->getColumns($args);
+            $num = $stmt->rowCount();
+
+            if($num > 0){
+                $tickets = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    array_push($tickets, $row);
+                }
+
+                return $tickets;
+            }
+
+            return null;
+        }
+        catch (Exception $e){
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            //Return an empty stmt
+            return null;
+        }
+    }
+
+    public function getStartDate(Ticket $ticket): ?DateTime {
         try {
             switch ($ticket->getEventType()) {
                 case EventType::Dance:
@@ -270,7 +300,7 @@ class TicketService extends ServiceUtils {
         }
     }
 
-    public function getEndDate(Ticket $ticket): DateTime {
+    public function getEndDate(Ticket $ticket): ?DateTime {
         try {
             switch ($ticket->getEventType()) {
                 case EventType::Dance:

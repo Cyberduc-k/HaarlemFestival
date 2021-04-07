@@ -199,6 +199,42 @@ class TicketDAO extends DAOUtils {
         }
     }
 
+    // get specific columns only
+    public function getColumns(array $args): ?PDOStatement
+    {
+        try{
+            //Extract the key value pairs and add them to the query
+            $selectStatement = "";
+            extract($args);
+            foreach($args as $key => $value){
+                if(!empty($value)){
+                    $selectStatement.=$value.", ";
+                }
+            }
+
+            //Remove the last comma and space
+            $selectStatement = substr($selectStatement, 0, -2);
+
+            // get all query
+            $query = "SELECT " . $selectStatement . " FROM " . $this->tableName;
+
+            // prepare query statement
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            // execute query
+            $stmt->execute();
+
+            //If we get tot this point there are no errors so we can commit
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        }
+        catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
     // create a new ticket
     public function create(Ticket $ticket): bool {
         try {

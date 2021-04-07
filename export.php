@@ -12,9 +12,9 @@ require_once ("validate.php");
 require_once ("menubar.php");
 ?>
 <div class="content">
-    <!--Form to export specific columns from all orders-->
+    <!--Form to export users to external API-->
     <h1>Export Data</h1>
-    <form class="" name="exportActs" action="exportToAPI.php" method="post">
+    <form class="" name="exportActs" action="exports/exportToAPI.php" method="post">
         <input type="submit" name="export" value="Export to API" class="customButton"/>
 
         <div class="formField red">
@@ -22,8 +22,8 @@ require_once ("menubar.php");
         </div>
     </form>
 
-    <!--Form to export specific columns from all orders-->
-    <form class="exportForm" name="exportActs" action="export.php" method="post">
+    <!--Form to export specific columns from all acts-->
+    <form class="exportForm" name="exportActs" action="exports/exportActs.php" method="post">
         <h2>Export Acts</h2>
         <div class="formBody">
             <div class="group">
@@ -61,7 +61,9 @@ require_once ("menubar.php");
             </div>
         </div>
     </form>
-    <form class="exportForm" name="exportUsers" action="export.php" method="post">
+
+    <!--Form to export specific columns from all users-->
+    <form class="exportForm" name="exportUsers" action="exports/exportUsers.php" method="post">
         <h2>Export Users</h2>
         <div class="formBody">
             <div class="group">
@@ -100,7 +102,9 @@ require_once ("menubar.php");
             </div>
         </div>
     </form>
-    <form class="exportForm" name="exportTickets" action="export.php" method="post">
+
+    <!--Form to export specific columns from all tickets-->
+    <form class="exportForm" name="exportTickets" action="exports/exportTickets.php" method="post">
         <h2>Export Tickets</h2>
         <div class="formBody">
             <div class="group">
@@ -136,7 +140,9 @@ require_once ("menubar.php");
             </div>
         </div>
     </form>
-    <form class="exportForm" name="exportInvoices" action="export.php" method="post">
+
+    <!--Form to export specific columns from all invoices-->
+    <form class="exportForm" name="exportInvoices" action="exports/exportInvoices.php" method="post">
         <h2>Export Invoices</h2>
         <div class="formBody">
             <div class="group">

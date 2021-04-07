@@ -1,7 +1,7 @@
 <?php
 set_include_path(__DIR__);
-require_once("models/Act.php");
-require_once("models/Musician.php");
+require_once(__DIR__ . "/../models/Act.php");
+require_once(__DIR__ . "/../models/Musician.php");
 require_once(__DIR__ . "/../DAL/ActDAO.php");
 require_once("ServiceUtils.php");
 
@@ -35,6 +35,36 @@ class ActService extends ServiceUtils {
 
             ErrorService::getInstance()->create($error);
 
+            return null;
+        }
+    }
+
+    //Get these specific columns from all acts
+    public function getColumns(array $args): ?array
+    {
+        try{
+            $stmt = $this->dao->getColumns($args);
+            $num = $stmt->rowCount();
+
+            if($num > 0){
+                $acts = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    array_push($acts, $row);
+                }
+
+                return $acts;
+            }
+
+            return null;
+        }
+        catch (Exception $e){
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            //Return an empty stmt
             return null;
         }
     }

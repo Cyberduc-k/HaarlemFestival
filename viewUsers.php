@@ -133,7 +133,7 @@
                     </div>
                 </div>
             </form>
-            <form action="exportToAPI.php" method="post">
+            <form action="exports/exportToAPI.php" method="post">
                 <div class="formBody">
                     <div>
                         <input id="submitBtn" name="submit" type="submit" value="Export users to external API" class="searchButton customButton"/>

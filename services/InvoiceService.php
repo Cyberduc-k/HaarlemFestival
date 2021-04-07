@@ -61,6 +61,36 @@ class InvoiceService extends ServiceUtils {
         }
     }
 
+    //Get these specific columns from all invoices
+    public function getColumns(array $args): ?array
+    {
+        try{
+            $stmt = $this->dao->getColumns($args);
+            $num = $stmt->rowCount();
+
+            if($num > 0){
+                $invoices = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    array_push($invoices, $row);
+                }
+
+                return $invoices;
+            }
+
+            return null;
+        }
+        catch (Exception $e){
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            //Return an empty stmt
+            return null;
+        }
+    }
+
     // Create a new invoice
     public function create(Invoice $invoice): bool {
         try {
