@@ -40,7 +40,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
                     $id = 1;
                 else
                     $id = array_pop($images)->getId() + 1;
-                
+
                 // Setup our new file path
                 $newFilePath = $targetDir . $id . "-" . $_FILES['file']['name'][$i];
 
