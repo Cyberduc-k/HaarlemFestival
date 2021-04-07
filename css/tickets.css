@@ -2,6 +2,7 @@
     padding: 20px 50px;
     display: grid;
     grid-template-columns: 1fr auto auto 100px;
+    grid-template-rows: auto 1fr 1fr 1fr;
     column-gap: 50px;
     border-bottom: 1px solid #707070;
 }
@@ -19,16 +20,13 @@
     grid-row: 2/5;
 }
 
-#header fieldset label {
-    line-height: calc(1em + 12px);
-}
-
 #header fieldset select {
     width: 200px;
 }
 
 #header .cart {
     grid-column: 4/5;
+    color: var(--color);
 }
 
 #header .prices {
@@ -113,14 +111,13 @@ nav ul a {
 }
 
 #tickets {
-    margin: auto;
-    margin-top: 50px;
+    margin: 50px auto;
     max-width: 1200px;
 }
 
 .ticket {
-    width: 100%;
     padding: 15px;
+    padding-right: 30px;
     margin: 20px 0;
     display: grid;
     grid-template-columns: 4fr 3fr 2fr 1fr;
@@ -130,10 +127,73 @@ nav ul a {
     border-left: 6px solid var(--color);
 }
 
+.ticket.selected {
+    background: var(--color-selected);
+}
+
+.ticket.selected .name {
+    color: black;
+}
+
 .ticket .name {
     color: var(--color);
 }
 
 .ticket .stock {
     justify-self: end;
+}
+
+#options {
+    margin: 50px auto;
+    max-width: 1200px;
+}
+
+#options fieldset {
+    border: none;
+    padding: 0;
+    margin-bottom: 50px;
+}
+
+#options fieldset label {
+    float: left;
+    margin-right: 10px;
+}
+
+#options fieldset input, #options fieldset select {
+    float: left;
+    margin-right: 20px;
+}
+
+#options fieldset .price {
+    float: right;
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+#price {
+    line-height: calc(1em + 12px);
+}
+
+#ticketId {
+    display: none;
+}
+
+#addToCart {
+    display: block;
+    width: 200px;
+    height: 50px;
+    margin: 20px auto;
+    color: var(--color);
+    border: 6px solid var(--color);
+    background: transparent;
+    cursor: pointer;
+}
+
+#addToProgramme {
+    display: block;
+    margin: auto;
+    color: var(--color);
+    border: none;
+    background: transparent;
+    cursor: pointer;
 }

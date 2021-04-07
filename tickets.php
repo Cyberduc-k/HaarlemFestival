@@ -49,9 +49,9 @@ $eventName = ucfirst($event->getName());
         <span class="row2">All-Access for this day</span>
         <span class="row3">All-Access for Thu, Fri, Sat</span>
 
-        <span class="val1">10.00 - 15.00</span>
-        <span class="val2">35,-</span>
-        <span class="val3">80,-</span>
+        <span class="val1">€ 10.00 - 15.00</span>
+        <span class="val2">€ 35,-</span>
+        <span class="val3">€ 80,-</span>
     </header>
 
     <section>
@@ -86,9 +86,45 @@ $eventName = ucfirst($event->getName());
 
         <article id="tickets">
         </article>
+
+        <form id="options" method="post" action="addToCart.php">
+            <fieldset>
+                <label for="ticketType">Type:</label>
+                <select name="ticketType" onchange="changeTicketType(this)">
+                    <?php
+                        if ($eventName == "Historic" || $eventName == "Food") {
+                            echo '<option value="0">Single Ticket</option>';
+                            echo '<option value="3">Family Ticket</option>';
+                        } else {
+                            echo '<option value="0">Single Ticket</option>';
+                            echo '<option value="1">1 Day All-Access</option>';
+                            echo '<option value="2">3 Day All-Access</option>';
+                        }
+                    ?>
+                </select>
+
+                <label for="amount">Amount:</label>
+                <input type="number" name="amount" min="1" value="1" />
+
+                <span class="price" id="price">€ __.__</span>
+                <label class="price">Price:</label>
+                
+                <input id="ticketId" type="number" name="ticketId" />
+            </fieldset>
+
+            <input id="addToCart" type="submit" value="Add to cart" />
+            <input id="addToProgramme" type="submit" value="Add to programme" />
+        </form>
     </section>
 
     <script>
+        const section = document.getElementById("tickets");
+        const ticketId = document.getElementById("ticketId");
+        const price = document.getElementById("price");
+        let ticketType = 0;
+        let tickets = [];
+        let filtered = [];
+
         function changeEvent(input) {
             const value = input.value;
 
@@ -113,27 +149,51 @@ $eventName = ucfirst($event->getName());
                 method: "POST",
                 body,
             }).then(async (res) => {
-                const tickets = await res.json();
-                
-                renderTickets(tickets);
+                tickets = (await res.json()) || [];
+                renderTickets();
             });
         }
 
-        function renderTickets(tickets) {
-            const section = document.getElementById("tickets");
-
+        function renderTickets() {
             section.innerHTML = "";
+            filterTickets();
 
-            for (const ticket of tickets || []) {
+            filtered.forEach((ticket, idx) => {
                 section.insertAdjacentHTML("beforeend", `
-                    <div class="ticket">
+                    <div class="ticket" onclick="selectTicket(this, ${ticket.id}, ${idx})">
                         <span class="name">${ticket.name}</span>
                         <span class="location">${ticket.location}</span>
-                        <span class="time">${ticket.startTime} - ${ticket.endTime}</span>
+                        <span class="time">${ticket.startTime.slice(0, -3)} - ${ticket.endTime.slice(0, -3)}</span>
                         <span class="stock">${ticket.inStock} Left</span>
                     </div>
                 `);
+            });
+        }
+
+        function selectTicket(self, id, idx) {
+            const ticketPrice = filtered[idx].price;
+
+            if (ticketPrice == Math.floor(ticketPrice))
+                price.innerText = `€ ${ticketPrice},-`;
+            else
+                price.innerText = `€ ${ticketPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+
+            ticketId.value = id;
+
+            for (const el of document.querySelectorAll(".ticket")) {
+                el.classList.remove("selected");
             }
+
+            self.classList.add("selected");
+        }
+
+        function filterTickets() {
+            filtered = tickets.filter(val => val.ticketType == ticketType);
+        }
+
+        function changeTicketType(self) {
+            ticketType = parseInt(self.value);
+            renderTickets();
         }
 
         if (location.hash !== "") {
