@@ -200,10 +200,14 @@ $content =  $rc->retrieve($eventID);
 
         <?php if ($eventName == "Food") { ?>
         document.getElementById("restaurantsNav").className = "active";
+        y.id = "";
         location.hash = "restaurants";
+        y.id = "schedule";
         <?php } else { ?>
         document.getElementById("scheduleNav").className = "active";
+        y.id = "";
         location.hash = "schedule";
+        y.id = "schedule";
         <?php } ?>
     }
 
@@ -222,7 +226,9 @@ $content =  $rc->retrieve($eventID);
         document.getElementById("scheduleNav").className = "";
         <?php } ?>
 
+        y.id = "";
         location.hash = "about";
+        y.id = "about";
     }
 
     const prevPage = location.hash;
