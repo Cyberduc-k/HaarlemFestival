@@ -1,10 +1,4 @@
-<?php
-const TICKET_COLUMNS = array("id", "ticketType", "eventId", "eventType", "price", "inStock");
-const INVOICE_COLUMNS = array("id", "userId", "userAddress", "userPhone", "tax", "date", "dueDate");
-
-if(!isset($_SESSION)) session_start();
-
-?>
+<?php if(!isset($_SESSION)) session_start();?>
 <!--Page to view orders-->
 <html lang="en">
 <head>
