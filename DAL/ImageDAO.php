@@ -97,9 +97,6 @@ class ImageDAO extends DAOUtils
             $contentPageId = (int)$image->getContentPage();
             $name = (string)$image->getName();
 
-            echo $id;
-            echo $contentPageId;
-
             // bind values
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":contentPageId", $contentPageId);

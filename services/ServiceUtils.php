@@ -4,6 +4,7 @@ require_once(__DIR__ . "/../models/User.php");
 require_once(__DIR__ . "/../models/ResetKey.php");
 require_once(__DIR__ . "/../models/Content.php");
 require_once(__DIR__ . "/../models/Ticket.php");
+require_once(__DIR__ . "/../models/foodType.php");
 //require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../models/Act.php");
 //require_once(__DIR__ . "/../models/HistoricTour.php");
@@ -193,6 +194,17 @@ class ServiceUtils {
         $image->setName((string)$row["name"]);
 
         return $image;
+    }
+
+    protected function rowToRestaurant(array $row): Restaurant {
+        $restaurant = new Restaurant();
+
+        $restaurant->setId((int)$row["id"]);
+        $restaurant->setName((int)$row["name"]);
+        $restaurant->setLocation((string)$row["location"]);
+        $restaurant->setFoodType((int)$row["foodType"]);
+
+        return $restaurant;
     }
 
     protected function rowToTourSchedule(array $row): HistoricSchedule{
