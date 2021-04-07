@@ -3,18 +3,21 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"   content="width=device-width">
-        <title>Document</title>
+        <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/addPage.css" />
+        <title>Add or Delete Page</title>
+        <?php require_once("menubar.php"); ?>
     </head>
     <body>
     <h2>Add event page</h2>
     <form method="post">
-        <label>Event Name<input type="text" name="name"/></label>
+        <label>Event Name<input type="text" name="name" required/></label>
         <br/>
-        <label>Colour<input type="text" name="colour"/></label>
+        <label>Colour<input type="text" name="colour" required/></label>
         <br/>
-        <label>Header<input type="text" name="header"/></label>
+        <label>Header<input type="text" name="header" required/></label>
         <br/>
-        <label>Text<input type="text" name="text"/></label>
+        <label>Text<textarea id=textForm name="text" required></textarea></label>
         <br/>
         <input type="submit" value="Add event page"/>
     </form>
