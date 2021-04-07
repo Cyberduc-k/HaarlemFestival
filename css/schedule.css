@@ -10,25 +10,51 @@
 }
 
 #schedule th:first-child {
-    width: 120px;
+    max-width: 120px;
 }
 
 #schedule tr {
     height: 80px;
 }
 
+#schedule th {
+    width: 80px;
+}
+
 #schedule tbody td:not(:first-child) {
     background: white;
+    border: 1px solid #707070;
+    background-image: repeating-linear-gradient(90deg, #707070 0 1px, transparent 1px 100%);
+    background-size: calc(100% / 18) 82px;
 }
 
-#schedule tbody td:nth-child(2n) {
-    border-top: 1px solid #707070;
-    border-bottom: 1px solid #707070;
-    border-left: 1px solid #707070;
+.event {
+    border-radius: 10px;
+    background-color: #00FEFE;
+    position: absolute;
+    right: calc(var(--end) * (100% - 120px) / 36);
+    bottom: calc((3 - var(--day)) * 80px);
+    width: calc(var(--width) * (100% - 120px) / 36);
+    height: 80px;
+    box-sizing: border-box;
+    padding: 2px;
+    font-size: 16px;
+    word-break: break-all;
+    color: black;
 }
 
-#schedule tbody td:nth-child(2n + 3) {
-    border-top: 1px solid #707070;
-    border-bottom: 1px solid #707070;
-    border-right: 1px solid #707070;
+.event.food {
+    background-color: rgb(124, 58, 181);
+}
+
+.event.historic {
+    background-color: rgb(240, 74, 252);
+}
+
+.event.jazz {
+    background-color: rgb(255, 146, 0);
+}
+
+.event.dance {
+    background-color: rgb(32, 165, 0);
 }
