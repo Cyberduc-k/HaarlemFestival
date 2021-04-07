@@ -2,10 +2,10 @@
 
 if (!isset($_SESSION)) session_start();
 
-// if (!isset($_SESSION["userType"])) {
-    // header("Location: login.php");
-    // exit
-// } else {
+if (!isset($_SESSION["userType"])) {
+    header("Location: login.php");
+    exit;
+} else {
 ?>
 
 <html lang="en">
@@ -39,7 +39,7 @@ if (!isset($_SESSION)) session_start();
                     require_once("services/TicketService.php");
 
                     $ticketService = new TicketService();
-                    $tickets = $ticketService->getAllForUser(0);
+                    $tickets = $ticketService->getAllForUser((int)$_SESSION["userId"]);
                     $thursday = '<tr><td>Thursday</td>';
                     $friday = '<tr><td>Friday</td>';
                     $saturday = '<tr><td>Saturday</td>';
@@ -54,7 +54,8 @@ if (!isset($_SESSION)) session_start();
                         $tickets = [];
                     }
 
-                    foreach ($tickets as $ticket) {
+                    foreach ($tickets as $twc) {
+                        $ticket = $twc->ticket;
                         $start = $ticketService->getStartDate($ticket);
                         $end = $ticketService->getEndDate($ticket);
                         $date = (int)$start->format('d');
@@ -90,11 +91,6 @@ if (!isset($_SESSION)) session_start();
                     usort($tickets_saturday, $sort_fn);
                     usort($tickets_sunday, $sort_fn);
 
-                    processDay($thursday, $tickets_thursday);
-                    processDay($friday, $tickets_friday);
-                    processDay($saturday, $tickets_saturday);
-                    processDay($sunday, $tickets_sunday);
-
                     function timeDiff(DateTime $start, DateTime $end): int {
                         $start2 = new DateTime($start->format('H:i:s'));
                         $end2 = new DateTime($end->format('H:i:s'));
@@ -118,7 +114,8 @@ if (!isset($_SESSION)) session_start();
                                 $text .= '<td></td>';
                             }
 
-                            $text .= '<td colspan="' . timeDiff($tkt['start'], $tkt['end']) . '"></td>';
+                            $diff = timeDiff($tkt['start'], $tkt['end']);
+                            if ($diff > 0) $text .= '<td colspan="' . $diff . '"></td>';
                             $time = $tkt['end'];
                         }
 
@@ -126,6 +123,11 @@ if (!isset($_SESSION)) session_start();
                             $text .= '<td></td>';
                         }
                     }
+
+                    processDay($thursday, $tickets_thursday);
+                    processDay($friday, $tickets_friday);
+                    processDay($saturday, $tickets_saturday);
+                    processDay($sunday, $tickets_sunday);
 
                     echo $thursday; echo '</td>';
                     echo $friday; echo '</td>';
@@ -137,3 +139,4 @@ if (!isset($_SESSION)) session_start();
     </main>
 </body>
 </html>
+<?php } ?>

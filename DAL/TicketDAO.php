@@ -366,7 +366,7 @@ class TicketDAO extends DAOUtils {
         }
     }
 
-    public function getTicketsForHistoricPerDay(int $eventId, $date): PDOStatement {
+    public function getTicketsForHistoricPerDay($date): PDOStatement {
         try {
             $day = "%".$date."%";
 
@@ -379,7 +379,6 @@ class TicketDAO extends DAOUtils {
 
             Base::getInstance()->conn->beginTransaction();
 
-            $stmt->bindParam(":eventId", $eventId);
             $stmt->bindParam(":day", $day);
             $stmt->execute();
 

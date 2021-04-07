@@ -279,7 +279,7 @@ class TicketService extends ServiceUtils {
                     $date = $act->getDate();
                     $time = $act->getStartTime();
 
-                    return $date->add(DateInterval::createFromDateString($time->format("H:i:s")));
+                    return $date->add(new DateInterval($time->format("\P\TH\Hi\Ms\S")));
                 case EventType::Historic:
                     $service = new HistoricTourService();
                     $tour = $service->getById($ticket->getEventId());
@@ -308,9 +308,9 @@ class TicketService extends ServiceUtils {
                     $service = new ActService();
                     $act = $service->getById($ticket->getEventId());
                     $date = $act->getDate();
-                    $time = $act->getStartTime();
+                    $time = $act->getEndTime();
 
-                    return $date->add(DateInterval::createFromDateString($time->format("H:i:s")));
+                    return $date->add(new DateInterval($time->format("\P\TH\Hi\Ms\S")));
                 case EventType::Historic:
                     $service = new HistoricTourService();
                     $tour = $service->getById($ticket->getEventId());
