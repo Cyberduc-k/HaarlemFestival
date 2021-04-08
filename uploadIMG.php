@@ -75,9 +75,3 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 echo $statusMsg;
 ?>
 
-<!--
-
-GEBRUIK DIT OM IMAGES TE UPLOADEN(nog niet naar de database)!!!
-
-                ----------
--->

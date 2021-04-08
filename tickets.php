@@ -67,6 +67,12 @@ $eventName = ucfirst($event->getName());
 
             <span class="val1">€ 17,50</span>
             <span class="val2">€ 60,-</span>
+        <?php } else if ($eventName == "Food") { ?>
+            <span class="row1">Wuuuuuuut Single Ticket</span>
+            <span class="row2">Family Ticket (max 4 persons)</span>
+
+            <span class="val1">€ 17,50</span>
+            <span class="val2">€ 60,-</span>
         <?php } ?>
     </header>
 
