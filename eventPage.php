@@ -3,7 +3,8 @@
 require_once ("services/EventService.php");
 require_once ("services/RestaurantService.php");
 require_once ("models/Restaurant.php");
-require_once ("EventSchedule.php");;
+require_once ("EventSchedule.php");
+require_once ("models/FoodType.php");
 require_once "retreiveContent.php";
 require_once "services/ContentService.php";
 
@@ -218,10 +219,11 @@ echo <<<END
                     <tr>
                         <td> <?php echo $restaurant->getName(); ?> </td>
                         <td> <?php echo $restaurant->getLocation(); ?> </td>
-                        <td> <?php echo $restaurant->getFoodType(); ?> </td>
+                        <td> <?php echo FoodType::getType($restaurant->getFoodType()); ?> </td>
                     </tr>
                 <?php } ?>
             </table>
+            <br>
             <?php if (isset($_SESSION["userType"])) {
                 switch ((int)$_SESSION['userType']){
                     case 2:
@@ -234,9 +236,9 @@ echo <<<END
                                 <p>
                                     <label> Name: </label>
                                     <input name="name" type="text" required>
-                                    <label> Location: </label>
+                                    <br><br><label> Location: </label>
                                     <input name="location" type="text" required>
-                                    <label> Food type (French, Dutch, etc): </label>
+                                    <br><br><label> Food type (French, Dutch, etc): </label>
                                     <input name="foodType" type="text" required>
                                     <br><br><input type="submit" name="submit" value="submit" required>
                                 </p>
