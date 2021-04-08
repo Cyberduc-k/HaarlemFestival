@@ -6,17 +6,20 @@ header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Max-Age: 3600");
 
 if(!$_POST){
+    //The email and key to validate
     if(isset($_GET["key"]) && isset($_GET["email"])){
         include_once '../../services/EventService.php';
         include_once '../../services/ApiKeyService.php';
         include_once '../../models/ApiKey.php';
 
+        //Validate key
         $apiKeyService = new ApiKeyService();
         $key = new ApiKey();
         $key->setEmail((string)htmlspecialchars($_GET["email"]));
         $key->setApiKey((string)htmlspecialchars($_GET["key"]));
 
         if ($apiKeyService->validate($key)){
+            //Get all events from db
             $eventService = new UserService();
             $events = $eventService->getAllAsArray();
 
