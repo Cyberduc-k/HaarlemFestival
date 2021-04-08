@@ -46,7 +46,12 @@ if (isset($_SESSION["userType"])) {
     }
 }
 
-$image = $content->getImagePath();
+$img = $rc->retrieveImage($content->getId());
+$image = "";
+if (!empty($img)){
+    $image = "uploads/uploadedIMG/".$img->getId()."-".$img->getName();
+}
+
 
 echo <<<END
         <header id="header" style="background-image: url('$image')">

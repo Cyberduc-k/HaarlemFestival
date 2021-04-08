@@ -4,11 +4,12 @@ require_once(__DIR__ . "/../models/User.php");
 require_once(__DIR__ . "/../models/ResetKey.php");
 require_once(__DIR__ . "/../models/Content.php");
 require_once(__DIR__ . "/../models/Ticket.php");
-//require_once(__DIR__ . "/../models/TicketWithCount.php");
+require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../models/Act.php");
-//require_once(__DIR__ . "/../models/HistoricTour.php");
-//require_once(__DIR__ . "/../models/Venue.php");
+require_once(__DIR__ . "/../models/HistoricTour.php");
+require_once(__DIR__ . "/../models/Venue.php");
 require_once(__DIR__ . "/../models/HistoricSchedule.php");
+require_once(__DIR__ . "/../models/Image.php");
 
 
 // Functions often used throughout the service layer

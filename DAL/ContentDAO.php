@@ -184,5 +184,34 @@ class ContentDAO extends DAOUtils {
             return $this->handleFalseError($e, true);
         }
     }
+
+    public function getImageForContent($id): ?PDOStatement{
+        try {
+            // query to read single record
+            $query = "SELECT
+                ".$this->tableName.".id AS contentPageId, imagePath AS id, name
+            FROM
+                " . $this->tableName . "
+                JOIN images ON imagePath=images.id 
+                WHERE " . $this->tableName . ".id = :id";
+
+            // prepare query statement
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            // bind id of type to be retrieved
+            $stmt->bindParam(":id", $id);
+
+            // execute query
+            $stmt->execute();
+
+            // If we get tot this point there are no errors so we can commit
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
 }
 ?>
