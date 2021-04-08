@@ -20,4 +20,7 @@ if(isset($_POST["submitButton"])) {
 <form name="ServiceAgreement" action="checkout.php" method="post">
     <input type="submit" name="submitButton">
 </form>
+<?php
+require_once ("footer.php");
+?>
 </html>

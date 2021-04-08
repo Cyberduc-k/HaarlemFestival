@@ -167,5 +167,8 @@ function showEditPage(User $user) {
             </form>
         </div>
     </body>
+    <?php
+    require_once ("footer.php");
+    ?>
     </html>
 <?php } ?>

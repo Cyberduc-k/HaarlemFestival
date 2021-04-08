@@ -93,4 +93,7 @@
         </fieldset>
     </form>
     </body>
+    <?php
+    require_once ("footer.php");
+    ?>
 </hmtl>
