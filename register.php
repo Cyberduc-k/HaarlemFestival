@@ -4,6 +4,7 @@
     <head>
         <title>Register</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/login.css" />
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
         <!-- Only enable the login button when captcha is succesfully filled in. -->
@@ -15,6 +16,8 @@
         </script>
     </head>
     <body>
+        <?php require_once("menubar.php"); ?>
+
         <div id="loginForm">
             <?php
             
@@ -93,9 +96,8 @@
             else {
 ?>
 
+                <h1>Registration Form</h1>
                 <form action="register.php" method="post">
-                    <div id="formHeader">Registration Form</div>
-
                     <div class="formBody">
                         <div class="formField">
                             <input type="text" name="firstname" required placeholder="Firstname"
