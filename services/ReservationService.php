@@ -15,7 +15,7 @@ class ReservationService extends ServiceUtils {
     {
         try {
 
-            if ($this->dao->addReservation($restaurant))
+            if ($this->dao->addReservation($reservation))
                 return true;
 
             return false;
