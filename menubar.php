@@ -63,7 +63,8 @@ if (isset($_SESSION['userType'])) {
 
         case 1:
             echo "<li><a ".getActiveString("viewUsers")." href='viewUsers.php'>View users</a></li>";
-            echo "<li><a ".getActiveString("exportToAPI")." href='export.php'>Export data</a></li>";
+            echo "<li><a ".getActiveString("export")." href='export.php'>Export data</a></li>";
+            echo "<li><a ".getActiveString("viewApiKeys")." href='viewApiKeys.php'>Manage API keys</a></li>";
             break;
     }
     
