@@ -123,6 +123,7 @@ function showEditPage(User $user) {
     <head>
         <title>Edit Info</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/editUser.css" />
     </head>
     <body>
         <div class="content">
