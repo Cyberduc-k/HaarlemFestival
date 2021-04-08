@@ -112,6 +112,8 @@ echo <<<END
                         Thursday
                     <a id="thursday" onclick="daySchedule(this, 'Thursday')">
                 <li>
+                    <a id="thursday" onclick="daySchedule(this, 'Thursday')">
+                        Thursday
                     </a>
                 </li>
                 <?php } ?>
