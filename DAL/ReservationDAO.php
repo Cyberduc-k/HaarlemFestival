@@ -5,16 +5,16 @@ require_once("DAOUtils.php");
 // DAO for the images
 class ReservationDAO extends DAOUtils
 {
-    private string $tableName = "images";
+    private string $tableName = "reservation";
 
-    public function addImage(Image $image): ?bool
+    public function addReservation(Reservation $reservation): ?bool
     {
         try {
             // query to insert record
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                id = :id, contentPageId = :contentPageId, name = :name";
+                id = :id, restaurantId = :restaurantId, name = :name, reservationTime = :reservationTime";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
