@@ -99,5 +99,50 @@ class ContentService extends ServiceUtils {
 
         return false;
     }
+
+    public function insertImage($contentId, $img): ?bool
+    {
+        try {
+
+            if ($this->dao->insertImage($contentId, $img))
+                return true;
+
+            return false;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return false;
+        }
+    }
+
+    public function getImageForContent($id): ?Image {
+        try {
+            $stmt = $this->dao->getImageForContent($id);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+                return $this->rowToImage($row);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty content
+            return null;
+        }
+    }
 }
 ?>

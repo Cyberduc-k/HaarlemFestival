@@ -8,22 +8,26 @@ abstract class FoodType {
     public const Asian = 4;
     public const NA = 5;
 
-    public static function getType(String $foodTypeString): int {
-        switch ($foodTypeString) {
-            case "French":
-                return 0;
-            case "Italian":
-                return 1;
-            case "Dutch":
-                return 2;
-            case "Mexican":
-                return 3;
-            case "Asian":
-                return 4;
+    // Int to type string
+    public static function getType(int $type): String {
+        switch ($type) {
+            case 0:
+                return "French";
+            case 1:
+                return "Italian";
+            case 2:
+                return "Dutch";
+            case 3:
+                return "Mexican";
+            case 4:
+                return "Asian";
+            case 5:
+                return "NA";
         }
 
-        return 5;
+        return "Couldn't get type";
     }
 }
+
 
 ?>

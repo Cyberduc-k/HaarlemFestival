@@ -25,7 +25,6 @@ if ($_POST) {
         !empty($_POST["lastname"]) &&
         !empty($_POST["email"]) &&
         !empty($_POST["password"]) &&
-        !empty($_POST["usertype"]) &&
         isset($_SESSION["userType"])
     ) {
         // Make sure the logged in user is a superadmin
@@ -103,4 +102,7 @@ if ($_POST) {
     </div>
 <?php } ?>
 </body>
+<?php
+require_once ("footer.php");
+?>
 </html>

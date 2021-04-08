@@ -290,6 +290,8 @@ class TicketDAO extends DAOUtils {
 
             $stmt->execute();
 
+            $ticket->setId((int)base::getInstance()->conn->lastInsertId());
+
             Base::getInstance()->conn->commit();
 
             return true;

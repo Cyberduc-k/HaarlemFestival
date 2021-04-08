@@ -1,21 +1,21 @@
 <?php
 
-require_once(__DIR__ . "/../DAL/ImageDAO.php");
-require_once(__DIR__ . "/../models/Image.php");
+require_once(__DIR__ . "/../DAL/ReservationDAO.php");
+require_once(__DIR__ . "/../models/Reservation.php");
 require_once ("ServiceUtils.php");
 
 class ReservationService extends ServiceUtils {
-    private ImageDAO $dao;
+    private ReservationDAO $dao;
 
     public function __construct() {
-        $this->dao = new ImageDAO();
+        $this->dao = new ReservationDAO();
     }
 
-    public function addImage(Image $image)
+    public function addReservation(Reservation $reservation)
     {
         try {
 
-            if ($this->dao->addImage($image))
+            if ($this->dao->addReservation($reservation))
                 return true;
 
             return false;

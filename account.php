@@ -42,5 +42,8 @@ if(!isset($_SESSION)) session_start();
 
 
     </body>
+    <?php
+    require_once ("footer.php");
+    ?>
 </html>
 

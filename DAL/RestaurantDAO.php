@@ -12,7 +12,7 @@ class RestaurantDAO extends DAOUtils
     {
         try {
             $query = "SELECT
-                          id, name, location, foodType
+                          id, name, location, foodType, price
                       FROM " . $this->tableName;
 
             // prepare query statement
@@ -31,6 +31,29 @@ class RestaurantDAO extends DAOUtils
         }
     }
 
+    public function getById(int $id): ?PDOStatement
+    {
+        try {
+            $query = "SELECT
+                          id, name, location, foodType, price
+                      FROM " . $this->tableName . "
+                      WHERE id = :id";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
     public function addRestaurant(Restaurant $restaurant): ?bool
     {
         try {
@@ -38,23 +61,23 @@ class RestaurantDAO extends DAOUtils
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                id = :id, name = :name, location = :location, foodType = :foodType";
+                name = :name, location = :location, foodType = :foodType, price = :price";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
             Base::getInstance()->conn->beginTransaction();
 
             // cast references into variables to avoid error
-            $id = (int)$restaurant->getId();
-            $name = (int)$restaurant->getName();
+            $name = (string)$restaurant->getName();
             $location = (string)$restaurant->getLocation();
             $foodType = (string)$restaurant->getFoodType();
+            $price = (int)$restaurant->getPrice();
 
             // bind values
-            $stmt->bindParam(":id", $id);
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":location", $location);
             $stmt->bindParam(":foodType", $foodType);
+            $stmt->bindParam(":price", $price);
 
             // execute query
             $stmt->execute();
@@ -67,5 +90,4 @@ class RestaurantDAO extends DAOUtils
             return $this->handleFalseError($e, true);
         }
     }
-
 }

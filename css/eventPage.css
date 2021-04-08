@@ -4,6 +4,8 @@
     display: grid;
     position: relative;
     border-bottom: 1px solid #707070;
+    background-size: cover;
+    background-position: center;
 }
 
 #header::before {
@@ -104,4 +106,12 @@ article {
 
 #daySchedule table td:nth-child(2) {
     text-align: end;
+}
+
+li.active {
+    background-color: var(--color);
+}
+
+li.active * {
+    color: black;
 }

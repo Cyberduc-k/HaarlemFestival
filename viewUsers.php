@@ -4,6 +4,7 @@
     <head>
         <title>User List</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/viewUsers.css" />
     </head>
     <body>
     <?php
@@ -13,7 +14,7 @@
     require_once ("models/UserTypes.php");
     
     ?>
-        <div class="content">
+        <section class="content">
             <h1>User List</h1>
             <table id="userList">
                 <tr>
@@ -110,7 +111,7 @@
                 }
                 ?>
             </table>
-            <form action="viewUsers.php" method="post">
+            <form id="searchForm" action="viewUsers.php" method="post">
                 <div class="formBody">
                     <div class="searchFormField">
                         <input type="text" name="firstname" placeholder="Firstname" />
@@ -133,13 +134,9 @@
                     </div>
                 </div>
             </form>
-            <form action="exports/exportToAPI.php" method="post">
-                <div class="formBody">
-                    <div>
-                        <input id="submitBtn" name="submit" type="submit" value="Export users to external API" class="searchButton customButton"/>
-                    </div>
-                </div>
-            </form>
-        </div>
+        </section>
     </body>
+    <?php
+    require_once ("footer.php");
+    ?>
 </html>

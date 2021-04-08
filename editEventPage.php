@@ -120,7 +120,7 @@
                 })
             }
         </script>
-        <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>" method="post" enctype="multipart/form-data">
+        <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>,eventId=<?php echo $eventID; ?>" method="post" enctype="multipart/form-data">
             <fieldset>
                 <p>
                     Select File to Upload:
@@ -132,7 +132,44 @@
             </fieldset>
         </form>
     </article>
+    <article>
+        <h2>Select an Image you want to use as Header</h2>
+        <form method="post">
+            <?php
+            require_once ("services/ImageService.php");
+
+            $is = new ImageService();
+
+            $contentId = $content->getId();
+            $images = $is->getByContentPageId($contentId);
+
+            foreach ($images as $image){
+                $id = $image->getId();
+                $name = $image->getName();
+
+                echo "<div>
+                        <img src='uploads/uploadedIMG/$id-$name'/>
+                        <input type='radio' name='img' value='$id'/>
+                    </div>";
+            }
+            ?>
+            <input type="submit" name="submit" value="Select"/>
+        </form>
+        <?php
+        require_once ("services/ContentService.php");
+        $cs = new ContentService();
+
+            if (isset($_POST["img"])){
+                $img = $_POST["img"];
+
+                $cs->insertImage($contentId, $img);
+            }
+        ?>
+    </article>
 </section>
 </body>
+<?php
+require_once ("footer.php");
+?>
 </html>
 

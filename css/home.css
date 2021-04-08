@@ -1,0 +1,51 @@
+#header {
+    width: 100%;
+    height: 500px;
+    display: grid;
+    position: relative;
+    border-bottom: 1px solid #707070;
+    background-image: url("../uploads/uploadedIMG/space3.png");
+}
+
+#header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(to top, #00FEFE, transparent);
+    opacity: 0.5;
+}
+
+#header h1 {
+    justify-self: center;
+    align-self: center;
+    margin: 0;
+    font-size: 100px;
+    color: white;
+    text-shadow: 1px 1px 0 black, 1px -1px 0 black, -1px 1px 0 black, -1px -1px 0 black;
+    z-index: 1;
+}
+
+#event{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 80%;
+}
+
+.events{
+    margin: 10px;
+}
+
+#eventMore{
+    color: #00FEFE;
+}
+
+#eventImg{
+    height: 150px;
+    width: 150px;
+}
+

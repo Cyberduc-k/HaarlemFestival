@@ -67,4 +67,7 @@ if (isset($_POST['agreeButton'])) {
     </article>
 </section>
 </body>
+<?php
+require_once ("footer.php");
+?>
 </html>

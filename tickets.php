@@ -111,14 +111,22 @@ $eventName = ucfirst($event->getName());
         <article id="tickets">
         </article>
 
-        <form id="options" method="post" action="addToCart.php?next=tickets.php?event=<?php echo $eventID; ?>">
+        <form id="options" method="post" action="addToCart.php?eventId=<?php echo $eventID; ?>,next=tickets.php?event=<?php echo $eventID; ?>">
             <fieldset>
-                <label for="ticketType">Type:</label>
+                <?php if ($eventName == "Food") {?>
+                    <label for="ticketType">Time:</label>
+                <?php } else { ?>
+                    <label for="ticketType">Type:</label>
+                <?php } ?>
                 <select name="ticketType" onchange="changeTicketType(this)">
                     <?php
-                        if ($eventName == "Historic" || $eventName == "Food") {
+                        if ($eventName == "Historic") {
                             echo '<option value="0">Single Ticket</option>';
                             echo '<option value="3">Family Ticket</option>';
+                        } elseif ($eventName == "Food") {
+                            echo '<option value="17:00:00">17:00</option>';
+                            echo '<option value="18:00:00">18:00</option>';
+                            echo '<option value="19:00:00">19:00</option>';
                         } else {
                             echo '<option value="0">Single Ticket</option>';
                             echo '<option value="1">1 Day All-Access</option>';
@@ -133,7 +141,11 @@ $eventName = ucfirst($event->getName());
                 <span class="price" id="price">€ __.__</span>
                 <label class="price">Price:</label>
                 
-                <input id="ticketId" type="number" name="ticketId" required />
+                <input id="ticketId" type="hidden" name="ticketId" required />
+                <?php if ($eventName == "Food") { ?>
+                    <input id="time" type="hidden" name="time" required />
+                    <input id="day" type="hidden" name="day" required />
+                <?php } ?>
             </fieldset>
 
             <input id="addToCart" type="submit" name="addToCart" value="Add to cart" />
@@ -174,17 +186,22 @@ $eventName = ucfirst($event->getName());
                 body,
             }).then(async (res) => {
                 tickets = (await res.json()) || [];
+                console.log(tickets);
                 renderTickets();
             });
         }
 
         function renderTickets() {
-            var eventName = "<?php echo $eventName ?>";
+            const eventName = "<?php echo $eventName ?>";
 
             section.innerHTML = "";
-            filterTickets();
+            if (eventName != "Food") {
+                filterTickets();
+            } else {
+                filtered = tickets;
+            }
 
-            if(eventName === "Historic"){
+            if (eventName === "Historic"){
                 filtered.forEach((ticket, idx) => {
                     section.insertAdjacentHTML("beforeend", `
                     <div class="ticket" onclick="selectTicket(this, ${ticket.id}, ${idx})">
@@ -192,6 +209,16 @@ $eventName = ucfirst($event->getName());
                         <span class="location">${ticket.guide}</span>
                         <span class="time">${ticket.date}</span>
                         <span class="stock">${ticket.price == 0 ? '' : `${ticket.inStock} Left`}</span>
+                    </div>
+                `);
+                });
+            }else if (eventName === "Food"){
+                filtered.forEach((ticket, idx) => {
+                    section.insertAdjacentHTML("beforeend", `
+                    <div class="ticket" onclick="selectTicket(this, ${ticket.id}, ${idx})">
+                        <span class="name">${ticket.name}</span>
+                        <span class="location">${ticket.location}</span>
+                        <span class="time">${ticket.foodType}</span>
                     </div>
                 `);
                 });
@@ -207,6 +234,7 @@ $eventName = ucfirst($event->getName());
                 `);
                 });
             }
+
 
         }
 
@@ -226,6 +254,10 @@ $eventName = ucfirst($event->getName());
             }
 
             self.classList.add("selected");
+
+            <?php if ($eventName == "Food") { ?>
+                document.getElementById("day").value = location.hash.substring(1);
+            <?php } ?>
         }
 
         function filterTickets() {
@@ -250,4 +282,7 @@ $eventName = ucfirst($event->getName());
         }
     </script>
 </body>
+<?php
+require_once ("footer.php");
+?>
 </html>

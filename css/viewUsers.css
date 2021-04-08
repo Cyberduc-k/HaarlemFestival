@@ -1,0 +1,66 @@
+.content {
+    max-width: 1200px;
+    margin: auto;
+}
+
+table, #searchForm {
+    border-spacing: 0;
+    margin-left: -1px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+table input {
+    border: none;
+    height: 100%;
+}
+
+table td, table tr, table th {
+    border: 1px solid white;
+}
+
+table td{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+table th{
+    padding: 15px;
+}
+
+table tr{
+    margin: 10px;
+}
+
+table td:last-child {
+    padding: 0;
+}
+
+.tableButton{
+    height: 100%;
+    margin: 0;
+}
+
+.tableForm{
+    display: inline-block;
+    width: 30%;
+    padding: 0;
+    margin: 0 0 0 5px;
+    float: left;
+}
+
+.tableForm input{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+#searchForm input{
+    float: left;
+    padding: 10px;
+    margin-right: 10px;
+    width: 18%;
+}

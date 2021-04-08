@@ -1,8 +1,8 @@
 <?php
 //Export all users in the db to an external api
 if($_POST){
-    require_once("services/UserService.php");
-    require_once("validate.php");
+    require_once("../services/UserService.php");
+    require_once("../validate.php");
 
     //Clear errors
     unset($_SESSION["exportAPIError"]);

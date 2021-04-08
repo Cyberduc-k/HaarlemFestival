@@ -66,18 +66,22 @@ class ImageService extends ServiceUtils {
     }
 
     // Try to get image by contentPageId
-    public function getByContentPageId(int $contentPageId): ?Image {
+    public function getByContentPageId(int $contentPageId): ?array {
         try {
             $stmt = $this->dao->getByContentPageId($contentPageId);
             $num = $stmt->rowCount();
 
             if ($num > 0) {
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $images = array();
 
-                return $this->rowToImage($row);
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    array_push($images, $this->rowToImage($row));
+                }
+
+                return $images;
             }
 
-            return null;
+            return [];
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());

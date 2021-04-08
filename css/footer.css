@@ -1,0 +1,23 @@
+#foot {
+    height: 70px;
+    width: 100%;
+    background: #333333;
+    border-top: 1px solid #707070;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+}
+
+#foot ul {
+    background: none;
+    list-style: none;
+}
+
+#foot ul:first-child li {
+    float: left;
+    margin-right: 10px;
+}
+
+#foot ul:not(:first-child) {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+}

@@ -15,4 +15,8 @@ class retrieveContent
         return $content = $this->cs->getByEventId($eventID);
     }
 
+    function retrieveImage($contentId): ?Image{
+        return $this->cs->getImageForContent($contentId);
+    }
+
 }
