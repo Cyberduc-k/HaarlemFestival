@@ -48,7 +48,7 @@ class RestaurantDAO extends DAOUtils
             $name = (string)$restaurant->getName();
             $location = (string)$restaurant->getLocation();
             $foodType = (string)$restaurant->getFoodType();
-            $price = (int)$price->getPrice();
+            $price = (int)$restaurant->getPrice();
 
             // bind values
             $stmt->bindParam(":name", $name);
