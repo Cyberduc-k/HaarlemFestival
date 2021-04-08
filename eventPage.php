@@ -36,19 +36,19 @@ $content =  $rc->retrieve($eventID);
 </head>
 <body class="<?php echo $event->getColour(); ?>" >
 <?php
-    require_once ("menubar.php");
+require_once ("menubar.php");
 
-    if (isset($_SESSION["userType"])) {
-        switch ((int)$_SESSION['userType']){
-            case 2:
-                echo "<a id='editPageBtn' href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
-                break;
-        }
+if (isset($_SESSION["userType"])) {
+    switch ((int)$_SESSION['userType']){
+        case 2:
+            echo "<a id='editPageBtn' href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
+            break;
     }
+}
 
-    $image = $content->getImagePath();
+$image = $content->getImagePath();
 
-    echo <<<END
+echo <<<END
         <header id="header" style="background-image: url('$image')">
             <h1>$eventName</h1>
         </header>
@@ -64,18 +64,18 @@ $content =  $rc->retrieve($eventID);
         </li>
         <?php
         if ($eventName == "Food"){ ?>
-        <li id="restaurantsNav">
-            <a onclick="hideAbout()">
-                Restaurants
-            </a>
-        </li>
+            <li id="restaurantsNav">
+                <a onclick="hideAbout()">
+                    Restaurants
+                </a>
+            </li>
         <?php } else{ ?>
-        <li id="scheduleNav">
-            <a onclick="hideAbout()">
-                Schedule
-            </a>
-        </li>
-        <?php
+            <li id="scheduleNav">
+                <a onclick="hideAbout()">
+                    Schedule
+                </a>
+            </li>
+            <?php
         }
         ?>
         <li>
@@ -89,26 +89,28 @@ $content =  $rc->retrieve($eventID);
 <section id="about">
     <article>
         <?php
-            $header = $content->getHeader();
+        $header = $content->getHeader();
 
-            echo <<<END
+        echo <<<END
                 <header>
                     <h2>$header</h2>
                 </header>
             END;
 
-            echo $content->getText();
+        echo $content->getText();
 
         ?>
     </article>
 </section>
 
 <section id="schedule">
-        <?php if ($eventName == "Jazz" || $eventName == "Dance"){
-            ?>
+    <?php if ($eventName == "Jazz" || $eventName == "Dance"){
+        ?>
         <nav id="days">
             <ul>
                 <?php if ($eventName == "Jazz"){ ?>
+                        Thursday
+                    <a id="thursday" onclick="daySchedule(this, 'Thursday')">
                 <li>
                     <a id="thursday" onclick="daySchedule(this, 'Thursday')">
                         Thursday
@@ -132,8 +134,8 @@ $content =  $rc->retrieve($eventID);
                 </li>
             </ul>
         </nav>
-    <?php
-        }
+        <?php
+    }
     ?>
 
     <script>
@@ -197,43 +199,43 @@ $content =  $rc->retrieve($eventID);
     <?php
     // Restaurant list
     if ($eventName == "Food") { ?>
-    <article id ="restaurantList">
-        <header>
-            <h2>Restaurants</h2>
-        </header>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>FoodType</th>
-            </tr>
-            <?php
-            $restaurants = $rs->getAll();
-            foreach ($restaurants as $restaurant) { ?>
-            <tr>
-                <td> <?php echo $restaurant->getName(); ?> </td>
-                <td> <?php echo $restaurant->getLocation(); ?> </td>
-                <td> <?php echo $restaurant->getFoodType(); ?> </td>
-            </tr>
-            <?php } ?>
-        </table>
-        <form action="addRestaurant.php" method="post" enctype="multipart/form-data">
-            <fieldset>
-                <p>
-                    Add a restaurant:
-                </p>
-                <p>
-                    <label> Name: </label>
-                    <input name="name" type="text" required>
-                    <label> Location: </label>
-                    <input name="location" type="text" required>
-                    <label> Food type (French, Dutch, etc): </label>
-                    <input name="foodType" type="text" required>
-                    <br><br><input type="submit" name="submit" value="submit" required>
-                </p>
-            </fieldset>
-        </form>
-    </article>
+        <article id ="restaurantList">
+            <header>
+                <h2>Restaurants</h2>
+            </header>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>FoodType</th>
+                </tr>
+                <?php
+                $restaurants = $rs->getAll();
+                foreach ($restaurants as $restaurant) { ?>
+                    <tr>
+                        <td> <?php echo $restaurant->getName(); ?> </td>
+                        <td> <?php echo $restaurant->getLocation(); ?> </td>
+                        <td> <?php echo $restaurant->getFoodType(); ?> </td>
+                    </tr>
+                <?php } ?>
+            </table>
+            <form action="addRestaurant.php" method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <p>
+                        Add a restaurant:
+                    </p>
+                    <p>
+                        <label> Name: </label>
+                        <input name="name" type="text" required>
+                        <label> Location: </label>
+                        <input name="location" type="text" required>
+                        <label> Food type (French, Dutch, etc): </label>
+                        <input name="foodType" type="text" required>
+                        <br><br><input type="submit" name="submit" value="submit" required>
+                    </p>
+                </fieldset>
+            </form>
+        </article>
     <?php } ?>
 
     <article id="daySchedule">
@@ -243,19 +245,19 @@ $content =  $rc->retrieve($eventID);
 
         <?php
 
-            switch ($eventName){
-                case "Food":
-                    break;
-                case "Historic":
-                    $schedule->getHistoricSchedule();
-                    break;
-                case "Jazz":
-                    $schedule->musicEvent($eventID, "Thursday");
-                    break;
-                case "Dance":
-                    $schedule->musicEvent($eventID, "Friday");
-                    break;
-            }
+        switch ($eventName){
+            case "Food":
+                break;
+            case "Historic":
+                $schedule->getHistoricSchedule();
+                break;
+            case "Jazz":
+                $schedule->musicEvent($eventID, "Thursday");
+                break;
+            case "Dance":
+                $schedule->musicEvent($eventID, "Friday");
+                break;
+        }
         ?>
 
     </article>
