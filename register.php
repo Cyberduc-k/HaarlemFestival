@@ -79,7 +79,7 @@
                     $user->setLastname(htmlentities($_POST["lastname"]));
                     $user->setEmail(htmlentities($_POST["email"]));
                     $user->setPassword(htmlentities($_POST["password"]));
-                    $user->setUsertype(UserTypes::USER);
+                    $user->setUsertype(UserTypes::CLIENT);
 
                     if ($userService->create($user)) {
                         echo "<div>Successful registration! <a href='index.php'>Login</a></div>";

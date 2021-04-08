@@ -12,7 +12,7 @@ if ($_POST) {
 
         // Make sure the logged in in user has a higher usertype
         if (
-            (int)$_SESSION["userType"] >= UserTypes::ADMIN && !is_null($userType) &&
+            (int)$_SESSION["userType"] >= UserTypes::VOLUNTEER && !is_null($userType) &&
             $userType < (int)$_SESSION["userType"]
         ) {
             $user = $userService->getById((int)(htmlentities($_POST["id"])));

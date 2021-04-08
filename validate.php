@@ -15,13 +15,13 @@ if (
     switch ($userType) {
         case 2: break;
         case 1:
-            if (!(UserTypes::ACCESSLEVELS[basename($_SERVER['PHP_SELF'])] <= UserTypes::ADMIN)) {
+            if (!(UserTypes::ACCESSLEVELS[basename($_SERVER['PHP_SELF'])] <= UserTypes::VOLUNTEER)) {
                 invalidUser("Superadmin");
             }
 
             break;
         default:
-            if (!(UserTypes::ACCESSLEVELS[basename($_SERVER['PHP_SELF'])] == UserTypes::USER)) {
+            if (!(UserTypes::ACCESSLEVELS[basename($_SERVER['PHP_SELF'])] == UserTypes::CLIENT)) {
                 invalidUser("Admin");
             }
 

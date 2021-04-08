@@ -75,8 +75,8 @@
                                 $loggedInUserType = (int)$_SESSION["userType"];
                                 $shownUserType = $user->getUserType();
 
-                                if ($shownUserType == UserTypes::USER ||
-                                    ($shownUserType == UserTypes::ADMIN && $loggedInUserType == UserTypes::SUPERADMIN)
+                                if ($shownUserType == UserTypes::CLIENT ||
+                                    ($shownUserType == UserTypes::VOLUNTEER && $loggedInUserType == UserTypes::SUPERADMIN)
                                 ) {
                                     ?>
                                     <form class="tableForm" name="tableEditForm<?php echo $user->getId()?>" action="editOtherUser.php" method="post">

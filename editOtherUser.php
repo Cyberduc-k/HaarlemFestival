@@ -18,7 +18,7 @@ if ($_POST) {
 
         // Make sure the logged in in user has permission
         if (
-            (int)$_SESSION["userType"] >= UserTypes::ADMIN && !is_null($userType) &&
+            (int)$_SESSION["userType"] >= UserTypes::VOLUNTEER && !is_null($userType) &&
             $userType < (int)$_SESSION["userType"]
         ) {
             $_SESSION["userIdToEdit"] = (string)htmlentities($_POST["id"]);
