@@ -111,7 +111,7 @@ $eventName = ucfirst($event->getName());
         <article id="tickets">
         </article>
 
-        <form id="options" method="post" action="addToCart.php?next=tickets.php?event=<?php echo $eventID; ?>">
+        <form id="options" method="post" action="addToCart.php?eventId=<?php echo $eventID; ?>,next=tickets.php?event=<?php echo $eventID; ?>">
             <fieldset>
                 <?php if ($eventName == "Food") {?>
                     <label for="ticketType">Time:</label>
