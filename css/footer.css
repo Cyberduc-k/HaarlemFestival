@@ -1,69 +1,23 @@
-
 #foot {
-    height: 150px;
+    height: 70px;
     width: 100%;
-    background: #242424;
+    background: #333333;
     border-top: 1px solid #707070;
     display: grid;
-    grid-template-columns: 100px 1fr;
-    grid-template-rows: 50px 50px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    grid-template-columns: 200px 1fr 200px;
 }
 
 #foot ul {
-    grid-column: 2/3;
-    justify-self: end;
     background: none;
     list-style: none;
-    margin: auto;
 }
 
-#foot ul:nth-of-type(1) {
-    align-self: end;
-    margin-bottom: 4px;
-}
-
-#foot ul:nth-of-type(2) {
-    align-self: start;
-    margin-top: 4px;
-}
-
-#foot li {
+#foot ul:first-child li {
     float: left;
-    margin-right: 30px;
-    padding: 0;
-    font-size: 22px;
-}
-#foot ul:nth-of-type(1) > :nth-child(1) {
     margin-right: 10px;
 }
 
-#foot a {
-    color: #EAE6E6;
-    text-decoration: none;
-}
-
-.icon {
-    display: block;
-    width: 32px;
-    height: 32px;
-}
-
-.icon.instagram {
-    background-image: url("instagram-brands.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.icon.facebook {
-    background-image: url("facebook-square-brands.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-#copyright{
-    margin: auto;
-    grid-column: 2/3;
+#foot ul:not(:first-child) {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
 }
