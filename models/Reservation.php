@@ -15,15 +15,15 @@ class Reservation {
     }
 
     public function getRestaurantId(): int {
-        return $this->name;
+        return $this->restaurantId;
     }
 
     public function setRestaurantId(int $restaurantId): void {
-        $this->name = $restaurantId;
+        $this->restaurantId = $restaurantId;
     }
 
     public function getName(): String {
-        return $this->namen;
+        return $this->name;
     }
 
     public function setName(String $name): void {

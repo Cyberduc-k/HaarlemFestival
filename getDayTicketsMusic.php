@@ -34,6 +34,7 @@ if (isset($_POST["day"]) && isset($_POST["eventID"])) {
     }elseif($eventType == 2){
         $tickets = array_map(function($restaurant){
             return [
+                "id" => $restaurant->getId(),
                 "name" => $restaurant->getName(),
                 "location" => $restaurant->getLocation(),
                 "foodType" => FoodType::getType($restaurant->getFoodType()),

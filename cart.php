@@ -35,6 +35,7 @@ if (isset($_POST['agreeButton'])) {
 </head>
 <body>
 <section>
+    <a onload="userTickets(this)"></a>
 
     <?php require_once("menubar.php"); ?>
 
@@ -67,7 +68,4 @@ if (isset($_POST['agreeButton'])) {
     </article>
 </section>
 </body>
-<?php
-require_once ("footer.php");
-?>
 </html>

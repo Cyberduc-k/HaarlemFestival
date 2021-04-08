@@ -264,11 +264,11 @@ class TicketDAO extends DAOUtils {
         try {
             $query = "INSERT INTO " . $this->tableName . "
                       SET
-                          ticketType=:ticketType
-                          eventType=:eventType,
-                          eventId=:eventId,
-                          price=:price,
-                          inStock=:inStock";
+                          `ticketType` = :ticketType
+                          `eventType` = :eventType,
+                          `eventId` = :eventId,
+                          `price` = :price,
+                          `inStock` = :inStock";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
@@ -290,12 +290,13 @@ class TicketDAO extends DAOUtils {
 
             $stmt->execute();
 
-            $ticket->setId((int)base::getInstance()->conn->lastInsertId());
+            $ticket->setId((int)Base::getInstance()->conn->lastInsertId());
 
             Base::getInstance()->conn->commit();
 
             return true;
         } catch (Exception $e) {
+            var_dump($e);
             return $this->handleFalseError($e, true);
         }
     }
