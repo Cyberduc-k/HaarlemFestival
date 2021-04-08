@@ -363,6 +363,7 @@ class TicketService extends ServiceUtils {
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $row['language'] = Language::getLanguage((int)$row['language']);
+                $row['date'] = (new DateTime($row['date']))->format('H:i');
                 array_push($tickets, $row);
             }
 

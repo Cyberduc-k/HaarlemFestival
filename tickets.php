@@ -25,7 +25,11 @@ $eventName = ucfirst($event->getName());
     <?php require_once("menubar.php"); ?>
 
     <header id="header">
-        <h1>Tickets</h1>
+        <?php if ($eventName == "Food") { ?>
+            <h1>Reservations</h1>
+        <?php } else { ?>
+            <h1>Tickets</h1>
+        <?php } ?>
 
         <fieldset>
             <label for="event">Event:</label>
@@ -170,7 +174,6 @@ $eventName = ucfirst($event->getName());
                 body,
             }).then(async (res) => {
                 tickets = (await res.json()) || [];
-                console.log(tickets);
                 renderTickets();
             });
         }
