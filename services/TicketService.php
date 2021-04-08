@@ -358,19 +358,13 @@ class TicketService extends ServiceUtils {
     {
         try {
             $stmt = $this->dao->getTicketsForHistoricPerDay($date);
-            $num = $stmt->rowCount();
+            $tickets = [];
 
-            if ($num > 0) {
-                $tickets = [];
-
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($tickets, $this->rowToTicket($row));
-                }
-
-                return $tickets;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($tickets, $row);
             }
 
-            return null;
+            return $tickets;
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
