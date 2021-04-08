@@ -6,7 +6,6 @@ require_once("validate.php");
 
 
 if(isset($_POST["submitButton"])) {
-    database_write();
 }
 ?>
 
@@ -17,6 +16,7 @@ if(isset($_POST["submitButton"])) {
     <link type="text/css" rel="stylesheet" href="css/style.css" />
     <link type="text/css" rel="stylesheet" href="css/tickets.css" />
 </head>
+
 <form name="ServiceAgreement" action="checkout.php" method="post">
     <input type="submit" name="submitButton">
 </form>
