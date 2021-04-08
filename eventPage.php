@@ -110,23 +110,23 @@ $content =  $rc->retrieve($eventID);
             <ul>
                 <?php if ($eventName == "Jazz"){ ?>
                 <li>
-                    <a onclick="daySchedule('Thursday')">
+                    <a id="thursday" onclick="daySchedule(this, 'Thursday')">
                         Thursday
                     </a>
                 </li>
                 <?php } ?>
                 <li>
-                    <a onclick="daySchedule('Friday')">
+                    <a id="friday" onclick="daySchedule(this, 'Friday')">
                         Friday
                     </a>
                 </li>
                 <li>
-                    <a onclick="daySchedule('Saturday')">
+                    <a id="saturday" onclick="daySchedule(this, 'Saturday')">
                         Saturday
                     </a>
                 </li>
                 <li>
-                    <a onclick="daySchedule('Sunday')">
+                    <a id="sunday" onclick="daySchedule(this, 'Sunday')">
                         Sunday
                     </a>
                 </li>
@@ -137,9 +137,38 @@ $content =  $rc->retrieve($eventID);
     ?>
 
     <script>
-        function daySchedule(day) {
+        const hash = location.hash.length === 0 ? [] : location.hash.substring(1).split(',');
+        const pairs = {};
+
+        for (const part of hash) {
+            if (part.length === 0) continue;
+            const pair = part.split('=');
+
+            pairs[pair[0]] = pair[1];
+        }
+
+        function updateHash() {
+            let hash = "#";
+
+            for (const key in pairs) {
+                if (hash.length !== 1) hash += ',';
+                hash += `${key}=${pairs[key]}`;
+            }
+
+            location.hash = hash;
+        }
+
+        function daySchedule(self, day) {
             const eventID = `<?php echo $eventID ?>`;
             const body = new FormData();
+
+            for (const child of self.parentElement.parentElement.children) {
+                child.classList.remove("active");
+            }
+
+            self.parentElement.classList.add("active");
+            pairs.day = day;
+            updateHash();
 
             body.append("day", day);
             body.append("eventID", eventID);
@@ -156,6 +185,13 @@ $content =  $rc->retrieve($eventID);
                 daySchedule.prepend(header);
             });
         }
+
+        <?php
+
+        if ($eventName == "Jazz" || $eventName == "Dance")
+            echo 'if (pairs.day) daySchedule(document.getElementById(pairs.day.toLowerCase()), pairs.day);';
+
+        ?>
     </script>
 
     <?php
@@ -237,15 +273,13 @@ $content =  $rc->retrieve($eventID);
 
         <?php if ($eventName == "Food") { ?>
         document.getElementById("restaurantsNav").className = "active";
-        y.id = "";
-        location.hash = "restaurants";
-        y.id = "schedule";
+        pairs.tab = "restaurants";
         <?php } else { ?>
         document.getElementById("scheduleNav").className = "active";
-        y.id = "";
-        location.hash = "schedule";
-        y.id = "schedule";
+        pairs.tab = "schedule";
         <?php } ?>
+
+        updateHash();
     }
 
     function hideSchedule() {
@@ -263,21 +297,14 @@ $content =  $rc->retrieve($eventID);
         document.getElementById("scheduleNav").className = "";
         <?php } ?>
 
-        y.id = "";
-        location.hash = "about";
-        y.id = "about";
+        pairs.tab = "about";
+        updateHash();
     }
 
-    const prevPage = location.hash;
-
-    if (prevPage.length == 0)
-        hideSchedule();
-    else {
-        switch (prevPage) {
-            case "#schedule": hideAbout(); break;
-            case "#restaurants": hideAbout(); break;
-            default: hideSchedule();
-        }
+    switch (pairs.tab) {
+        case "schedule": hideAbout(); break;
+        case "restaurants": hideAbout(); break;
+        default: hideSchedule();
     }
 </script>
 
