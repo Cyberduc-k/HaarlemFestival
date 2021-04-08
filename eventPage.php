@@ -37,6 +37,7 @@ $content =  $rc->retrieve($eventID);
 <body class="<?php echo $event->getColour(); ?>" >
 <?php
     require_once ("menubar.php");
+    require_once ("footer.php");
 
     if (isset($_SESSION["userType"])) {
         switch ((int)$_SESSION['userType']){
