@@ -11,7 +11,7 @@ class ReservationService extends ServiceUtils {
         $this->dao = new ReservationDAO();
     }
 
-    public function reservationService(Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
         try {
 

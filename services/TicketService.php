@@ -407,6 +407,26 @@ class TicketService extends ServiceUtils {
             return null;
         }
     }
+
+    public function create(Ticket $ticket)
+    {
+        try {
+
+            if ($this->dao->create($ticket))
+                return true;
+
+            return false;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return false;
+        }
+    }
 }
 
 ?>

@@ -43,6 +43,30 @@ class RestaurantService extends ServiceUtils
         }
     }
 
+    public function getById(int $id): ?Restaurant {
+        try {
+            $stmt = $this->dao->getById($id);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                return $this->rowToRestaurant($row);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty image
+            return null;
+        }
+    }
+
     public function addRestaurant(Restaurant $restaurant)
     {
         try {
