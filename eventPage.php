@@ -139,8 +139,6 @@ $content =  $rc->retrieve($eventID);
     <script>
         function daySchedule(day) {
             const eventID = `<?php echo $eventID ?>`;
-            console.log(day);
-
             const body = new FormData();
 
             body.append("day", day);
@@ -150,33 +148,23 @@ $content =  $rc->retrieve($eventID);
                 method: "POST",
                 body,
             }).then(async (res) => {
-                document.getElementById("daySchedule").innerHTML = await res.text();
+                const daySchedule = document.getElementById("daySchedule");
+                const header = daySchedule.firstElementChild;
+
+                daySchedule.removeChild(header);
+                daySchedule.innerHTML = await res.text();
+                daySchedule.prepend(header);
             });
         }
     </script>
-
-    <header>
-        <?php
-            if ($eventName == "Food")
-            { ?>
-            <h2>
-                Restaurants
-            </h2>
-        <?php
-            }else{ ?>
-                <h2>
-                    Schedule
-                </h2>
-        <?php
-            }
-        ?>
-
-    </header>
 
     <?php
     // Restaurant list
     if ($eventName == "Food") { ?>
     <article id ="restaurantList">
+        <header>
+            <h2>Restaurants</h2>
+        </header>
         <table>
             <tr>
                 <th>Name</th>
@@ -213,6 +201,9 @@ $content =  $rc->retrieve($eventID);
     <?php } ?>
 
     <article id="daySchedule">
+        <header>
+            <h2>Schedule</h2>
+        </header>
 
         <?php
 
