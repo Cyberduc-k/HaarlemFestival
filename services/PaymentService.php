@@ -15,6 +15,7 @@ require_once("MailService.php");
 class PaymentService extends ServiceUtils
 {
     private PaymentDAO $dao;
+    private $userId;
 
     public function __construct()
     {
@@ -28,7 +29,6 @@ class PaymentService extends ServiceUtils
         try {
             // create random and unique order ID
             $orderId = $this->createUniqueOrderId();
-            $userId = 9;
             $amountString = (string)$amount . ".00";
 
 
@@ -139,5 +139,61 @@ class PaymentService extends ServiceUtils
         }
         return true;
     }
+
+    function updateCartStatus(string $orderId): bool{
+        try {
+            $userId = (int)$this->getUserId($orderId);
+            return $stmt = $this->dao->updateCartStatus($userId, $orderId);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+        }
+        return false;
+    }
+
+    function getUserId(string $orderId): int {
+        try {
+            $stmt = $this->dao->getUserId($orderId);
+            $num = $stmt ->rowCount();
+
+            if($num == 1) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                return (int)$row["userId"];
+            }
+
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+        }
+        return 999999;
+    }
+
+    function getStatusByUserId(int $userId) {
+        try {
+            $stmt = $this->dao->getStatusByUserId($userId);
+            $num = $stmt->rowCount();
+
+            if ($num == 1) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                return (string)$row["status"];
+            }
+
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+        }
+        return "";
+    }
+
 
 }

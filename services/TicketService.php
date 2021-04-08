@@ -407,6 +407,35 @@ class TicketService extends ServiceUtils {
             return null;
         }
     }
+
+    public function updateTicketAmount(int $userId, string $orderId): bool {
+        try {
+            return $this->dao->updateTicketAmount($orderId);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);        }
+        return false;
+    }
+
+    public function getPrice(int $id) {
+        try {
+            $ticket = $this->dao->getById($id);
+            $price = $ticket->getPrice();
+
+            return $price;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
 }
 
 ?>

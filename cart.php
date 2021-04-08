@@ -2,24 +2,26 @@
 if (!isset($_SESSION)) session_start();
 require_once("services/TicketService.php");
 
+if(isset($_SESSION["userId"])) {
+$ts = new TicketService();
+$userId = $_SESSION["userId"];
 
-if(isset($_GET["userId"])) {
-    $ts = new TicketService();
-    $tickets = $ts->getAllForUser(9);
+$tickets = $ts->getAllForCart($userId);
+$ticketService = new TicketService();
 
-    $amount = 0;
+$amount = 0;
 
-    for ($i = 0; $i <= count($tickets) - 1; $i++) {
-        $ticket = $tickets[$i]->ticket;
-        $num = $tickets[$i]->count;
-        $amount += $ticket->getPrice();
-    }
+foreach ($tickets as $twc) {
+    $ticket = $twc->ticket;
+    $price = $ticket->getPrice();
+    $amount += $price;
+}
 
-    if (isset($_POST['agreeButton'])) {
-        require_once("services/PaymentService.php");
-        $ps = new PaymentService();
-        $ps->createPayment($_GET['userId'], $amount,);
-    }
+if (isset($_POST['agreeButton'])) {
+    require_once("services/PaymentService.php");
+    $ps = new PaymentService();
+    $ps->createPayment($userId, $amount,);
+}
 } else {
     header("Location: ./");
 }
@@ -32,22 +34,37 @@ if(isset($_GET["userId"])) {
     <link type="text/css" rel="stylesheet" href="css/tickets.css"/>
 </head>
 <body>
-
-<?php require_once("menubar.php"); ?>
-
-<article id="tickets">
-</article>
 <section>
+
+    <?php require_once("menubar.php"); ?>
+
+    <article id="tickets">
+        <?php
+        $ticketService = new TicketService();
+        $tickets = $ticketService->getAllForCart($userId);
+
+        foreach ($tickets as $twc) {
+            $ticket = $twc->ticket;
+            $start = $ticketService->getStartDate($ticket);
+            $startDate = $start->format('d-m-y H:i');
+            $name = $ticketService->getDescription($ticket);
+            $location = $ticketService->getLocation($ticket);
+            $amount = $twc->count;
+        ?>
+        <div class="ticket">
+            <span class="name"><?= $name ?></span>
+            <span class="location"><?= $location ?></span>
+            <span class="time"><?= $startDate ?> </span>
+            <span class="numOfTickets"><?=$amount?> </span>
+        </div>
+        <?php
+        }
+        ?>
+
+        <form id="agreement" method="post" action="cart.php" onload="renderTickets(this)">
+            <input id ="agreeButton" type="submit" name="agreeButton" value="Proceed to payment">
+        </form>
+    </article>
 </section>
-
-<script>
-    const section = document.getElementById("tickets");
-</script>
-
-
-<form id="agreement" method="post" action="cart.php">
-    <button name="agreeButton" type="submit"> proceed to payment </button>
-</form>
-
 </body>
 </html>

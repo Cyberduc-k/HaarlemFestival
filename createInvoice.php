@@ -15,10 +15,13 @@ require_once("models/EventType.php");
 require_once("services/InvoiceService.php");
 require_once("services/UserService.php");
 require_once("services/TicketService.php");
+require_once("services/PaymentService.php");
 // require_once("validate.php");
 require_once("menubar.php");
 
 if ($_POST) {
+    $pService = new PaymentService();
+    $tService = new TicketService();
     $service = new InvoiceService();
     $invoice = new Invoice();
 
@@ -28,18 +31,20 @@ if ($_POST) {
     $invoice->setTax((float)$_POST["tax"] / 100.0);
     $invoice->setDate(new DateTime());
     $invoice->setDueDate(new DateTime($_POST["dueDate"]));
+    $invoiceAmount = 0;
 
     $ticketIds = $_POST["ticketId"];
     $ticketCounts = $_POST["ticketCount"];
 
     if ($service->create($invoice)) {
         for ($i = 0; $i < count($ticketIds); $i++) {
+            $invoiceAmount += $tService->getPrice((int)$ticketIds[$i]);
             if (!$service->addTicket($invoice->getId(), (int)$ticketIds[$i], (int)$ticketCounts[$i])) {
                 header("Location: createInvoice.php");
                 exit;
             }
         }
-
+        $pService->createPayment($invoice->getUserId(), $invoiceAmount);
         echo "Succesfully created invoice";
     } else {
         header("Location: createInvoice.php");

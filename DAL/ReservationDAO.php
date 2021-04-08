@@ -5,7 +5,7 @@ require_once("DAOUtils.php");
 // DAO for the images
 class ReservationDAO extends DAOUtils
 {
-    private string $tableName = "reservation";
+    private string $tableName = "reservations";
 
     public function addReservation(Reservation $reservation): ?bool
     {
@@ -14,24 +14,26 @@ class ReservationDAO extends DAOUtils
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                id = :id, restaurantId = :restaurantId, name = :name, reservationTime = :reservationTime";
+                restaurantId = :restaurantId, name = :name, reservationTime = :reservationTime";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
             Base::getInstance()->conn->beginTransaction();
 
             // cast references into variables to avoid error
-            $id = (int)$image->getId();
-            $contentPageId = (int)$image->getContentPage();
-            $name = (string)$image->getName();
+            $restaurantId = (int)$reservation->getRestaurantId();
+            $name = (string)$reservation->getName();
+            $reservationTime = $reservation->getReservationTime()->format("Y-m-d H:i:s");
 
             // bind values
-            $stmt->bindParam(":id", $id);
-            $stmt->bindParam(":contentPageId", $contentPageId);
+            $stmt->bindParam(":restaurantId", $restaurantId);
             $stmt->bindParam(":name", $name);
+            $stmt->bindParam(":reservationTime", $reservationTime);
 
             // execute query
             $stmt->execute();
+
+            $reservation->setId((int)base::getInstance()->conn->lastInsertId());
 
             // If we get tot this point there are no errors so we can commit
             Base::getInstance()->conn->commit();
