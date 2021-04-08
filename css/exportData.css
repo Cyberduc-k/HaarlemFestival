@@ -1,0 +1,19 @@
+.content {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.exportForm {
+    width: 25%;
+    display: inline;
+    float: left;
+}
+
+.inputs{
+    height: 35%;
+}
+
+.exportBtn{
+    padding: 6px;
+    margin: 10px;
+}
