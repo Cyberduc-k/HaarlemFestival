@@ -1,12 +1,15 @@
 <?php
 
 require_once ("services/EventService.php");
-require_once ("EventSchedule.php");
+require_once ("services/RestaurantService.php");
+require_once ("models/Restaurant.php");
+require_once ("EventSchedule.php");;
 require_once "retreiveContent.php";
 require_once "services/ContentService.php";
 
 $schedule = new EventSchedule();
 $es = new EventService();
+$rs = new RestaurantService();
 
 if (isset($_GET["event"]))
 {
@@ -180,12 +183,17 @@ $content =  $rc->retrieve($eventID);
                 <th>Location</th>
                 <th>FoodType</th>
             </tr>
+            <?php
+            $restaurants = $rs->getAll();
+            foreach ($restaurants as $restaurant) { ?>
             <tr>
-                <td> ... </td>
-                <td> ... </td>
-                <td> ... </td>
+                <td> <?php echo $restaurant->getName(); ?> </td>
+                <td> <?php echo $restaurant->getLocation(); ?> </td>
+                <td> <?php echo $restaurant->getFoodType(); ?> </td>
             </tr>
+            <?php } ?>
         </table>
+        <form>
     </article>
     <?php } ?>
 
