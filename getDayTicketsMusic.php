@@ -26,7 +26,7 @@ if (isset($_POST["day"]) && isset($_POST["eventID"])) {
             break;
     }
 
-    if ($eventType == 3){
+    if ($eventType == 3) {
         $tickets = $service->getHistoricTicketsPerDay($date);
     }else{
         $tickets = $service->getMusicTicketsPerDay($eventType, $date);

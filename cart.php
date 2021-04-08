@@ -5,7 +5,7 @@ require_once("services/EventService.php");
 require_once("services/UserService.php");
 require_once("services/TicketService.php");
 
-if(isset($_GET["userId"])) {
+if(isset($_SESSION["userId"])) {
 
     $ts = new TicketService();
     $es = new EventService();
