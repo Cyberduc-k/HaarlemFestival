@@ -17,7 +17,7 @@ class EventService extends ServiceUtils
             $num = $stmt->rowCount();
 
             if ($num > 0) {
-                $events = [];
+                $events = array();
 
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     array_push($events, $this->rowToEvent($row));
@@ -38,6 +38,35 @@ class EventService extends ServiceUtils
         }
     }
 
+    // Get all events as array
+    public function getAllAsArray(): ?array {
+        try {
+            $stmt = $this->dao->getAll();
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $events = array();
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    array_push($events, $row);
+                }
+
+                return $events;
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return null;
+        }
+    }
+
     public function getById(int $id): ?Event{
         try {
             $stmt = $this->dao->getById($id);
@@ -47,6 +76,28 @@ class EventService extends ServiceUtils
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 return $this->rowToEvent($row);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty event
+            return null;
+        }
+    }
+
+    public function getByIdAsArray(int $id): ?Array{
+        try {
+            $stmt = $this->dao->getById($id);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                return $stmt->fetch(PDO::FETCH_ASSOC);
             }
 
             return null;
