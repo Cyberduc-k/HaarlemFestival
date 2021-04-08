@@ -27,9 +27,9 @@ abstract class UserTypes {
     public static function getType(int $type): String {
         switch ($type) {
             case 0:
-                return "User";
+                return "Client";
             case 1:
-                return "Admin";
+                return "Volunteer";
             case 2:
                 return "Superadmin";
         }
