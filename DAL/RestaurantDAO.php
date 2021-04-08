@@ -45,7 +45,7 @@ class RestaurantDAO extends DAOUtils
             Base::getInstance()->conn->beginTransaction();
 
             // cast references into variables to avoid error
-            $name = (int)$restaurant->getName();
+            $name = (string)$restaurant->getName();
             $location = (string)$restaurant->getLocation();
             $foodType = (string)$restaurant->getFoodType();
 
