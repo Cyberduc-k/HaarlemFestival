@@ -85,9 +85,9 @@ if ($_POST) {
                 </div>
 
                 <input type="radio" id="male" name="usertype" value="0">
-                <label for="0">User</label><br>
+                <label for="0">Client</label><br>
                 <input type="radio" id="female" name="usertype" value="1">
-                <label for="1">Admin</label><br>
+                <label for="1">Volunteer</label><br>
                 <input type="radio" id="other" name="usertype" value="2">
                 <label for="2">Superadmin</label>
 

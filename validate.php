@@ -22,13 +22,13 @@ if (
             break;
         default:
             if (!(UserTypes::ACCESSLEVELS[basename($_SERVER['PHP_SELF'])] == UserTypes::CLIENT)) {
-                invalidUser("Admin");
+                invalidUser("Volunteer");
             }
 
             break;
     }
 } else {
-    invalidUser("Member");
+    invalidUser("Client");
 }
 
 // Show a message to the user based on what level of user he should be
