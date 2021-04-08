@@ -373,7 +373,8 @@ class TicketDAO extends DAOUtils {
             $query = "SELECT language, guide, inStock, tickets.id, tickets.ticketType, tickets.price FROM `tickets` 
                             JOIN events ON eventId=events.id
                             JOIN historic_tours ON events.id=historic_tours.eventId
-                            WHERE historic_tours.date LIKE :day";
+                            WHERE historic_tours.date LIKE :day
+                            ORDER BY date";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
