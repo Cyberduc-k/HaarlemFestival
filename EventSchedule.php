@@ -91,7 +91,7 @@ class EventSchedule
         if (is_array($schedule)){
             foreach($schedule as $mus=>$mus_value)
             {
-                echo "<table>
+                echo "<table border='1'>
                     <tr>
                     <td>".$mus."</td>
                     <td>".$mus_value->getStartTime()->format("H:i:s")." - ".$mus_value->getEndTime()->format("H:i:s")."</td>
@@ -102,6 +102,19 @@ class EventSchedule
                   </tr>
                   </table>";
             }
+
+            //
+
+//            if (!is_null($schedule) && !empty($schedule)) {
+//                foreach ($schedule as $timeSlot) {
+//
+//                    echo "<tr>
+//                <td>".$timeSlot->getDate()->format("d-m-Y")."</td>
+//                <td>".$timeSlot->getNDutchTours()."</td>
+//                <td>".$timeSlot->getNEnglishTours()."</td>
+//                <td>".$timeSlot->getNChineseTours()."</td>
+//            <tr>";
+//                }
         }
         else{
             echo "No schedule found or this day";

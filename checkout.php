@@ -1,10 +1,8 @@
 <?php
-
-
 // TODO: checkout.php vervangen, maar heb hem aangehouden als makkelijke test voor de API calls
-if (!isset($_SESSION)) session_start();
 
 require_once("services/PaymentService.php");
+require_once("validate.php");
 
 
 if(isset($_POST["submitButton"])) {
@@ -14,7 +12,12 @@ if(isset($_POST["submitButton"])) {
 
 
 <html lang="en">
-<form name="testForm" action="checkout.php" method="post">
+<head>
+    <title>Check out</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/tickets.css" />
+</head>
+<form name="ServiceAgreement" action="checkout.php" method="post">
     <input type="submit" name="submitButton">
 </form>
 </html>

@@ -184,6 +184,7 @@ $eventName = ucfirst($event->getName());
             });
         }
 
+
         function selectTicket(self, id, idx) {
             const ticketPrice = filtered[idx].price;
 
