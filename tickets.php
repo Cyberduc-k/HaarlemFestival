@@ -174,7 +174,6 @@ $eventName = ucfirst($event->getName());
                 body,
             }).then(async (res) => {
                 tickets = (await res.json()) || [];
-                console.log(tickets);
                 renderTickets();
             });
         }

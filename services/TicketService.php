@@ -4,6 +4,7 @@ require_once(__DIR__ . "/../models/Ticket.php");
 require_once(__DIR__ . "/../models/TicketType.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../models/EventType.php");
+require_once(__DIR__ . "/../models/Language.php");
 require_once(__DIR__ . "/../DAL/TicketDAO.php");
 require_once("ActService.php");
 require_once("VenueService.php");
@@ -361,6 +362,8 @@ class TicketService extends ServiceUtils {
             $tickets = [];
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $row['language'] = Language::getLanguage((int)$row['language']);
+                $row['date'] = (new DateTime($row['date']))->format('H:i');
                 array_push($tickets, $row);
             }
 
