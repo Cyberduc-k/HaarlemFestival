@@ -187,10 +187,13 @@ $content =  $rc->retrieve($eventID);
                     Add a restaurant:
                 </p>
                 <p>
+                    <label> Name: </label>
                     <input name="name" type="text" required>
+                    <label> Location: </label>
                     <input name="location" type="text" required>
+                    <label> Food type (French, Dutch, etc): </label>
                     <input name="foodType" type="text" required>
-                    <input type="submit" name="submit" value="Upload" required>
+                    <br><br><input type="submit" name="submit" value="submit" required>
                 </p>
             </fieldset>
         </form>
