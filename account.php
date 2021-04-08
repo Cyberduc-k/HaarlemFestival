@@ -12,6 +12,7 @@ if(!isset($_SESSION)) session_start();
 
     require_once("menubar.php");
     require_once("services/UserService.php");
+    require_once("services/PaymentService.php");
 
     $userService = new UserService();
 
@@ -35,7 +36,11 @@ if(!isset($_SESSION)) session_start();
     echo "<h1 style='float: left'>Welcome " . $_SESSION['firstname'] . "!</h1>";
     echo "<img class='avatar' src=".$userService->getAvatarByEmail($_SESSION["email"])." alt='avatar' style='float: left; margin: 40px 0px 0px 40px'>";
 
+
+
     ?>
+
+
     </body>
     <?php
     require_once ("footer.php");

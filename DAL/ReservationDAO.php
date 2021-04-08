@@ -5,7 +5,7 @@ require_once("DAOUtils.php");
 // DAO for the images
 class ReservationDAO extends DAOUtils
 {
-    private string $tableName = "reservation";
+    private string $tableName = "reservations";
 
     public function addReservation(Reservation $reservation): ?bool
     {
@@ -23,7 +23,7 @@ class ReservationDAO extends DAOUtils
             // cast references into variables to avoid error
             $restaurantId = (int)$reservation->getRestaurantId();
             $name = (string)$reservation->getName();
-            $reservationTime = $reservation->getReservationTime();
+            $reservationTime = $reservation->getReservationTime()->format("Y-m-d H:i:s");
 
             // bind values
             $stmt->bindParam(":restaurantId", $restaurantId);

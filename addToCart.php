@@ -25,7 +25,7 @@ if (isset($_SESSION["userId"])) {
         $reservation = new Reservation();
         $reservation->setName($_SESSION["firstname"]);
         $reservation->setRestaurantId($ticketId);
-        $reservation->setReservationTime(new DateTime($_POST("ticketType")));
+        $reservation->setReservationTime(new DateTime($_POST["ticketType"]));
 
         $reses->addReservation($reservation);
 
