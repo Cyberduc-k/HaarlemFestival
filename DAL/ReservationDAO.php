@@ -14,21 +14,21 @@ class ReservationDAO extends DAOUtils
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                id = :id, restaurantId = :restaurantId, name = :name, reservationTime = :reservationTime";
+                restaurantId = :restaurantId, name = :name, reservationTime = :reservationTime";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
             Base::getInstance()->conn->beginTransaction();
 
             // cast references into variables to avoid error
-            $id = (int)$image->getId();
-            $contentPageId = (int)$image->getContentPage();
-            $name = (string)$image->getName();
+            $restaurantId = (int)$reservation->getRestaurantId();
+            $name = (string)$reservation->getName();
+            $reservationTime = $reservation->getReservationTime();
 
             // bind values
-            $stmt->bindParam(":id", $id);
-            $stmt->bindParam(":contentPageId", $contentPageId);
+            $stmt->bindParam(":restaurantId", $restaurantId);
             $stmt->bindParam(":name", $name);
+            $stmt->bindParam(":reservationTime", $reservationTime);
 
             // execute query
             $stmt->execute();
