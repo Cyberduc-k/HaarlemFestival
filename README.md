@@ -1,9 +1,27 @@
 # Haarlem Festival Project
 
-## TODO
+website URL: http://haarlemfestival2021.nl
 
-- [ ] Setup database
-- [ ] Loaded page contents from database
-- [ ] Add all model classes
-- [ ] Generate ticket pdf
-- [ ] Generate invoice pdf
+
+
+Normal user login credentials:
+
+Username: FirstTestUser
+Email: Test1@gmail.com
+Password: Password1
+
+Username: SecondTestUser
+Email: Test2@gmail.com
+Password: Password2
+
+
+Admin login credentials:
+
+Username: FirstAdmin
+Email: Admin1@gmail.com
+Password: Password3
+
+Username: SecondAdmin
+Email: Admin2@gmail.com
+Password: Password4
+

@@ -22,11 +22,13 @@
             ?>
     <body>
         <section id="event">
-            <article>
             <?php
 
             foreach ($events as $ev)
             {
+                ?>
+            <article>
+                <?php
                 $en = ucfirst($ev->getName());
                 $eid = $ev->getId();
 
@@ -43,10 +45,13 @@
                     echo "<img id='eventImg' src='uploads/uploadedIMG/$id-$name'/>";
                 }
 
-                echo "<a class='events' id='eventMore' href='/eventPage.php?event=$eid'>More...</a></article>";
+                echo "<a class='events' id='eventMore' href='/eventPage.php?event=$eid'>More...</a>";
+                ?>
+            </article>
+                <?php
             }
-
             ?>
+
         </section>
     </body>
     <?php

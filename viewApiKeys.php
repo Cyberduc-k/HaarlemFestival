@@ -116,6 +116,9 @@ else{
             <p><?php if(isset($_SESSION["apiError"])){echo $_SESSION["apiError"];}?></p>
         </form>
     </section>
+    <?php
+    require_once ("footer.php");
+    ?>
     </body>
     </html>
 <?php
