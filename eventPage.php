@@ -75,22 +75,11 @@ $content =  $rc->retrieve($eventID);
         <?php
         }
         ?>
-        <?php
-        if ($eventName == "Food"){ ?>
-            <li id="restaurantsNav">
-                <a onclick="hideAbout()">
-                    Reservations
-                </a>
-            </li>
-        <?php } else{ ?>
-            <li>
-                <a href="tickets.php?event=<?php echo $eventID; ?>">
-                    Tickets
-                </a>
-            </li>
-        <?php
-        }
-        ?>
+        <li>
+            <a href="tickets.php?event=<?php echo $eventID; ?>">
+                Tickets
+            </a>
+        </li>
     </ul>
 </nav>
 
