@@ -7,6 +7,7 @@ require_once(__DIR__ . "/../models/EventType.php");
 require_once(__DIR__ . "/../DAL/TicketDAO.php");
 require_once("ActService.php");
 require_once("VenueService.php");
+require_once("ReservationService.php");
 require_once("HistoricTourService.php");
 require_once("ServiceUtils.php");
 
@@ -225,6 +226,7 @@ class TicketService extends ServiceUtils {
 
                     return $venue->getName();
                 case EventType::Food:
+                    $service = new ReservationService();
                     return "Haarlem"; // @TODO: pull from databse
                 default: die();
             }

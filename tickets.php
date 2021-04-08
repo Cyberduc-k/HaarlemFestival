@@ -178,7 +178,7 @@ $eventName = ucfirst($event->getName());
                         <span class="name">${ticket.name}</span>
                         <span class="location">${ticket.location}</span>
                         <span class="time">${ticket.startTime.slice(0, -3)} - ${ticket.endTime.slice(0, -3)}</span>
-                        <span class="stock">${ticket.inStock} Left</span>
+                        <span class="stock">${ticket.price == 0 ? '' : `${ticket.inStock} Left`}</span>
                     </div>
                 `);
             });
