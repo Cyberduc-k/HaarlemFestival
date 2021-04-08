@@ -4,6 +4,7 @@
 <head>
     <title>Add new user</title>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/createUser.css" />
 </head>
 <body>
 

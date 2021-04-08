@@ -1,0 +1,25 @@
+.content {
+    max-width: 600px;
+    margin: auto;
+}
+
+form {
+    border: 1px solid white;
+    padding: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    width: 100%;
+}
+
+label {
+    vertical-align: top;
+}
