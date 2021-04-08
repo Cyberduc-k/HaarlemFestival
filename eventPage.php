@@ -217,29 +217,40 @@ echo <<<END
                     </tr>
                 <?php } ?>
             </table>
-            <form action="addRestaurant.php" method="post" enctype="multipart/form-data">
-                <fieldset>
-                    <p>
-                        Add a restaurant:
-                    </p>
-                    <p>
-                        <label> Name: </label>
-                        <input name="name" type="text" required>
-                        <label> Location: </label>
-                        <input name="location" type="text" required>
-                        <label> Food type (French, Dutch, etc): </label>
-                        <input name="foodType" type="text" required>
-                        <br><br><input type="submit" name="submit" value="submit" required>
-                    </p>
-                </fieldset>
-            </form>
+            <?php if (isset($_SESSION["userType"])) {
+                switch ((int)$_SESSION['userType']){
+                    case 2:
+                        ?>
+                        <form action="addRestaurant.php" method="post" enctype="multipart/form-data">
+                            <fieldset>
+                                <p>
+                                    Add a restaurant:
+                                </p>
+                                <p>
+                                    <label> Name: </label>
+                                    <input name="name" type="text" required>
+                                    <label> Location: </label>
+                                    <input name="location" type="text" required>
+                                    <label> Food type (French, Dutch, etc): </label>
+                                    <input name="foodType" type="text" required>
+                                    <br><br><input type="submit" name="submit" value="submit" required>
+                                </p>
+                            </fieldset>
+                        </form>
+                        <?php
+                        break;
+                }
+            }
+            ?>
         </article>
     <?php } ?>
 
     <article id="daySchedule">
+        <?php if ($eventName != "Food"){ ?>
         <header>
             <h2>Schedule</h2>
         </header>
+        <?php }
 
         <?php
             // get right schedule per event
