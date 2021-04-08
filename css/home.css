@@ -42,3 +42,8 @@
 #eventMore{
     color: #00FEFE;
 }
+
+#eventImg{
+    height: 150px;
+    width: 150px;
+}
