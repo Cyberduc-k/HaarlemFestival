@@ -37,6 +37,7 @@ if (isset($_POST["day"]) && isset($_POST["eventID"])) {
                 "name" => $restaurant->getName(),
                 "location" => $restaurant->getLocation(),
                 "foodType" => FoodType::getType($restaurant->getFoodType()),
+                "price" => $restaurant->getPrice()
             ];
         }, $rs->getAll());
     }else{

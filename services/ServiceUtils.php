@@ -202,7 +202,7 @@ class ServiceUtils {
         $restaurant->setName((string)$row["name"]);
         $restaurant->setLocation((string)$row["location"]);
         $restaurant->setFoodType((int)$row["foodType"]);
-        $restaurant->setFoodType((int)$row["price"]);
+        $restaurant->setPrice((int)$row["price"]);
 
         return $restaurant;
     }

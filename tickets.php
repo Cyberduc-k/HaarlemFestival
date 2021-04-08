@@ -116,9 +116,11 @@ $eventName = ucfirst($event->getName());
                 <label for="ticketType">Type:</label>
                 <select name="ticketType" onchange="changeTicketType(this)">
                     <?php
-                        if ($eventName == "Historic" || $eventName == "Food") {
+                        if ($eventName == "Historic") {
                             echo '<option value="0">Single Ticket</option>';
                             echo '<option value="3">Family Ticket</option>';
+                        } elseif ($eventName == "Food") {
+                            echo '<option value="0">Reservation</option>';
                         } else {
                             echo '<option value="0">Single Ticket</option>';
                             echo '<option value="1">1 Day All-Access</option>';

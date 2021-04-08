@@ -5,6 +5,7 @@ class Restaurant {
     private String $name;
     private String $location;
     private int $foodType;
+    private int $price;
 
     public function getId(): int {
         return $this->id;
@@ -36,6 +37,14 @@ class Restaurant {
 
     public function setFoodType(int $foodType): void {
         $this->foodType = $foodType;
+    }
+
+    public function getPrice(): int {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): void {
+        $this->price = $price;
     }
 }
 
