@@ -20,7 +20,6 @@ class EventSchedule
             </tr>";
 
         $hts = new HistoricTourService();
-        $schedule = array();
 
         $schedule = $hts->getSchedule();
 
@@ -62,6 +61,7 @@ class EventSchedule
     {
         $date = "";
 
+        // get date of each day
         switch($day){
             case "Thursday":
                 $date = "07-26";
@@ -84,11 +84,13 @@ class EventSchedule
     {
         $as = new ActService();
 
+        // get schedule from database
         $schedule = $as->getScheduleForEvent($eventId, $date);
 
         if (is_array($schedule)){
             foreach($schedule as $mus=>$mus_value)
             {
+                // show table
                 echo "<table>
                     <tr>
                     <td>".$mus."</td>
@@ -100,21 +102,9 @@ class EventSchedule
                   </tr>
                   </table>";
             }
-
-            //
-
-//            if (!is_null($schedule) && !empty($schedule)) {
-//                foreach ($schedule as $timeSlot) {
-//
-//                    echo "<tr>
-//                <td>".$timeSlot->getDate()->format("d-m-Y")."</td>
-//                <td>".$timeSlot->getNDutchTours()."</td>
-//                <td>".$timeSlot->getNEnglishTours()."</td>
-//                <td>".$timeSlot->getNChineseTours()."</td>
-//            <tr>";
-//                }
         }
         else{
+            // give feedback when no schedule was found
             echo "No schedule found or this day";
         }
 
