@@ -478,7 +478,6 @@ class UserService extends ServiceUtils {
             else {
                 $stash = new EditStash();
                 $editKey = new EditKey();
-                echo "mail not changed";
                 $nextStashId = $userEditsService->getNextId();
 
                 if (is_null($nextStashId)) {

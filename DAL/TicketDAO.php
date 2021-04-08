@@ -417,6 +417,33 @@ class TicketDAO extends DAOUtils {
             return $this->handleNullError($e, true);
         }
     }
+
+    public function updateTicketAmount(string $orderId): bool {
+        try {
+            $query = "UPDATE
+                " .$this->tableName . " AS t
+                JOIN cart AS c
+             ON
+                  c.orderId =:orderId
+             SET
+                 t.inStock =(t.inStock - c.nTickets)
+            WHERE
+              t.id = c.ticketId;";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+            $stmt->bindParam(":orderId", $orderId);
+            $stmt->execute();
+
+            Base::getInstance();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
 }
 
 ?>
