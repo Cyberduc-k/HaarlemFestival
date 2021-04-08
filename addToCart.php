@@ -8,7 +8,7 @@ require_once("models/Reservation.php");
 require_once("services/ReservationService.php");
 require_once("services/RestaurantService.php");
 
-$eventID = $_GET["eventID"];
+$eventID = $_GET["eventId"];
 
 if (isset($_SESSION["userId"])) {
     $ts = new TicketService();
