@@ -58,6 +58,7 @@ else{
     <head>
         <title>Api Key List</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/viewApiKeys.css" />
     </head>
     <body>
 
@@ -66,9 +67,9 @@ else{
         require_once ("models/UserTypes.php");
     ?>
 
-    <div class="content">
+    <section class="content">
         <h1>API Key List</h1>
-        <table id="userList">
+        <table>
             <tr>
                 <th>Email</th>
                 <th>API key</th>
@@ -90,7 +91,7 @@ else{
                         <td><?php echo $key->getEmail()?></td>
                         <td><?php echo $key->getApiKey()?></td>
                         <td>
-                            <form class="" name="apiDeleteForm<?php echo $key->getEmail()?>" action="viewApiKeys.php" method="post">
+                            <form class="tableButton" name="apiDeleteForm<?php echo $key->getEmail()?>" action="viewApiKeys.php" method="post">
                                 <input type="hidden" name="emailToDelete" value="<?php echo $key->getEmail()?>"/>
 
                                 <input class='tableBtn' type="submit" value="Delete"/>
@@ -108,22 +109,13 @@ else{
         <br>
         <br>
         <h2>Allow API access for user</h2>
-        <form action="viewApiKeys.php" method="post">
-            <div class="formBody">
-                <div class="searchFormField">
-                    <input type="email" name="emailToAdd" placeholder="Email" required/>
-                </div>
+        <form id="allowAccessForm" action="viewApiKeys.php" method="post">
+            <input id="emailInput" type="email" name="emailToAdd" placeholder="Email" required/>
+            <input type="submit" value="Add" id="submit"/>
 
-                <div>
-                    <input id="submitBtn" type="submit" value="Add" class="searchButton customButton"/>
-                </div>
-
-                <div class="formField red">
-                    <p><?php if(isset($_SESSION["apiError"])){echo $_SESSION["apiError"];}?></p>
-                </div>
-            </div>
+            <p><?php if(isset($_SESSION["apiError"])){echo $_SESSION["apiError"];}?></p>
         </form>
-    </div>
+    </section>
     </body>
     </html>
 <?php
