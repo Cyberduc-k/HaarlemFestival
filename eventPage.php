@@ -109,8 +109,6 @@ echo <<<END
         <nav id="days">
             <ul>
                 <?php if ($eventName == "Jazz"){ ?>
-                        Thursday
-                    <a id="thursday" onclick="daySchedule(this, 'Thursday')">
                 <li>
                     <a id="thursday" onclick="daySchedule(this, 'Thursday')">
                         Thursday
