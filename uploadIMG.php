@@ -37,6 +37,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
             // Make sure we have a file path
             if ($tmpFilePath != "") {
 
+                $images = $service->getAll();
                 if (empty($images))
                     $id = 1;
                 else
@@ -51,7 +52,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
                     $statusMsg = "The file " . $fileName . " has been uploaded.";
 
                     // Upload image data to database
-                    $images = $service->getAll();
+                    // $images = $service->getAll();
 
                     // Create image to upload
                     $image = new Image();
