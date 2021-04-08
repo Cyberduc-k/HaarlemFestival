@@ -12,7 +12,7 @@ class RestaurantDAO extends DAOUtils
     {
         try {
             $query = "SELECT
-                          id, name, location, foodType
+                          id, name, location, foodType, price
                       FROM " . $this->tableName;
 
             // prepare query statement
@@ -38,7 +38,7 @@ class RestaurantDAO extends DAOUtils
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                name = :name, location = :location, foodType = :foodType";
+                name = :name, location = :location, foodType = :foodType, price = :price";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -48,11 +48,13 @@ class RestaurantDAO extends DAOUtils
             $name = (string)$restaurant->getName();
             $location = (string)$restaurant->getLocation();
             $foodType = (string)$restaurant->getFoodType();
+            $price = (int)$price->getPrice();
 
             // bind values
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":location", $location);
             $stmt->bindParam(":foodType", $foodType);
+            $stmt->bindParam(":price", $price);
 
             // execute query
             $stmt->execute();
@@ -65,5 +67,4 @@ class RestaurantDAO extends DAOUtils
             return $this->handleFalseError($e, true);
         }
     }
-
 }
