@@ -244,20 +244,20 @@ echo <<<END
         </header>
 
         <?php
-
-        switch ($eventName){
-            case "Food":
-                break;
-            case "Historic":
-                $schedule->getHistoricSchedule();
-                break;
-            case "Jazz":
-                $schedule->musicEvent($eventID, "Thursday");
-                break;
-            case "Dance":
-                $schedule->musicEvent($eventID, "Friday");
-                break;
-        }
+            // get right schedule per event
+            switch ($eventName){
+                case "Food":
+                    break;
+                case "Historic":
+                    $schedule->getHistoricSchedule();
+                    break;
+                case "Jazz":
+                    $schedule->musicEvent($eventID, "Thursday");
+                    break;
+                case "Dance":
+                    $schedule->musicEvent($eventID, "Friday");
+                    break;
+            }
         ?>
 
     </article>
