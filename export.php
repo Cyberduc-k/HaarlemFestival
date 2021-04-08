@@ -147,5 +147,8 @@ require_once ("menubar.php");
         <p><?php if(isset($_SESSION["exportInvoicesError"])){echo $_SESSION["exportInvoicesError"];}?></p>
     </form>
 </section>
+<?php
+require_once ("footer.php");
+?>
 </body>
 </html>
