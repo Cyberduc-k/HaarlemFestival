@@ -67,6 +67,7 @@ else {
     <head>
         <title>Login</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/login.css" />
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -79,11 +80,11 @@ else {
         </script>
     </head>
     <body>
+        <?php require_once("menubar.php"); ?>
+
         <div id="loginForm">
+            <h1>Login</h1>
             <form action="login.php" method="post">
-
-                <div id="formHeader">Login</div>
-
                 <div class="formBody">
                     <div class="formField">
                         <input type="email" name="email" required placeholder="Email" />
@@ -93,11 +94,11 @@ else {
                         <input type="password" name="password" required placeholder="Password" />
                     </div>
 
+                    <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Lezlz0aAAAAAFwW9tFtLphdlXVJ6qJ5ut-WBXVn"></div>
+
                     <div>
                         <input id="submitBtn" type="submit" value="Login" class="customButton" disabled/>
                     </div>
-
-                    <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Lezlz0aAAAAAFwW9tFtLphdlXVJ6qJ5ut-WBXVn"></div>
 
                     <div class="formField red">
                         <p><?php if(isset($_SESSION["loginError"])){echo $_SESSION["loginError"];}?></p>

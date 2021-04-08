@@ -2,21 +2,24 @@
 
 // Used as an alternative for enums to improve readability
 abstract class UserTypes {
-    const USER = 0;
-    const ADMIN = 1;
+    const CLIENT = 0;
+    const VOLUNTEER = 1;
     const SUPERADMIN = 2;
-    const CLIENT = 3;
-    const VOLUNTEER = 4;
 
     // Access levels of different pages
     const ACCESSLEVELS = [
-        "home.php" => self::USER,
+        "home.php" => self::CLIENT,
         "create.php" => self::SUPERADMIN,
         "createInvoice.php" => self::SUPERADMIN,
-        "edit.php" => self::USER,
-        "viewUsers.php" => self::ADMIN,
-        "changeAvatar.php" => self::USER,
+        "edit.php" => self::CLIENT,
+        "viewUsers.php" => self::VOLUNTEER,
+        "changeAvatar.php" => self::CLIENT,
         "exportToAPI.php" => self::SUPERADMIN,
+        "exportActs.php" => self::SUPERADMIN,
+        "exportInvoices.php" => self::SUPERADMIN,
+        "exportTickets.php" => self::SUPERADMIN,
+        "exportUsers.php" => self::SUPERADMIN,
+        "viewApiKeys.php" => self::SUPERADMIN,
         "export.php" => self::SUPERADMIN
     ];
 
@@ -24,15 +27,11 @@ abstract class UserTypes {
     public static function getType(int $type): String {
         switch ($type) {
             case 0:
-                return "User";
+                return "Client";
             case 1:
-                return "Admin";
+                return "Volunteer";
             case 2:
                 return "Superadmin";
-            case 3:
-                return "Client";
-            case 4:
-                return "Volunteer";
         }
 
         return "Couldn't get type";

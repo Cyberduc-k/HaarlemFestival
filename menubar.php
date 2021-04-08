@@ -54,16 +54,17 @@ echo '<li><a href="contact.php">Contact</a></li>';
 
 // first validate if user is logged in, only then allow access
 if (isset($_SESSION['userType'])) {
-    
     switch ((int)$_SESSION['userType']) {
         // There is no break so that the "lower" admin links will always show
-        case 2:
+        case UserTypes::SUPERADMIN:
             echo "<li><a ".getActiveString("create"). " href='create.php'>Create user</a></li>";
             echo "<li><a ".getActiveString("addDeleteEventPage"). " href='addDeleteEventPage.php'>Add Page</a></li>";
+            echo "<li><a ".getActiveString("createInvoice"). " href='createInvoice.php'>Create Invoice</a></li>";
+            echo "<li><a ".getActiveString("viewApiKeys")." href='viewApiKeys.php'>Manage API keys</a></li>";
+            echo "<li><a ".getActiveString("export")." href='export.php'>Export data</a></li>";
 
-        case 1:
+        case UserTypes::VOLUNTEER:
             echo "<li><a ".getActiveString("viewUsers")." href='viewUsers.php'>View users</a></li>";
-            echo "<li><a ".getActiveString("exportToAPI")." href='export.php'>Export data</a></li>";
             break;
     }
     

@@ -139,6 +139,29 @@ class UserService extends ServiceUtils {
         }
     }
 
+    // Try to get a user by id
+    public function getByIdAsArray(int $id): ?Array {
+        try {
+            $stmt = $this->dao->getById($id);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty user
+            return null;
+        }
+    }
+
     //Try to get a users type by id
     public function getTypeById(int $id): ?int {
         try {
