@@ -18,10 +18,10 @@ function database_read($orderId): string
     return $status ? $status : "unknown order";
 }
 
-function database_write(): bool
+function database_write(int $userId, float $amount): bool
 {
     $service = new PaymentService();
-    return $service->createPayment();
+    return $service->createPayment($userId, $amount);
 
 }
 

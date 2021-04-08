@@ -21,13 +21,16 @@ class PaymentService extends ServiceUtils
         $this->dao = new PaymentDAO();
     }
 
-    function createPayment(): bool {
+    function createPayment($userId, $amount): bool {
         $mollie = new MollieApiClient();
         $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
 
         try {
             // create random and unique order ID
             $orderId = $this->createUniqueOrderId();
+            $userId = 9;
+            $amountString = (string)$amount . ".00";
+
 
             // determine the URL parts
             $protocol = isset($_SERVER['HTTPS']) && strcasecmp('off', $_SERVER['HTTPS']) !== 0 ? "https" : "http";
@@ -38,7 +41,7 @@ class PaymentService extends ServiceUtils
             $payment = $mollie->payments->create([
                 "amount" => [
                     "currency" => "EUR",
-                    "value" => "10.00", // You must send the correct number of decimals, thus we enforce the use of strings
+                    "value" => "{$amountString}", // You must send the correct number of decimals, thus we enforce the use of strings
                 ],
                 "description" => "Order",
                 "redirectUrl" => "{$protocol}://{$hostname}{$path}/return.php?order_id={$orderId}",
@@ -49,7 +52,7 @@ class PaymentService extends ServiceUtils
             ]);
 
             // write payment to database
-            $this->dao->newPayment($orderId, $payment->status);
+            $this->dao->newPayment($orderId, $payment->status, $userId);
             // get checkout url to finish transaction
             Header("Location: " . $payment->getCheckoutUrl(), true, 303);
 

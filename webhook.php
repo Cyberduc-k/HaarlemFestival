@@ -7,6 +7,7 @@ use function _PhpScoperd8ff184be637\database_update;
 try {
     require_once("libs/Mollie/initialize.php");
     require_once("services/PaymentService.php");
+    require_once("services/TicketService.php");
 
     $mollie = new MollieApiClient();
     $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
@@ -25,10 +26,8 @@ try {
     if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
         echo "paid";
     } elseif ($payment->isOpen()) {
-        /*
-         * The payment is open.
-         */
-        echo "open";
+        $ts = new TicketService();
+
     } elseif ($payment->isPending()) {
         /*
          * The payment is pending.

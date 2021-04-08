@@ -6,14 +6,14 @@ class PaymentDAO extends DAOUtils
 {
     private string $tableName = "orders";
 
-    function newPayment(string $orderId, string $status): ?bool
+    function newPayment(string $orderId, string $status, int $userId): ?bool
     {
         try {
             // query to insert record
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                id=:orderId, status=:status";
+                id=:orderId, status=:status, userId=:userId";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -22,6 +22,7 @@ class PaymentDAO extends DAOUtils
             // bind values
             $stmt->bindParam(":orderId", $orderId);
             $stmt->bindParam(":status", $status);
+            $stmt->bindParam(":userId", $userId);
 
             // execute query
             $stmt->execute();
@@ -108,7 +109,7 @@ class PaymentDAO extends DAOUtils
             Base::getInstance()->conn->beginTransaction();
 
             // bind value
-            $stmt->bindParam(":id", $orderId);
+            $stmt->bindParam(":orderId", $orderId);
 
             // execute query
             $stmt->execute();

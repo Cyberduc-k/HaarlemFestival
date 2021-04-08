@@ -103,4 +103,7 @@ if ($_POST) {
     </div>
 <?php } ?>
 </body>
+<?php
+require_once ("footer.php");
+?>
 </html>
