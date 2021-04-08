@@ -50,7 +50,6 @@ foreach ($events as $ev) {
 }
 
 echo '<li><a ' . getActiveString("tickets") . ' href="tickets.php?event=2">Tickets</a></li>';
-echo '<li><a href="contact.php">Contact</a></li>';
 
 // first validate if user is logged in, only then allow access
 if (isset($_SESSION['userType'])) {

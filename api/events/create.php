@@ -9,6 +9,7 @@ header("Access-Control-Max-Age: 3600");
 // make sure variables are set
 if($_POST){
     if(
+        //The email and key to validate and the name and colour of the event to create
         !empty($_POST["name"]) &&
         !empty($_POST["colour"]) &&
         !empty($_POST["email"]) &&
@@ -17,6 +18,7 @@ if($_POST){
         require_once '../../services/ApiKeyService.php';
         require_once '../../models/ApiKey.php';
 
+        //Validate key
         $apiKeyService = new ApiKeyService();
         $key = new ApiKey();
         $key->setEmail((string)htmlspecialchars($_POST["email"]));
@@ -27,7 +29,7 @@ if($_POST){
             require_once("../../services/EventService.php");
 
             $event = new Event();
-            $eventService = new UserService();
+            $eventService = new EventService();
 
             // set order property values
             $event->setName((string)htmlspecialchars($_POST["name"]));
