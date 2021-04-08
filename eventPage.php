@@ -36,19 +36,19 @@ $content =  $rc->retrieve($eventID);
 </head>
 <body class="<?php echo $event->getColour(); ?>" >
 <?php
-    require_once ("menubar.php");
+require_once ("menubar.php");
 
-    if (isset($_SESSION["userType"])) {
-        switch ((int)$_SESSION['userType']){
-            case 2:
-                echo "<a id='editPageBtn' href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
-                break;
-        }
+if (isset($_SESSION["userType"])) {
+    switch ((int)$_SESSION['userType']){
+        case 2:
+            echo "<a id='editPageBtn' href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
+            break;
     }
+}
 
-    $image = $content->getImagePath();
+$image = $content->getImagePath();
 
-    echo <<<END
+echo <<<END
         <header id="header" style="background-image: url('$image')">
             <h1>$eventName</h1>
         </header>
@@ -64,18 +64,18 @@ $content =  $rc->retrieve($eventID);
         </li>
         <?php
         if ($eventName == "Food"){ ?>
-        <li id="restaurantsNav">
-            <a onclick="hideAbout()">
-                Restaurants
-            </a>
-        </li>
+            <li id="restaurantsNav">
+                <a onclick="hideAbout()">
+                    Restaurants
+                </a>
+            </li>
         <?php } else{ ?>
-        <li id="scheduleNav">
-            <a onclick="hideAbout()">
-                Schedule
-            </a>
-        </li>
-        <?php
+            <li id="scheduleNav">
+                <a onclick="hideAbout()">
+                    Schedule
+                </a>
+            </li>
+            <?php
         }
         ?>
         <li>
@@ -89,57 +89,86 @@ $content =  $rc->retrieve($eventID);
 <section id="about">
     <article>
         <?php
-            $header = $content->getHeader();
+        $header = $content->getHeader();
 
-            echo <<<END
+        echo <<<END
                 <header>
                     <h2>$header</h2>
                 </header>
             END;
 
-            echo $content->getText();
+        echo $content->getText();
 
         ?>
     </article>
 </section>
 
 <section id="schedule">
-        <?php if ($eventName == "Jazz" || $eventName == "Dance"){
-            ?>
+    <?php if ($eventName == "Jazz" || $eventName == "Dance"){
+        ?>
         <nav id="days">
             <ul>
                 <?php if ($eventName == "Jazz"){ ?>
-                <li>
-                    <a onclick="daySchedule('Thursday')">
                         Thursday
+                    <a id="thursday" onclick="daySchedule(this, 'Thursday')">
+                <li>
                     </a>
                 </li>
                 <?php } ?>
                 <li>
-                    <a onclick="daySchedule('Friday')">
+                    <a id="friday" onclick="daySchedule(this, 'Friday')">
                         Friday
                     </a>
                 </li>
                 <li>
-                    <a onclick="daySchedule('Saturday')">
+                    <a id="saturday" onclick="daySchedule(this, 'Saturday')">
                         Saturday
                     </a>
                 </li>
                 <li>
-                    <a onclick="daySchedule('Sunday')">
+                    <a id="sunday" onclick="daySchedule(this, 'Sunday')">
                         Sunday
                     </a>
                 </li>
             </ul>
         </nav>
-    <?php
-        }
+        <?php
+    }
     ?>
 
     <script>
-        function daySchedule(day) {
+        const hash = location.hash.length === 0 ? [] : location.hash.substring(1).split(',');
+        const pairs = {};
+
+        for (const part of hash) {
+            if (part.length === 0) continue;
+            const pair = part.split('=');
+
+            pairs[pair[0]] = pair[1];
+        }
+
+        function updateHash() {
+            let hash = "#";
+
+            for (const key in pairs) {
+                if (hash.length !== 1) hash += ',';
+                hash += `${key}=${pairs[key]}`;
+            }
+
+            location.hash = hash;
+        }
+
+        function daySchedule(self, day) {
             const eventID = `<?php echo $eventID ?>`;
             const body = new FormData();
+
+            for (const child of self.parentElement.parentElement.children) {
+                child.classList.remove("active");
+            }
+
+            self.parentElement.classList.add("active");
+            pairs.day = day;
+            updateHash();
 
             body.append("day", day);
             body.append("eventID", eventID);
@@ -156,48 +185,55 @@ $content =  $rc->retrieve($eventID);
                 daySchedule.prepend(header);
             });
         }
+
+        <?php
+
+        if ($eventName == "Jazz" || $eventName == "Dance")
+            echo 'if (pairs.day) daySchedule(document.getElementById(pairs.day.toLowerCase()), pairs.day);';
+
+        ?>
     </script>
 
     <?php
     // Restaurant list
     if ($eventName == "Food") { ?>
-    <article id ="restaurantList">
-        <header>
-            <h2>Restaurants</h2>
-        </header>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>FoodType</th>
-            </tr>
-            <?php
-            $restaurants = $rs->getAll();
-            foreach ($restaurants as $restaurant) { ?>
-            <tr>
-                <td> <?php echo $restaurant->getName(); ?> </td>
-                <td> <?php echo $restaurant->getLocation(); ?> </td>
-                <td> <?php echo $restaurant->getFoodType(); ?> </td>
-            </tr>
-            <?php } ?>
-        </table>
-        <form action="addRestaurant.php" method="post" enctype="multipart/form-data">
-            <fieldset>
-                <p>
-                    Add a restaurant:
-                </p>
-                <p>
-                    <label> Name: </label>
-                    <input name="name" type="text" required>
-                    <label> Location: </label>
-                    <input name="location" type="text" required>
-                    <label> Food type (French, Dutch, etc): </label>
-                    <input name="foodType" type="text" required>
-                    <br><br><input type="submit" name="submit" value="submit" required>
-                </p>
-            </fieldset>
-        </form>
-    </article>
+        <article id ="restaurantList">
+            <header>
+                <h2>Restaurants</h2>
+            </header>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>FoodType</th>
+                </tr>
+                <?php
+                $restaurants = $rs->getAll();
+                foreach ($restaurants as $restaurant) { ?>
+                    <tr>
+                        <td> <?php echo $restaurant->getName(); ?> </td>
+                        <td> <?php echo $restaurant->getLocation(); ?> </td>
+                        <td> <?php echo $restaurant->getFoodType(); ?> </td>
+                    </tr>
+                <?php } ?>
+            </table>
+            <form action="addRestaurant.php" method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <p>
+                        Add a restaurant:
+                    </p>
+                    <p>
+                        <label> Name: </label>
+                        <input name="name" type="text" required>
+                        <label> Location: </label>
+                        <input name="location" type="text" required>
+                        <label> Food type (French, Dutch, etc): </label>
+                        <input name="foodType" type="text" required>
+                        <br><br><input type="submit" name="submit" value="submit" required>
+                    </p>
+                </fieldset>
+            </form>
+        </article>
     <?php } ?>
 
     <article id="daySchedule">
@@ -207,19 +243,19 @@ $content =  $rc->retrieve($eventID);
 
         <?php
 
-            switch ($eventName){
-                case "Food":
-                    break;
-                case "Historic":
-                    $schedule->getHistoricSchedule();
-                    break;
-                case "Jazz":
-                    $schedule->musicEvent($eventID, "Thursday");
-                    break;
-                case "Dance":
-                    $schedule->musicEvent($eventID, "Friday");
-                    break;
-            }
+        switch ($eventName){
+            case "Food":
+                break;
+            case "Historic":
+                $schedule->getHistoricSchedule();
+                break;
+            case "Jazz":
+                $schedule->musicEvent($eventID, "Thursday");
+                break;
+            case "Dance":
+                $schedule->musicEvent($eventID, "Friday");
+                break;
+        }
         ?>
 
     </article>
@@ -237,15 +273,13 @@ $content =  $rc->retrieve($eventID);
 
         <?php if ($eventName == "Food") { ?>
         document.getElementById("restaurantsNav").className = "active";
-        y.id = "";
-        location.hash = "restaurants";
-        y.id = "schedule";
+        pairs.tab = "restaurants";
         <?php } else { ?>
         document.getElementById("scheduleNav").className = "active";
-        y.id = "";
-        location.hash = "schedule";
-        y.id = "schedule";
+        pairs.tab = "schedule";
         <?php } ?>
+
+        updateHash();
     }
 
     function hideSchedule() {
@@ -263,23 +297,18 @@ $content =  $rc->retrieve($eventID);
         document.getElementById("scheduleNav").className = "";
         <?php } ?>
 
-        y.id = "";
-        location.hash = "about";
-        y.id = "about";
+        pairs.tab = "about";
+        updateHash();
     }
 
-    const prevPage = location.hash;
-
-    if (prevPage.length == 0)
-        hideSchedule();
-    else {
-        switch (prevPage) {
-            case "#schedule": hideAbout(); break;
-            case "#restaurants": hideAbout(); break;
-            default: hideSchedule();
-        }
+    switch (pairs.tab) {
+        case "schedule": hideAbout(); break;
+        case "restaurants": hideAbout(); break;
+        default: hideSchedule();
     }
 </script>
-
+<?php
+require_once ("footer.php");
+?>
 </body>
 </html>

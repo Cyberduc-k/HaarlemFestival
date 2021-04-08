@@ -105,3 +105,11 @@ article {
 #daySchedule table td:nth-child(2) {
     text-align: end;
 }
+
+li.active {
+    background-color: var(--color);
+}
+
+li.active * {
+    color: black;
+}

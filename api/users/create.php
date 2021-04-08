@@ -9,6 +9,7 @@ header("Access-Control-Max-Age: 3600");
 // make sure variables are set
 if($_POST){
     if(
+        //The email and key to validate and the name and the variables of the user to create
         !empty($_POST["firstname"]) &&
         !empty($_POST["lastname"]) &&
         !empty($_POST["password"]) &&
@@ -19,6 +20,7 @@ if($_POST){
         require_once '../../services/ApiKeyService.php';
         require_once '../../models/ApiKey.php';
 
+        //Validate key
         $apiKeyService = new ApiKeyService();
         $key = new ApiKey();
         $key->setEmail((string)htmlspecialchars($_POST["apiMail"]));

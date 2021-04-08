@@ -38,20 +38,18 @@ class RestaurantDAO extends DAOUtils
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                id = :id, name = :name, location = :location, foodType = :foodType";
+                name = :name, location = :location, foodType = :foodType";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
             Base::getInstance()->conn->beginTransaction();
 
             // cast references into variables to avoid error
-            $id = (int)$restaurant->getId();
             $name = (int)$restaurant->getName();
             $location = (string)$restaurant->getLocation();
             $foodType = (string)$restaurant->getFoodType();
 
             // bind values
-            $stmt->bindParam(":id", $id);
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":location", $location);
             $stmt->bindParam(":foodType", $foodType);

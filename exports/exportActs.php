@@ -2,6 +2,7 @@
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+//Columns that can be exported
 const VALID_COLUMNS = array("id", "eventId", "date", "startTime", "endTime", "location", "imagePath");
 
 if($_POST){

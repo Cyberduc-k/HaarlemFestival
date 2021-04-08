@@ -6,10 +6,12 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 
 if(!$_POST){
+    //The email and key to validate and the id of the event to retreive
     if(isset($_GET["id"]) && isset($_GET["email"]) && isset($_GET["key"])) {
         require_once '../../services/ApiKeyService.php';
         require_once '../../models/ApiKey.php';
 
+        //Validate key
         $apiKeyService = new ApiKeyService();
         $key = new ApiKey();
         $key->setEmail((string)htmlspecialchars($_GET["email"]));
@@ -18,6 +20,7 @@ if(!$_POST){
         if ($apiKeyService->validate($key)){
             require_once '../../services/EventService.php';
 
+            //Get this user from db
             $eventService = new UserService();
             $event = $eventService->getByIdAsArray((int)htmlspecialchars($_GET["id"]));
 
