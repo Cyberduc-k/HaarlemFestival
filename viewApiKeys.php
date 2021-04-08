@@ -12,9 +12,9 @@ if ($_POST) {
         $apiKeyService = new ApiKeyService();
         $userService = new UserService();
 
-        $email = (string)htmlentities($_POST["email"]);
+        $email = (string)htmlentities($_POST["emailToAdd"]);
 
-        if(is_null($userService->getByEmail($email))){
+        if(empty($userService->getByEmail($email))){
             $_SESSION["apiError"] = "No user found with this email";
             header("Location: viewApiKeys.php");
             exit;

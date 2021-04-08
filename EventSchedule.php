@@ -77,8 +77,6 @@ class EventSchedule
                 break;
         }
 
-        echo $day."</br>";
-
         $this->getMusicEventSchedule($eventId, $date);
     }
 
@@ -91,10 +89,10 @@ class EventSchedule
         if (is_array($schedule)){
             foreach($schedule as $mus=>$mus_value)
             {
-                echo "<table border='1'>
+                echo "<table>
                     <tr>
                     <td>".$mus."</td>
-                    <td>".$mus_value->getStartTime()->format("H:i:s")." - ".$mus_value->getEndTime()->format("H:i:s")."</td>
+                    <td>".$mus_value->getStartTime()->format("H:i")." - ".$mus_value->getEndTime()->format("H:i")."</td>
                     </tr>
                     <tr>
                     <td></td>

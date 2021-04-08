@@ -4,9 +4,11 @@ require_once(__DIR__ . "/../models/Ticket.php");
 require_once(__DIR__ . "/../models/TicketType.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../models/EventType.php");
+require_once(__DIR__ . "/../models/Language.php");
 require_once(__DIR__ . "/../DAL/TicketDAO.php");
 require_once("ActService.php");
 require_once("VenueService.php");
+require_once("ReservationService.php");
 require_once("HistoricTourService.php");
 require_once("ServiceUtils.php");
 
@@ -77,6 +79,35 @@ class TicketService extends ServiceUtils {
     public function getAllForUser(int $userId): ?array {
         try {
             $stmt = $this->dao->getAllForUser($userId);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $tickets = [];
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    array_push($tickets, $this->rowToTicketWithCount($row));
+                }
+
+                return $tickets;
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
+    // get all ticets for a given user's cart.
+    // NOTE: this returns an array of TicketWithCount
+    public function getAllForCart(int $userId): ?array {
+        try {
+            $stmt = $this->dao->getAllForCart($userId);
             $num = $stmt->rowCount();
 
             if ($num > 0) {
@@ -225,6 +256,7 @@ class TicketService extends ServiceUtils {
 
                     return $venue->getName();
                 case EventType::Food:
+                    $service = new ReservationService();
                     return "Haarlem"; // @TODO: pull from databse
                 default: die();
             }
@@ -356,19 +388,15 @@ class TicketService extends ServiceUtils {
     {
         try {
             $stmt = $this->dao->getTicketsForHistoricPerDay($date);
-            $num = $stmt->rowCount();
+            $tickets = [];
 
-            if ($num > 0) {
-                $tickets = [];
-
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($tickets, $this->rowToTicket($row));
-                }
-
-                return $tickets;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $row['language'] = Language::getLanguage((int)$row['language']);
+                $row['date'] = (new DateTime($row['date']))->format('H:i');
+                array_push($tickets, $row);
             }
 
-            return null;
+            return $tickets;
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());

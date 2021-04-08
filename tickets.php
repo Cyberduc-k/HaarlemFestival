@@ -25,7 +25,11 @@ $eventName = ucfirst($event->getName());
     <?php require_once("menubar.php"); ?>
 
     <header id="header">
-        <h1>Tickets</h1>
+        <?php if ($eventName == "Food") { ?>
+            <h1>Reservations</h1>
+        <?php } else { ?>
+            <h1>Tickets</h1>
+        <?php } ?>
 
         <fieldset>
             <label for="event">Event:</label>
@@ -63,6 +67,12 @@ $eventName = ucfirst($event->getName());
             <span class="val3">€ 250,-</span>
         <?php } else if ($eventName == "Historic") { ?>
             <span class="row1">Single Ticket</span>
+            <span class="row2">Family Ticket (max 4 persons)</span>
+
+            <span class="val1">€ 17,50</span>
+            <span class="val2">€ 60,-</span>
+        <?php } else if ($eventName == "Food") { ?>
+            <span class="row1">Wuuuuuuut Single Ticket</span>
             <span class="row2">Family Ticket (max 4 persons)</span>
 
             <span class="val1">€ 17,50</span>
@@ -169,19 +179,35 @@ $eventName = ucfirst($event->getName());
         }
 
         function renderTickets() {
+            var eventName = "<?php echo $eventName ?>";
+
             section.innerHTML = "";
             filterTickets();
 
-            filtered.forEach((ticket, idx) => {
-                section.insertAdjacentHTML("beforeend", `
+            if(eventName === "Historic"){
+                filtered.forEach((ticket, idx) => {
+                    section.insertAdjacentHTML("beforeend", `
+                    <div class="ticket" onclick="selectTicket(this, ${ticket.id}, ${idx})">
+                        <span class="name">${ticket.language}</span>
+                        <span class="location">${ticket.guide}</span>
+                        <span class="time">${ticket.date}</span>
+                        <span class="stock">${ticket.price == 0 ? '' : `${ticket.inStock} Left`}</span>
+                    </div>
+                `);
+                });
+            }else{
+                filtered.forEach((ticket, idx) => {
+                    section.insertAdjacentHTML("beforeend", `
                     <div class="ticket" onclick="selectTicket(this, ${ticket.id}, ${idx})">
                         <span class="name">${ticket.name}</span>
                         <span class="location">${ticket.location}</span>
                         <span class="time">${ticket.startTime.slice(0, -3)} - ${ticket.endTime.slice(0, -3)}</span>
-                        <span class="stock">${ticket.inStock} Left</span>
+                        <span class="stock">${ticket.price == 0 ? '' : `${ticket.inStock} Left`}</span>
                     </div>
                 `);
-            });
+                });
+            }
+
         }
 
 

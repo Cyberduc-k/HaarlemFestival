@@ -1,0 +1,21 @@
+#loginForm {
+    max-width: 600px;
+    margin: auto;
+}
+
+form {
+    border: 1px solid white;
+    padding: 20px;
+}
+
+.formField {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+}
+
+.g-recaptcha {
+    margin-bottom: 18px;
+}

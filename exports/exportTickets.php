@@ -2,6 +2,7 @@
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+//Columns that can be exported
 const VALID_COLUMNS = array("id", "ticketType", "eventId", "eventType", "price", "inStock");
 
 if($_POST){

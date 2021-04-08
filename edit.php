@@ -18,7 +18,7 @@ if ($_POST) {
         isset($_SESSION["userId"]) &&
         isset($_SESSION["userType"])
     ) {
-        if (htmlentities($_POST["id"]) == $_SESSION["userId"] || (int)$_SESSION["userType"] >= UserTypes::ADMIN) {
+        if (htmlentities($_POST["id"]) == $_SESSION["userId"] || (int)$_SESSION["userType"] >= UserTypes::VOLUNTEER) {
             try {
                 $updatedUser = new User();
 
@@ -75,15 +75,15 @@ else {
 
     // If this variable is set the call came from a admin, so edit info of this user
     if (isset($_SESSION['userIdToEdit'])) {
-        if (isset($_SESSION["userType"]) && (int)$_SESSION["userType"] >= UserTypes::ADMIN) {
+        if (isset($_SESSION["userType"]) && (int)$_SESSION["userType"] >= UserTypes::VOLUNTEER) {
             $userIdToEdit = (int)$_SESSION['userIdToEdit'];
             $user = $userService->getById($userIdToEdit);
 
             if (!is_null($user)) {
                 // Only allow editing the page when the edited user is a user or is and admin and a superadmin is logged in
                 if (
-                    $user->getUsertype() == UserTypes::USER ||
-                    ($user->getUsertype() == UserTypes::ADMIN && (int)$_SESSION["userType"] == UserTypes::SUPERADMIN)
+                    $user->getUsertype() == UserTypes::CLIENT ||
+                    ($user->getUsertype() == UserTypes::VOLUNTEER && (int)$_SESSION["userType"] == UserTypes::SUPERADMIN)
                 ) {
                     showEditPage($user);
                 } else {
@@ -123,6 +123,7 @@ function showEditPage(User $user) {
     <head>
         <title>Edit Info</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/editUser.css" />
     </head>
     <body>
         <div class="content">

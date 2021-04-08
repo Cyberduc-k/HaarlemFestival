@@ -180,7 +180,7 @@ class UserDAO extends DAOUtils {
             $query = "SELECT
                 id, firstname, lastname, password, salt, email, register_date, usertype
             FROM
-                " . $this->tableName . " WHERE email = ? LIMIT 0,1";
+                " . $this->tableName . " WHERE email LIKE ? LIMIT 0,1";
 
             // prepare query statement
             $stmt = Base::getInstance()->conn->prepare($query);

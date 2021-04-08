@@ -1,12 +1,15 @@
 <?php
 
 require_once ("services/EventService.php");
-require_once ("EventSchedule.php");
+require_once ("services/RestaurantService.php");
+require_once ("models/Restaurant.php");
+require_once ("EventSchedule.php");;
 require_once "retreiveContent.php";
 require_once "services/ContentService.php";
 
 $schedule = new EventSchedule();
 $es = new EventService();
+$rs = new RestaurantService();
 
 if (isset($_GET["event"]))
 {
@@ -136,8 +139,6 @@ $content =  $rc->retrieve($eventID);
     <script>
         function daySchedule(day) {
             const eventID = `<?php echo $eventID ?>`;
-            console.log(day);
-
             const body = new FormData();
 
             body.append("day", day);
@@ -147,49 +148,62 @@ $content =  $rc->retrieve($eventID);
                 method: "POST",
                 body,
             }).then(async (res) => {
-                document.getElementById("daySchedule").innerHTML = await res.text();
+                const daySchedule = document.getElementById("daySchedule");
+                const header = daySchedule.firstElementChild;
+
+                daySchedule.removeChild(header);
+                daySchedule.innerHTML = await res.text();
+                daySchedule.prepend(header);
             });
         }
     </script>
-
-    <header>
-        <?php
-            if ($eventName == "Food")
-            { ?>
-            <h2>
-                Restaurants
-            </h2>
-        <?php
-            }else{ ?>
-                <h2>
-                    Schedule
-                </h2>
-        <?php
-            }
-        ?>
-
-    </header>
 
     <?php
     // Restaurant list
     if ($eventName == "Food") { ?>
     <article id ="restaurantList">
+        <header>
+            <h2>Restaurants</h2>
+        </header>
         <table>
             <tr>
                 <th>Name</th>
                 <th>Location</th>
                 <th>FoodType</th>
             </tr>
+            <?php
+            $restaurants = $rs->getAll();
+            foreach ($restaurants as $restaurant) { ?>
             <tr>
-                <td> ... </td>
-                <td> ... </td>
-                <td> ... </td>
+                <td> <?php echo $restaurant->getName(); ?> </td>
+                <td> <?php echo $restaurant->getLocation(); ?> </td>
+                <td> <?php echo $restaurant->getFoodType(); ?> </td>
             </tr>
+            <?php } ?>
         </table>
+        <form action="addRestaurant.php" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <p>
+                    Add a restaurant:
+                </p>
+                <p>
+                    <label> Name: </label>
+                    <input name="name" type="text" required>
+                    <label> Location: </label>
+                    <input name="location" type="text" required>
+                    <label> Food type (French, Dutch, etc): </label>
+                    <input name="foodType" type="text" required>
+                    <br><br><input type="submit" name="submit" value="submit" required>
+                </p>
+            </fieldset>
+        </form>
     </article>
     <?php } ?>
 
     <article id="daySchedule">
+        <header>
+            <h2>Schedule</h2>
+        </header>
 
         <?php
 
