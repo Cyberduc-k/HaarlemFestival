@@ -7,6 +7,7 @@ require_once("services/ImageService.php");
 //file upload path and other variables like filename
 $targetDir = "uploads/uploadedIMG/";
 $contentPageId = $_GET["contentId"];
+$eventId = $_GET["eventId"];
 $statusMsg = '';
 
 if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
@@ -73,5 +74,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 
 //display status message
 echo $statusMsg;
+
+header("Location: editEventPage.php?event=" .$eventId);
 ?>
 

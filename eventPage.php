@@ -251,7 +251,7 @@ echo <<<END
             <h2>Schedule</h2>
         </header>
         <?php }
-        
+
             // get right schedule per event
             switch ($eventName){
                 case "Food":

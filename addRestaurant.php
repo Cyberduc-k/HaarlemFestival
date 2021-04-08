@@ -35,5 +35,7 @@ $restaurant->setLocation($location);
 $restaurant->setFoodType($foodType);
 $rs->addRestaurant($restaurant);
 
+header("Location: editEventPage.php?event=2")
+
 ?>
 

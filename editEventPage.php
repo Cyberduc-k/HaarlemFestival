@@ -120,7 +120,7 @@
                 })
             }
         </script>
-        <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>" method="post" enctype="multipart/form-data">
+        <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>,eventId=<?php echo $eventID; ?>" method="post" enctype="multipart/form-data">
             <fieldset>
                 <p>
                     Select File to Upload:

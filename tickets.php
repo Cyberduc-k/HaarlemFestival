@@ -174,17 +174,22 @@ $eventName = ucfirst($event->getName());
                 body,
             }).then(async (res) => {
                 tickets = (await res.json()) || [];
+                console.log(tickets);
                 renderTickets();
             });
         }
 
         function renderTickets() {
-            var eventName = "<?php echo $eventName ?>";
+            const eventName = "<?php echo $eventName ?>";
 
             section.innerHTML = "";
+            if (eventName != "Food") {
             filterTickets();
+            } else {
+            filtered = tickets;
+            }
 
-            if(eventName === "Historic"){
+            if (eventName === "Historic"){
                 filtered.forEach((ticket, idx) => {
                     section.insertAdjacentHTML("beforeend", `
                     <div class="ticket" onclick="selectTicket(this, ${ticket.id}, ${idx})">
@@ -192,6 +197,16 @@ $eventName = ucfirst($event->getName());
                         <span class="location">${ticket.guide}</span>
                         <span class="time">${ticket.date}</span>
                         <span class="stock">${ticket.price == 0 ? '' : `${ticket.inStock} Left`}</span>
+                    </div>
+                `);
+                });
+            }else if (eventName === "Food"){
+                filtered.forEach((ticket, idx) => {
+                    section.insertAdjacentHTML("beforeend", `
+                    <div class="ticket" onclick="selectTicket(this, ${ticket.id}, ${idx})">
+                        <span class="name">${ticket.name}</span>
+                        <span class="location">${ticket.location}</span>
+                        <span class="time">${ticket.foodType}</span>
                     </div>
                 `);
                 });
@@ -207,6 +222,7 @@ $eventName = ucfirst($event->getName());
                 `);
                 });
             }
+
 
         }
 

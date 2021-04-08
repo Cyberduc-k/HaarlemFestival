@@ -1,10 +1,13 @@
 <?php
 
 require_once("services/TicketService.php");
+require_once("services/RestaurantService.php");
+require_once("models/FoodType.php");
 
 header("Content-Type: application/json");
 
-$service = new TicketService();
+$ts = new TicketService();
+$rs = new RestaurantService();
 
 if (isset($_POST["day"]) && isset($_POST["eventID"])) {
     $day = $_POST["day"];
@@ -27,9 +30,17 @@ if (isset($_POST["day"]) && isset($_POST["eventID"])) {
     }
 
     if ($eventType == 3) {
-        $tickets = $service->getHistoricTicketsPerDay($date);
+        $tickets = $ts->getHistoricTicketsPerDay($date);
+    }elseif($eventType == 2){
+        $tickets = array_map(function($restaurant){
+            return [
+                "name" => $restaurant->getName(),
+                "location" => $restaurant->getLocation(),
+                "foodType" => FoodType::getType($restaurant->getFoodType()),
+            ];
+        }, $rs->getAll());
     }else{
-        $tickets = $service->getMusicTicketsPerDay($eventType, $date);
+        $tickets = $ts->getMusicTicketsPerDay($eventType, $date);
     }
 
     echo json_encode($tickets);
