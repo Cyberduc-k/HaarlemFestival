@@ -4,6 +4,7 @@
     <head>
         <title>Home</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/home.css" />
     </head>
     <body>
         <?php
@@ -13,7 +14,7 @@
         $es = new EventService();
         $events = $es->getAll();
 
-            echo "<h1>Haarlem Festival</h1>";
+            echo "<header id='header'><h1>Haarlem Festival</h1></header>";
 
             foreach ($events as $ev)
             {
