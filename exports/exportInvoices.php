@@ -39,7 +39,7 @@ if($_POST){
         try{
             if((string)htmlentities($_POST["format"]) == "csv"){
                 $delimiter = ",";
-                $filename = "tickets_" . time() . ".csv";
+                $filename = "invoices_" . time() . ".csv";
 
                 //create a file pointer, now a temp file is not necessary
                 $f = fopen('php://memory', 'w');
@@ -82,7 +82,7 @@ if($_POST){
 
                 //Store the sheet as temp file
                 $writer = new Xlsx($spreadsheet);
-                $filename = "tickets_" . time() . ".xlsx";
+                $filename = "invoices_" . time() . ".xlsx";
                 $writer->save($filename);
 
                 //set headers to download file rather than to display it
