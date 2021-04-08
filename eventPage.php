@@ -193,7 +193,19 @@ $content =  $rc->retrieve($eventID);
             </tr>
             <?php } ?>
         </table>
-        <form>
+        <form action="addRestaurant.php" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <p>
+                    Add a restaurant:
+                </p>
+                <p>
+                    <input name="name" type="text" required>
+                    <input name="location" type="text" required>
+                    <input name="foodType" type="text" required>
+                    <input type="submit" name="submit" value="Upload" required>
+                </p>
+            </fieldset>
+        </form>
     </article>
     <?php } ?>
 
