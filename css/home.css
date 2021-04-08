@@ -26,3 +26,19 @@
     text-shadow: 1px 1px 0 black, 1px -1px 0 black, -1px 1px 0 black, -1px -1px 0 black;
     z-index: 1;
 }
+
+#event{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 80%;
+}
+
+.events{
+    margin: 10px;
+}
+
+#eventMore{
+    color: #00FEFE;
+}
