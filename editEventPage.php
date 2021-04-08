@@ -133,6 +133,7 @@
         </form>
     </article>
     <article>
+        <h2>Select an Image you want to use as Header</h2>
         <form method="post">
             <?php
             require_once ("services/ImageService.php");
@@ -155,9 +156,13 @@
             <input type="submit" name="submit" value="Select"/>
         </form>
         <?php
+        require_once ("services/ContentService.php");
+        $cs = new ContentService();
+
             if (isset($_POST["img"])){
                 $img = $_POST["img"];
-                $es->insertImage($contentId, $img);
+
+                $cs->insertImage($contentId, $img);
             }
         ?>
     </article>

@@ -159,11 +159,11 @@ class ContentDAO extends DAOUtils {
     public function insertImage($id, $img): ?bool{
         try {
             // query to insert record
-            $query = "INSERT INTO
+            $query = "UPDATE
                 " . $this->tableName . "
             SET
-                imagePath=:img
-                WHERE id=:id";
+                imagePath = :img
+                WHERE id = :id";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
