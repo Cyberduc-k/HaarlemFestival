@@ -155,5 +155,34 @@ class ContentDAO extends DAOUtils {
             return $this->handleFalseError($e, true);
         }
     }
+
+    public function insertImage($id, $img): ?bool{
+        try {
+            // query to insert record
+            $query = "INSERT INTO
+                " . $this->tableName . "
+            SET
+                imagePath=:img
+                WHERE id=:id";
+
+            // prepare query
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            // bind values
+            $stmt->bindParam(":img", $img);
+            $stmt->bindParam(":id", $id);
+
+            // execute query
+            $stmt->execute();
+
+            // If we get tot this point there are no errors so we can commit
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
 }
 ?>

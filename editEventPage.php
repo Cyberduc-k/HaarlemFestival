@@ -132,6 +132,35 @@
             </fieldset>
         </form>
     </article>
+    <article>
+        <form method="post">
+            <?php
+            require_once ("services/ImageService.php");
+
+            $is = new ImageService();
+
+            $contentId = $content->getId();
+            $images = $is->getByContentPageId($contentId);
+
+            foreach ($images as $image){
+                $id = $image->getId();
+                $name = $image->getName();
+
+                echo "<div>
+                        <img src='uploads/uploadedIMG/$id-$name'/>
+                        <input type='radio' name='img' value='$id'/>
+                    </div>";
+            }
+            ?>
+            <input type="submit" name="submit" value="Select"/>
+        </form>
+        <?php
+            if (isset($_POST["img"])){
+                $img = $_POST["img"];
+                $es->insertImage($contentId, $img);
+            }
+        ?>
+    </article>
 </section>
 </body>
 <?php

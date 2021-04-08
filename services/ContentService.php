@@ -99,5 +99,25 @@ class ContentService extends ServiceUtils {
 
         return false;
     }
+
+    public function insertImage($contentId, $img): ?bool
+    {
+        try {
+
+            if ($this->dao->insertImage($contentId, $img))
+                return true;
+
+            return false;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty stmt
+            return false;
+        }
+    }
 }
 ?>
