@@ -240,6 +240,8 @@ echo <<<END
                                     <input name="name" type="text" required>
                                     <br><br><label> Location: </label>
                                     <input name="location" type="text" required>
+                                    <br><br><label> Price: </label>
+                                    <input name="price" type="text" required>
                                     <br><br><label> Food type (French, Dutch, etc): </label>
                                     <input name="foodType" type="text" required>
                                     <br><br><input type="submit" name="submit" value="submit" required>

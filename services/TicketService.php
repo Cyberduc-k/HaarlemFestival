@@ -75,7 +75,7 @@ class TicketService extends ServiceUtils {
         }
     }
 
-    // get all ticets for a given user.
+    // get all tickets for a given user.
     // NOTE: this returns an array of TicketWithCount
     public function getAllForUser(int $userId): ?array {
         try {

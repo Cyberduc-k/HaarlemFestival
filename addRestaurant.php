@@ -8,6 +8,7 @@ $rs = new RestaurantService;
 $name = $_POST["name"];
 $location = $_POST["location"];
 $foodType = $_POST["foodType"];
+$price = $_POST["price"];
 
         switch ($foodType) {
             case "French":
@@ -33,9 +34,10 @@ $restaurant = new Restaurant();
 $restaurant->setName($name);
 $restaurant->setLocation($location);
 $restaurant->setFoodType($foodType);
+$restaurant->setPrice($price);
 $rs->addRestaurant($restaurant);
 
-header("Location: editEventPage.php?event=2")
+header("Location: eventPage.php?event=2")
 
 ?>
 
