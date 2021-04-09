@@ -2,8 +2,6 @@
 require_once("models/Image.php");
 require_once("services/ImageService.php");
 
-// NOG NIET UITGEBREID GESTEST, KAN NOG NIET HELEMAAL WERKEN!
-
 //file upload path and other variables like filename
 $targetDir = "uploads/uploadedIMG/";
 $contentPageId = $_GET["contentId"];
@@ -25,6 +23,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
     // Loop through each filec
     for ( $i=0 ; $i < $total ; $i++ ) {
 
+        // Create needed variables like filepath and filetype
         $fileName = htmlspecialchars(basename($_FILES["file"]["name"][$i]));
         $targetFilePath = $targetDir . $fileName;
         $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
@@ -37,6 +36,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
             // Make sure we have a file path
             if ($tmpFilePath != "") {
 
+                // Make sure id is correctly set
                 $images = $service->getAll();
                 if (empty($images))
                     $id = 1;
@@ -50,9 +50,6 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
                 if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
                     $statusMsg = "The file " . $fileName . " has been uploaded.";
-
-                    // Upload image data to database
-                    // $images = $service->getAll();
 
                     // Create image to upload
                     $image = new Image();
@@ -73,9 +70,10 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
     $statusMsg = 'No image was found.';
 }
 
-//display status message
+// Display status message
 echo $statusMsg;
 
+// Back to event page
 header("Location: editEventPage.php?event=" .$eventId);
 ?>
 

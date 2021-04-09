@@ -226,7 +226,9 @@ echo <<<END
                 <?php } ?>
             </table>
             <br>
-            <?php if (isset($_SESSION["userType"])) {
+            <?php
+            // Add restaurant (only for admin!)
+            if (isset($_SESSION["userType"])) {
                 switch ((int)$_SESSION['userType']){
                     case 2:
                         ?>

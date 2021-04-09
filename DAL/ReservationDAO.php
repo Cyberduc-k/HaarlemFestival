@@ -79,6 +79,7 @@ class ReservationDAO extends DAOUtils
             // execute query
             $stmt->execute();
 
+            // make sure id is set
             $reservation->setId((int)base::getInstance()->conn->lastInsertId());
 
             // If we get tot this point there are no errors so we can commit

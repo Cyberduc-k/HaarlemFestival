@@ -12,6 +12,7 @@ class ImageDAO extends DAOUtils
     public function getAll(): ?PDOStatement
     {
         try {
+            // query for getting all records
             $query = "SELECT
                           id, contentPageId, name
                       FROM " . $this->tableName;
