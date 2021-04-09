@@ -71,6 +71,7 @@ $eventName = ucfirst($event->getName());
 
             <span class="val1">€ 17,50</span>
             <span class="val2">€ 60,-</span>
+        <?php } ?>
     </header>
 
     <section>
