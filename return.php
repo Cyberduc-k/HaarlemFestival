@@ -22,6 +22,7 @@ if(isset($_SESSION["userId"])) {
     <title>Thank you</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/account.css">
+    <link rel="stylesheet" type="text/css" href="css/tickets.css">
 </head>
 <body>
 <section>
