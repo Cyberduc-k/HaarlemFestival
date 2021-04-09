@@ -72,7 +72,7 @@ if($_POST){
             else if ((string)htmlentities($_POST["format"]) == "excel"){
                 require_once('../libs/PHPSpreadsheet/vendor/autoload.php');
                 //Add the headers off selected columns to array
-                array_unshift($data, array_keys($args));
+                array_unshift($data, $args);
 
                 //Create an excel sheet
                 $spreadsheet = new Spreadsheet();
