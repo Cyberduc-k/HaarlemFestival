@@ -46,7 +46,9 @@ $eventName = ucfirst($event->getName());
             </select>
         </fieldset>
 
+        <?php if ($eventName != "Food") { ?>
         <span class="prices">Prices</span>
+        <?php } ?>
         <a class="cart" href="cart.php">Cart</a>
 
         <?php if ($eventName == "Jazz") { ?>
@@ -67,12 +69,6 @@ $eventName = ucfirst($event->getName());
             <span class="val3">€ 250,-</span>
         <?php } else if ($eventName == "Historic") { ?>
             <span class="row1">Single Ticket</span>
-            <span class="row2">Family Ticket (max 4 persons)</span>
-
-            <span class="val1">€ 17,50</span>
-            <span class="val2">€ 60,-</span>
-        <?php } else if ($eventName == "Food") { ?>
-            <span class="row1">Wuuuuuuut Single Ticket</span>
             <span class="row2">Family Ticket (max 4 persons)</span>
 
             <span class="val1">€ 17,50</span>
