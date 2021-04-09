@@ -109,19 +109,13 @@ class TicketService extends ServiceUtils {
     public function getAllForCart(int $userId): ?array {
         try {
             $stmt = $this->dao->getAllForCart($userId);
-            $num = $stmt->rowCount();
+            $tickets = [];
 
-            if ($num > 0) {
-                $tickets = [];
-
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($tickets, $this->rowToTicketWithCount($row));
-                }
-
-                return $tickets;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($tickets, $this->rowToTicketWithCount($row));
             }
 
-            return null;
+            return $tickets;
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
@@ -138,19 +132,13 @@ class TicketService extends ServiceUtils {
     public function getAllForInvoice(int $invoiceId): ?array {
         try {
             $stmt = $this->dao->getAllForInvoice($invoiceId);
-            $num = $stmt->rowCount();
+            $tickets = [];
 
-            if ($num > 0) {
-                $tickets = [];
-
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($tickets, $this->rowToTicketWithCount($row));
-                }
-
-                return $tickets;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($tickets, $this->rowToTicketWithCount($row));
             }
 
-            return null;
+            return $tickets;
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
@@ -192,7 +180,7 @@ class TicketService extends ServiceUtils {
     
     public function moveCartToInvoice(int $userId, int $invoiceId): bool {
         try {
-            return $this->dao->moveCartToInvoice($userId, $ticketId, $count);
+            return $this->dao->moveCartToInvoice($userId, $invoiceId);
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
