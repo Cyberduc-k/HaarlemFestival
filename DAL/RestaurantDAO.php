@@ -10,6 +10,7 @@ class RestaurantDAO extends DAOUtils
     // get all restaurants
     public function getAll(): ?PDOStatement
     {
+        // query om alle records op te halen
         try {
             $query = "SELECT
                           id, name, location, foodType, price
