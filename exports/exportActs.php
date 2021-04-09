@@ -25,7 +25,7 @@ if($_POST){
         //Make sure there arent any malicious post variables
         foreach($_POST as $key => $value){
             if(in_array($key, VALID_COLUMNS))
-                $args[htmlentities((string)$key)] = htmlentities((string)$value);
+                array_push($args, $key);
         }
 
         $data = $actService->getColumns($args);
@@ -46,7 +46,7 @@ if($_POST){
                 $f = fopen('php://memory', 'w');
 
                 //set column headers
-                $fields = array_keys($args);
+                $fields = $args;
                 fputcsv($f, $fields, $delimiter);
 
                 foreach($data as $row){
