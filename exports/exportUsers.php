@@ -76,7 +76,7 @@ if($_POST){
                 require_once('../libs/PHPSpreadsheet/vendor/autoload.php');
                 //Add the headers off selected columns to beginning of the array
                 //So i can easily just add the entire array to the excel file
-                array_unshift($data, array_keys($args));
+                array_unshift($data, $args);
 
                 //Create an excel sheet
                 $spreadsheet = new Spreadsheet();
