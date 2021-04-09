@@ -11,7 +11,7 @@ class HistoricTourDAO extends DAOUtils
     public function getAll(): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, venueID, [language], guide, [date]
+                          id, venueID, `language`, guide, `date`
                       FROM " . $this->tableName;
 
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -56,7 +56,7 @@ class HistoricTourDAO extends DAOUtils
     public function getById(int $id): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, venueID, [language], guide, [date]
+                          id, venueID, `language`, guide, `date`
                       FROM " . $this->tableName . "
                       WHERE id = :id";
 

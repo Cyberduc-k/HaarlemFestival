@@ -182,7 +182,7 @@ class ServiceUtils {
         $venue = new Venue();
 
         $venue->setId((int)$row["id"]);
-        $venue->setName((string)$row["eventId"]);
+        $venue->setName((string)$row["name"]);
 
         return $venue;
     }
