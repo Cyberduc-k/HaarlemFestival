@@ -264,7 +264,7 @@ class TicketDAO extends DAOUtils {
         try {
             $query = "INSERT INTO " . $this->tableName . "
                       SET
-                          `ticketType` = :ticketType
+                          `ticketType` = :ticketType,
                           `eventType` = :eventType,
                           `eventId` = :eventId,
                           `price` = :price,

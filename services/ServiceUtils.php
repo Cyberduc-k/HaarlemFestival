@@ -208,6 +208,16 @@ class ServiceUtils {
         return $restaurant;
     }
 
+    protected function rowToReservation(array $row): Reservation {
+        $reservation = new Reservation();
+
+        $reservation->setId((int)$row["id"]);
+        $reservation->setRestaurantId((int)$row["restaurantId"]);
+        $reservation->setName((string)$row["name"]);
+        $reservation->setReservationTime(new DateTime($row["reservationTime"]));
+        return $reservation;
+    }
+
     protected function rowToTourSchedule(array $row): HistoricSchedule{
         $schedule = new HistoricSchedule();
 

@@ -62,7 +62,6 @@ class RestaurantService extends ServiceUtils
 
             ErrorService::getInstance()->create($error);
 
-            // Return an empty image
             return null;
         }
     }

@@ -5,6 +5,7 @@ require_once(__DIR__ . "/../models/TicketType.php");
 require_once(__DIR__ . "/../models/TicketWithCount.php");
 require_once(__DIR__ . "/../models/EventType.php");
 require_once(__DIR__ . "/../models/Language.php");
+require_once(__DIR__ . "/../services/ReservationService.php");
 require_once(__DIR__ . "/../DAL/TicketDAO.php");
 require_once("ActService.php");
 require_once("VenueService.php");
@@ -227,7 +228,9 @@ class TicketService extends ServiceUtils {
 
                     return "Historic Tour By " . $tour->getGuide();
                 case EventType::Food:
-                    return "Restaurant reservation";
+                    $rs = new ReservationService();
+                    $reservation = $rs->getById($ticket->getEventId());
+                    return $reservation->getName();
                 default: die();
             }
         } catch (Exception $e) {
@@ -256,7 +259,8 @@ class TicketService extends ServiceUtils {
 
                     return $venue->getName();
                 case EventType::Food:
-                    $service = new ReservationService();
+                    // $rs = new ReservationService();
+                    // $rs->getById($ticket->getId());
                     return "Haarlem"; // @TODO: pull from databse
                 default: die();
             }
@@ -318,7 +322,9 @@ class TicketService extends ServiceUtils {
 
                     return $tour->getDate();
                 case EventType::Food:
-                    break;
+                    $rs = new ReservationService();
+                    $reservation = $rs->getById($ticket->getEventId());
+                    return $reservation->getReservationTime();
                 default: die();
             }
         } catch (Exception $e) {
@@ -349,7 +355,9 @@ class TicketService extends ServiceUtils {
 
                     return $tour->getDate()->add(new DateInterval("PT1H"));
                 case EventType::Food:
-                    break;
+                    $rs = new ReservationService();
+                    $reservation = $rs->getById($ticket->getId());
+                    return $reservation->getReservationTime()->add(new DateInterval("PT1H"));
                 default: die();
             }
         } catch (Exception $e) {
