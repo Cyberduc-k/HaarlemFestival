@@ -10,7 +10,7 @@ abstract class UserTypes {
     const ACCESSLEVELS = [
         "home.php" => self::CLIENT,
         "create.php" => self::SUPERADMIN,
-        "createInvoice.php" => self::SUPERADMIN,
+        "createInvoice.php" => self::VOLUNTEER,
         "edit.php" => self::CLIENT,
         "viewUsers.php" => self::VOLUNTEER,
         "changeAvatar.php" => self::CLIENT,

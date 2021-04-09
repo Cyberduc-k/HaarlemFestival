@@ -5,6 +5,7 @@ require_once ("services/RestaurantService.php");
 require_once ("models/Restaurant.php");
 require_once ("EventSchedule.php");
 require_once ("models/FoodType.php");
+require_once ("models/UserTypes.php");
 require_once "retreiveContent.php";
 require_once "services/ContentService.php";
 
@@ -41,7 +42,8 @@ require_once ("menubar.php");
 
 if (isset($_SESSION["userType"])) {
     switch ((int)$_SESSION['userType']){
-        case 2:
+        case USERTYPES::VOLUNTEER:
+        case UserTypes::SUPERADMIN:
             echo "<a id='editPageBtn' href='editEventPage.php?event=".$eventID."'>Edit Page</a>";
             break;
     }
