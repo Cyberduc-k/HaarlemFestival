@@ -6,6 +6,7 @@ if(!isset($_SESSION)) session_start();
         <title>Account</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <link type="text/css" rel="stylesheet" href="css/account.css" />
+        <link type="text/css" rel="stylesheet" href="css/innerNav.css" />
     </head>
     <body>
     <?php
@@ -32,15 +33,12 @@ if(!isset($_SESSION)) session_start();
         </ul>
     </nav>
 
-    <?php
-    echo "<h1 style='float: left'>Welcome " . $_SESSION['firstname'] . "!</h1>";
-    echo "<img class='avatar' src=".$userService->getAvatarByEmail($_SESSION["email"])." alt='avatar' style='float: left; margin: 40px 0px 0px 40px'>";
-
-
-
-    ?>
-
-
+    <section class="content">
+        <?php
+        echo "<h1 style='float: left'>Welcome " . $_SESSION['firstname'] . "!</h1>";
+        echo "<img class='avatar' src=".$userService->getAvatarByEmail($_SESSION["email"])." alt='avatar' style='float: left; margin: 40px 0px 0px 40px'>";
+        ?>
+    </section>
     </body>
     <?php
     require_once ("footer.php");

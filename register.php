@@ -16,11 +16,8 @@
         </script>
     </head>
     <body>
-        <?php require_once("menubar.php"); ?>
+        <?php
 
-        <div id="loginForm">
-            <?php
-            
             require_once("services/UserService.php");
             require_once("models/User.php");
             require_once("models/UserTypes.php");
@@ -94,43 +91,44 @@
             }
             // show the registration form
             else {
+        require_once("menubar.php");
 ?>
-
-                <h1>Registration Form</h1>
-                <form action="register.php" method="post">
-                    <div class="formBody">
-                        <div class="formField">
-                            <input type="text" name="firstname" required placeholder="Firstname"
-                                   pattern="^[a-zA-Z ]{2,}$"/>
-                        </div>
-
-                        <div class="formField">
-                            <input type="text" name="lastname" required placeholder="Lastname"
-                                   pattern="^[a-zA-Z ]{2,}$"/>
-                        </div>
-
-                        <div class="formField">
-                            <input type="email" name="email" required placeholder="Email" />
-                        </div>
-
-                        <div class="formField">
-                            <input type="password" name="password" required placeholder="Password"
-                                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"/>
-                        </div>
-
-                        <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Lezlz0aAAAAAFwW9tFtLphdlXVJ6qJ5ut-WBXVn"></div>
-                        <div class="formField red">
-                            <p><?php if(isset($_SESSION["registerError"])){echo $_SESSION["registerError"];}?></p>
-                        </div>
-
-                        <div>
-                            <input id="submitBtn" type="submit" value="Register" class="customButton" disabled />
-                        </div>
-                        <div id='userNotes'>
-                            Already have an account? <a href='index.php'>Login</a>
-                        </div>
+        <div id="loginForm">
+            <h1>Registration Form</h1>
+            <form action="register.php" method="post">
+                <div class="formBody">
+                    <div class="formField">
+                        <input type="text" name="firstname" required placeholder="Firstname"
+                               pattern="^[a-zA-Z ]{2,}$"/>
                     </div>
-                </form>
+
+                    <div class="formField">
+                        <input type="text" name="lastname" required placeholder="Lastname"
+                               pattern="^[a-zA-Z ]{2,}$"/>
+                    </div>
+
+                    <div class="formField">
+                        <input type="email" name="email" required placeholder="Email" />
+                    </div>
+
+                    <div class="formField">
+                        <input type="password" name="password" required placeholder="Password"
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"/>
+                    </div>
+
+                    <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Lezlz0aAAAAAFwW9tFtLphdlXVJ6qJ5ut-WBXVn"></div>
+                    <div class="formField red">
+                        <p><?php if(isset($_SESSION["registerError"])){echo $_SESSION["registerError"];}?></p>
+                    </div>
+
+                    <div>
+                        <input id="submitBtn" type="submit" value="Register" class="customButton" disabled />
+                    </div>
+                    <div id='userNotes'>
+                        Already have an account? <a href='index.php'>Login</a>
+                    </div>
+                </div>
+            </form>
             <?php } ?>
         </div>
     </body>

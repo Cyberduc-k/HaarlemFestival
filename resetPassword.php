@@ -4,9 +4,9 @@
 <head>
     <title>Reset Password</title>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/resetPassword.css" />
 </head>
 <body>
-<div id="resetPasswordForm">
     <?php
 
     // form is submitted, check if access will be granted
@@ -60,27 +60,23 @@
     }
     // show the reset password form
     else {
+        require_once ("menubar.php");
 ?>
-        <div class="content">
-            <form action="resetPassword.php" method="post">
-                <div id="formHeader">Reset Password</div>
-                <div class="formBody">
-                    <div class="formField">
-                        <input type="email" name="email" required placeholder="Email" />
-                    </div>
-                    <div>
-                        <input id="submitBtn" type="submit" value="Reset Password" class="customButton"/>
-                    </div>
-                    <div class="formField red">
-                        <p><?php if(isset($_SESSION["passwordError"])){echo $_SESSION["passwordError"];}?></p>
-                    </div>
+    <div id="resetPasswordForm">
+        <h1>Reset Password</h1>
+        <form action="resetPassword.php" method="post">
+                <div class="formField">
+                    <input type="email" name="email" required placeholder="Email" />
                 </div>
-                <div id='userNotes'>
-                    <p>Remembered password? <a href='index.php'>Log in</a></p>
-                    <p>New here? <a href='register.php'>Register for free</a></p>
+                <div>
+                    <input id="submitBtn" type="submit" value="Reset Password" class="customButton"/>
                 </div>
-            </form>
-        </div>
+                <div class="formField red">
+                    <p><?php if(isset($_SESSION["passwordError"])){echo $_SESSION["passwordError"];}?></p>
+                </div>
+                <p>Remembered password? <a href='index.php'>Log in</a></p>
+                <p>New here? <a href='register.php'>Register for free</a></p>
+        </form>
     <?php } ?>
 </div>
 </body>
