@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php
-//Load menubar
+//Load menubar and validate
 require_once ("validate.php");
 require_once ("menubar.php");
 ?>
@@ -50,6 +50,7 @@ require_once ("menubar.php");
         <label for="excel">Excel</label><br>
         <input type="submit" name ="exportOrders" value="Export" class="exportBtn"/>
 
+        <!--Error message for act exports-->
         <p><?php if(isset($_SESSION["exportActsError"])){echo $_SESSION["exportActsError"];}?></p>
     </form>
 
@@ -76,7 +77,7 @@ require_once ("menubar.php");
             <label for="usertype">usertype</label>
         </article>
 
-
+        <!--Buttons to select format-->
         <p>Format</p>
         <input type="radio" id="csv" name="format" value="csv" checked>
         <label for="csv">CSV</label><br>
@@ -84,6 +85,7 @@ require_once ("menubar.php");
         <label for="excel">Excel</label><br>
         <input type="submit" value="Export" name="exportUsers" class="exportBtn"/>
 
+        <!--Error message for user exports-->
         <p><?php if(isset($_SESSION["exportUsersError"])){echo $_SESSION["exportUsersError"];}?></p>
     </form>
 

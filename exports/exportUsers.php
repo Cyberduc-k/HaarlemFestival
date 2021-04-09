@@ -17,6 +17,7 @@ if($_POST){
     if(isset($_SESSION["exportUsersError"]))
         unset($_SESSION["exportUsersError"]);
 
+    //Make sure a column is selected and a format is set
     if(
         (!empty($_POST["id"]) || !empty($_POST["firstname"]) || !empty($_POST["lastname"]) || !empty($_POST["password"])
             || !empty($_POST["salt"]) || !empty($_POST["email"]) || !empty($_POST["register_date"]) || !empty($_POST["usertype"]))
@@ -25,7 +26,7 @@ if($_POST){
         //Make sure there arent any malicious post variables
         foreach($_POST as $key => $value){
             if(in_array($key, VALID_COLUMNS))
-                $args[htmlentities((string)$key)] = htmlentities((string)$value);
+                array_push($args,$key);
         }
 
         $data = $userService->getColumns($args);
@@ -36,6 +37,7 @@ if($_POST){
         exit;
     }
 
+    //Only export if we got some data back
     if(!empty($data)){
         try{
             if((string)htmlentities($_POST["format"]) == "csv"){
@@ -46,9 +48,10 @@ if($_POST){
                 $f = fopen('php://memory', 'w');
 
                 //set column headers
-                $fields = array_keys($args);
+                $fields = $args;
                 fputcsv($f, $fields, $delimiter);
 
+                //Add all data to the csv
                 foreach($data as $row){
                     $line = array();
                     foreach($args as $argument){
@@ -71,7 +74,8 @@ if($_POST){
             }
             else if ((string)htmlentities($_POST["format"]) == "excel"){
                 require_once('../libs/PHPSpreadsheet/vendor/autoload.php');
-                //Add the headers off selected columns to array
+                //Add the headers off selected columns to beginning of the array
+                //So i can easily just add the entire array to the excel file
                 array_unshift($data, array_keys($args));
 
                 //Create an excel sheet

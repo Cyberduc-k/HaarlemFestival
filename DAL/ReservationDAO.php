@@ -30,6 +30,29 @@ class ReservationDAO extends DAOUtils
         }
     }
 
+    public function getReservationRestaurant(int $id): ?PDOStatement
+    {
+        try {
+            $query = "SELECT R.id, R.name, R.location, R.price, R.foodType
+            FROM restaurants as R
+            JOIN reservations ON reservations.restaurantId = R.id
+            WHERE reservations.id = :id";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
     public function addReservation(Reservation $reservation): ?bool
     {
         try {

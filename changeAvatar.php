@@ -40,6 +40,8 @@ else {
         <head>
             <title>Change Avatar</title>
             <link type="text/css" rel="stylesheet" href="css/style.css" />
+            <link type="text/css" rel="stylesheet" href="css/changeAvatar.css" />
+            <link type="text/css" rel="stylesheet" href="css/innerNav.css" />
             <script>
                 // script to display image on change and to show a picker on click
                 function triggerClick(e) {
@@ -60,7 +62,20 @@ else {
             </script>
         </head>
         <body>
-            <div class="content">
+            <nav>
+                <ul>
+                    <li>
+                        <a href='userSchedule.php'>Programme</a>
+                    </li>
+                    <li>
+                        <a href='edit.php?type=own'>Edit my information</a>
+                    </li>
+                    <li>
+                        <a href='changeAvatar.php'>Change Avatar</a>
+                    </li>
+                </ul>
+            </nav>
+            <section class="content">
                 <h1>Change Avatar</h1>
                 <form action="changeAvatar.php" method="post" enctype="multipart/form-data">
                     <div class="formBody">
@@ -82,7 +97,7 @@ else {
                         </div>
                     </div>
                 </form>
-            </div>
+            </section>
         </body>
         <?php
         require_once ("footer.php");

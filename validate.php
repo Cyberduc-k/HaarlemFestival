@@ -6,6 +6,7 @@ require_once ("models/UserTypes.php");
 if (!isset($_SESSION)) session_start();
 
 if (
+    //Variables that are set when a user logs in
     isset( $_SESSION['userType']) && isset( $_SESSION['email']) &&
     isset($_SESSION['firstname']) && isset( $_SESSION['userId'])
 ) {
@@ -15,9 +16,8 @@ if (
     switch ($userType) {
         case 2: break;
         case 1:
-            if (!(UserTypes::ACCESSLEVELS[basename($_SERVER['PHP_SELF'])] <= UserTypes::VOLUNTEER)) {
+            if (!(UserTypes::ACCESSLEVELS[basename($_SERVER['PHP_SELF'])] <= UserTypes::VOLUNTEER))
                 invalidUser("Superadmin");
-            }
 
             break;
         default:
@@ -36,5 +36,4 @@ function invalidUser(String $minimumUserLevel) {
     echo "This is a ".$minimumUserLevel."s only page! Please <a href='logout.php'>Login</a> as a ".$minimumUserLevel." first";
     exit;
 }
-
 ?>

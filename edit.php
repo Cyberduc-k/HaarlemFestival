@@ -124,8 +124,22 @@ function showEditPage(User $user) {
         <title>Edit Info</title>
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <link type="text/css" rel="stylesheet" href="css/editUser.css" />
+        <link type="text/css" rel="stylesheet" href="css/innerNav.css" />
     </head>
     <body>
+    <nav>
+        <ul>
+            <li>
+                <a href='userSchedule.php'>Programme</a>
+            </li>
+            <li>
+                <a href='edit.php?type=own'>Edit my information</a>
+            </li>
+            <li>
+                <a href='changeAvatar.php'>Change Avatar</a>
+            </li>
+        </ul>
+    </nav>
         <div class="content">
             <h1>Edit User</h1>
             <form name="editForm" action="edit.php" method="post">

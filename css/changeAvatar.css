@@ -5,5 +5,5 @@
 .content {
     max-width: 600px;
     margin: auto;
-    height: 700px;
+    min-height: 680px;
 }

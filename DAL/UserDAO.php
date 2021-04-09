@@ -85,13 +85,11 @@ class UserDAO extends DAOUtils {
     public function getColumns(array $args): ?PDOStatement
     {
         try{
-            //Extract the key value pairs and add them to the query
+            //Add the selected columns to the query
             $selectStatement = "";
-            extract($args);
-            foreach($args as $key => $value){
-                if(!empty($value)){
-                    $selectStatement.=$value.", ";
-                }
+            foreach($args as $column){
+                if(!empty($column))
+                    $selectStatement.=$column.", ";
             }
 
             //Remove the last comma and space

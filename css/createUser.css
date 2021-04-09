@@ -1,6 +1,7 @@
 .content {
     max-width: 600px;
     margin: auto;
+    min-height: 680px;
 }
 
 form {

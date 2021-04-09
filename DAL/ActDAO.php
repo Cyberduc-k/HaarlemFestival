@@ -67,11 +67,9 @@ class ActDAO extends DAOUtils {
         try{
             //Extract the key value pairs and add them to the query
             $selectStatement = "";
-            extract($args);
-            foreach($args as $key => $value){
-                if(!empty($value)){
-                    $selectStatement.=$value.", ";
-                }
+            foreach($args as $column){
+                if(!empty($column))
+                    $selectStatement.=$column.", ";
             }
 
             //Remove the last comma and space
