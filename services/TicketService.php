@@ -358,7 +358,7 @@ class TicketService extends ServiceUtils {
                     return $tour->getDate()->add(new DateInterval("PT1H"));
                 case EventType::Food:
                     $rs = new ReservationService();
-                    $reservation = $rs->getById($ticket->getId());
+                    $reservation = $rs->getById($ticket->getEventId());
                     return $reservation->getReservationTime()->add(new DateInterval("PT1H"));
                 default: die();
             }
