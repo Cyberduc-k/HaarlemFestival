@@ -10,6 +10,7 @@ require_once(__DIR__ . "/../models/HistoricTour.php");
 require_once(__DIR__ . "/../models/Venue.php");
 require_once(__DIR__ . "/../models/HistoricSchedule.php");
 require_once(__DIR__ . "/../models/Image.php");
+require_once(__DIR__ . "/../models/Restaurant.php");
 
 
 // Functions often used throughout the service layer
@@ -215,6 +216,7 @@ class ServiceUtils {
         $reservation->setRestaurantId((int)$row["restaurantId"]);
         $reservation->setName((string)$row["name"]);
         $reservation->setReservationTime(new DateTime($row["reservationTime"]));
+
         return $reservation;
     }
 
