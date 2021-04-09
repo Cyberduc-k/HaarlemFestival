@@ -243,8 +243,8 @@ class TicketService extends ServiceUtils {
                     return "Historic Tour By " . $tour->getGuide();
                 case EventType::Food:
                     $rs = new ReservationService();
-                    $reservation = $rs->getById($ticket->getEventId());
-                    return $reservation->getName();
+                    $restaurant = $rs->getReservationRestaurant($ticket->getEventId());
+                    return $restaurant->getName();
                 default: die();
             }
         } catch (Exception $e) {
@@ -273,9 +273,9 @@ class TicketService extends ServiceUtils {
 
                     return $venue->getName();
                 case EventType::Food:
-                    // $rs = new ReservationService();
-                    // $rs->getById($ticket->getId());
-                    return "Haarlem"; // @TODO: pull from databse
+                    $rs = new ReservationService();
+                    $restaurant = $rs->getReservationRestaurant($ticket->getEventId());
+                    return $restaurant->getLocation();
                 default: die();
             }
         } catch (Exception $e) {
