@@ -46,7 +46,9 @@ $eventName = ucfirst($event->getName());
             </select>
         </fieldset>
 
+        <?php if ($eventName != "Food") { ?>
         <span class="prices">Prices</span>
+        <?php } ?>
         <a class="cart" href="cart.php">Cart</a>
 
         <?php if ($eventName == "Jazz") { ?>
