@@ -18,7 +18,6 @@ try {
     $payment = $mollie->payments->get($_POST["id"]);
     $orderId = $payment->metadata->order_id;
 
-
     // Update the order in the database.
     database_update($orderId, $payment->status);
     $paymentService->updateCartStatus($orderId);

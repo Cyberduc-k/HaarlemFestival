@@ -222,6 +222,37 @@ class TicketDAO extends DAOUtils {
             return $this->handleFalseError($e, true);
         }
     }
+    
+    public function moveCartToInvoce(int $userId, int $invoiceId): bool {
+        try {
+            $tickets = $this->getAllForCart($userId);
+            $query = "INSERT INTO `invoice_ticket` SET invoiceId = :invoiceId, ticketId = :ticketId, nTickets = :nTickets";
+            $stmt = Base::getInstance()->conn->prepare($query);
+            $stmt->bindParam(":invoiceId", $invoiceId);
+
+            while ($row = $tickets->fetch(PDO::FETCH_ASSOC)) {
+                $stmt->bindParam(":ticketId", $row["ticketId"]);
+                $stmt->bindParam(":nTickets", $row["nTickets"]);
+                Base::getInstance()->conn->beginTransaction();
+                $stmt->execute();
+                Base::getInstance()->conn->commit();
+            }
+
+            $query = "DELETE FROM `cart` WHERE userId = :userId";
+            $stmt = Base::getInstance()->conn->prepare($query);
+            
+            Base::getInstance()->conn->beginTransaction();
+            
+            $stmt->bindParam(":userId", $userId);
+            $stmt->execute();
+            
+            Base::getInstance()->conn->commit();
+            
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
 
     // get specific columns only
     public function getColumns(array $args): ?PDOStatement

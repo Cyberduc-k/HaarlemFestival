@@ -4,7 +4,9 @@
     display: grid;
     position: relative;
     border-bottom: 1px solid #707070;
-    background-image: url("../uploads/uploadedIMG/space3.png");
+    background-image: url("../uploads/uploadedIMG/HaarlemFestival.png");
+    background-size: cover;
+    background-position: center;
 }
 
 #header::before {
@@ -28,7 +30,7 @@
     z-index: 1;
 }
 
-#event{
+#event {
     display: grid;
     grid-template-columns: 50% 50%;
     margin: auto;
@@ -36,16 +38,15 @@
     width: 80%;
 }
 
-.events{
+.events {
     margin: 10px;
 }
 
-#eventMore{
+#eventMore {
     color: #00FEFE;
 }
 
-#eventImg{
+#eventImg {
     height: 150px;
     width: 150px;
 }
-

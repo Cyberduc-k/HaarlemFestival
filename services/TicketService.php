@@ -189,6 +189,20 @@ class TicketService extends ServiceUtils {
             return null;
         }
     }
+    
+    public function moveCartToInvoice(int $userId, int $invoiceId): bool {
+        try {
+            return $this->dao->moveCartToInvoice($userId, $ticketId, $count);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return false;
+        }
+    }
 
     public function getDescription(Ticket $ticket): string {
         try {
