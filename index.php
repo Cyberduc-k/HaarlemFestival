@@ -1,20 +1,18 @@
 <?php
 
-require_once __DIR__.'/router.php';
+require_once __DIR__.'/libs/Router/Router.php';
 
-$router = Router::instance();
-
-$router->route('/', function($req) {
+Route::get('/', function() {
     require __DIR__.'/controllers/home.php';
 });
 
-$router->route('/event/{name}', function($req) {
+Route::get('/event/{name}', function($name) {
     require __DIR__.'/controllers/event.php';
-    run($req->name);
-});
+    run($name);
+})->word('name');
 
-$router->route('*', function($req) {
+Route::pageNotFound(function() {
     require __DIR__.'/views/404.php';
 });
 
-$router->run();
+Route::run();

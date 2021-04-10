@@ -91,6 +91,30 @@ class EventService extends ServiceUtils
         }
     }
 
+    public function getByName(string $name): ?Event{
+        try {
+            $stmt = $this->dao->getByName($name);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                return $this->rowToEvent($row);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            // Return an empty event
+            return null;
+        }
+    }
+
     public function getByIdAsArray(int $id): ?Array{
         try {
             $stmt = $this->dao->getById($id);

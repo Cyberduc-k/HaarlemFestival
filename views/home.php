@@ -1,11 +1,11 @@
 <html lang="en">
     <head>
         <title>Home</title>
-        <link type="text/css" rel="stylesheet" href="css/style.css" />
-        <link type="text/css" rel="stylesheet" href="css/home.css" />
+        <link type="text/css" rel="stylesheet" href="/css/style.css" />
+        <link type="text/css" rel="stylesheet" href="/css/home.css" />
     </head>
     <body>
-        <?php require_once __DIR__.'/menubar.php'; ?>
+        <?php require __DIR__.'/menubar.php'; ?>
 
         <header id="header">
             <h1>Haarlem Festival</h1>

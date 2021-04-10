@@ -6,7 +6,7 @@
     <link type="text/css" rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-    <?php require_once __DIR__.'/menubar.php'; ?>
+    <?php require __DIR__.'/menubar.php'; ?>
     <h1>Page Not Found</h1>
     <p><?php echo $_SERVER['REQUEST_URI']; ?></p>
 </body>
