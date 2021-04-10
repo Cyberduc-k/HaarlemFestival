@@ -38,13 +38,13 @@ if ($_POST) {
 
     if ($service->create($invoice)) {
         for ($i = 0; $i < count($ticketIds); $i++) {
-            $invoiceAmount += $tService->getPrice((int)$ticketIds[$i]);
+            // $invoiceAmount += $tService->getPrice((int)$ticketIds[$i]);
             if (!$service->addTicket($invoice->getId(), (int)$ticketIds[$i], (int)$ticketCounts[$i])) {
                 header("Location: createInvoice.php");
                 exit;
             }
         }
-        $pService->createPayment($invoice->getUserId(), $invoiceAmount);
+        // $pService->createPayment($invoice->getUserId(), $invoiceAmount);
         echo "Succesfully created invoice";
     } else {
         header("Location: createInvoice.php");
