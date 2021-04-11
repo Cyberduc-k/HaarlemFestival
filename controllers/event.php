@@ -10,9 +10,7 @@ require_once __DIR__.'/../models/Restaurant.php';
 require_once __DIR__.'/../models/UserTypes.php';
 
 function run(string $name) {
-    $schedule = new EventSchedule();
     $es = new EventService();
-    $rc = new RetrieveContent();
     $event = $es->getByName($name);
 
     if (!isset($event)) {
@@ -20,6 +18,8 @@ function run(string $name) {
         return;
     }
 
+    $rc = new RetrieveContent();
+    $schedule = new EventSchedule();
     $eventName = ucfirst($name);
     $content = $rc->retrieve($event->getId());
     $img = $rc->retrieveImage($content->getId());

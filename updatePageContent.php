@@ -1,13 +1,13 @@
 <?php
-require_once "services/ContentService.php";
-require_once "retreiveContent.php";
+require_once __DIR__.'/services/ContentService.php';
+require_once __DIR__.'/services/RetrieveContent.php';
 
-$about = ($_POST['var']); // doorgestuurd van js
-$eventID = htmlspecialchars($_POST['eventID']);
+$about = $_POST['var']; // doorgestuurd van js
+$eventID = $_POST['eventID'];
 updateContent($about, $eventID);
 
 function updateContent($aboutText, $eventID) {
-    $rc = new retrieveContent();
+    $rc = new RetrieveContent();
     $cs = new ContentService();
 
     // getting current content
@@ -17,7 +17,3 @@ function updateContent($aboutText, $eventID) {
     $content->setText($aboutText);
     $cs->update($content);
 }
-
-
-
-
