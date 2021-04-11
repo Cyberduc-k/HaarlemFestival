@@ -7,6 +7,9 @@ body {
     font: 20px "Lucida Grande", Tahoma, Verdana, sans-serif;
     color: #EAE6E6;
     background: #333333;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
 
 body.orange {

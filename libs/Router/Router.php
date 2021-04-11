@@ -7,40 +7,46 @@ class Route {
     private static array $routes = ['GET' => [], 'POST' => []];
     private static ?Closure $pageNotFound = null;
 
-    public static function add(string $route, callable $handler, string $method): RouteConstraint {
-        $matcher = $route;
-        $keys = [];
+    public static function add(array $methods, string $route, callable $handler): array {
+        $constraints = [];
 
-        if (preg_match_all('/\{([^}]+)\}/', $route, $match, PREG_PATTERN_ORDER)) {
-            $args = $match[1];
+        foreach ($methods as $method) {
+            $matcher = $route;
+            $keys = [];
 
-            if (count($args) > 0) {
-                $replacements = [];
+            if (preg_match_all('/\{([^}]+)\}/', $route, $match, PREG_PATTERN_ORDER)) {
+                $args = $match[1];
 
-                foreach ($args as $k => $arg) {
-                    $keys[rtrim($arg, '*')] = $k;
-                    $replacements[] = (substr($arg, -1) == '*') ? '(.+?)' : '([^/]+)';
+                if (count($args) > 0) {
+                    $replacements = [];
+
+                    foreach ($args as $k => $arg) {
+                        $keys[rtrim($arg, '*')] = $k;
+                        $replacements[] = (substr($arg, -1) == '*') ? '(.+?)' : '([^/]+)';
+                    }
+
+                    $matcher = str_replace($match[0], $replacements, $route);
                 }
-
-                $matcher = str_replace($match[0], $replacements, $route);
             }
+
+            $count = array_push(self::$routes[$method], [
+                'matcher' => '/^'.str_replace('/', '\/', $matcher).'$/',
+                'handler' => $handler,
+                'keys' => $keys,
+            ]);
+
+            array_push($constraints, new RouteConstraint(self::$routes[$method][$count - 1]));
         }
 
-        $count = array_push(self::$routes[$method], [
-            'matcher' => '/^'.str_replace('/', '\/', $matcher).'$/',
-            'handler' => $handler,
-            'keys' => $keys,
-        ]);
-
-        return new RouteConstraint(self::$routes[$method][$count - 1]);
+        return $constraints;
     }
 
     public static function get(string $route, callable $handler): RouteConstraint {
-        return self::add($route, $handler, 'GET');
+        return self::add(['GET'], $route, $handler)[0];
     }
 
     public static function post(string $route, callable $handler): RouteConstraint {
-        return self::add($route, $handler, 'POST');
+        return self::add(['POST'], $route, $handler)[0];
     }
 
     public static function pageNotFound(callable $handler) {

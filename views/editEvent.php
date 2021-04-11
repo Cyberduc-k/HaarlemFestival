@@ -10,40 +10,42 @@
 <body>
     <?php require __DIR__.'/menubar.php'; ?>
 
-    <section class="content">
-        <header>
-            <h1><?php echo $eventName; ?></h1>
-        </header>
+    <main>
+        <section class="content">
+            <header>
+                <h1><?php echo $eventName; ?></h1>
+            </header>
 
-        <article>
-            <textarea id="mytextarea" name="mytextarea"></textarea>
-            <p>
-                <button id="saveBtn" onclick="saveContent()">Save</button>
-            </p>
+            <article>
+                <textarea id="mytextarea" name="mytextarea"></textarea>
+                <p>
+                    <button id="saveBtn" onclick="saveContent()">Save</button>
+                </p>
 
-            <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>&event=<?php echo $name; ?>" method="post" enctype="multipart/form-data">
-                <fieldset>
-                    <label>Select files to upload:</label>
-                    <p>
-                        <input name="file[]" type="file" multiple />
-                        <input type="submit" value="Upload" />
-                    </p>
-                </fieldset>
-            </form>
-        </article>
-        <article>
-            <h2>Select an image to use as header</h2>
-            <form method="post">
-                <?php foreach ($images as $image) { ?>
-                    <div>
-                        <img src="uploads/uploadedIMG/<?php echo $image->getId().'-'.$image->getName(); ?>" />
-                        <input type="radio" name="img" value="<?php echo $image->getId(); ?>" />
-                    </div>
-                <?php } ?>
-                <input type="submit" value="Select" />
-            </form>
-        </article>
-    </section>
+                <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>&event=<?php echo $name; ?>" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <label>Select files to upload:</label>
+                        <p>
+                            <input name="file[]" type="file" multiple />
+                            <input type="submit" value="Upload" />
+                        </p>
+                    </fieldset>
+                </form>
+            </article>
+            <article>
+                <h2>Select an image to use as header</h2>
+                <form method="post">
+                    <?php foreach ($images as $image) { ?>
+                        <div>
+                            <img src="uploads/uploadedIMG/<?php echo $image->getId().'-'.$image->getName(); ?>" />
+                            <input type="radio" name="img" value="<?php echo $image->getId(); ?>" />
+                        </div>
+                    <?php } ?>
+                    <input type="submit" value="Select" />
+                </form>
+            </article>
+        </section>
+    </main>
 
     <script>
         tinymce.init({

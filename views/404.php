@@ -7,7 +7,12 @@
 </head>
 <body>
     <?php require __DIR__.'/menubar.php'; ?>
-    <h1>Page Not Found</h1>
-    <p><?php echo $_SERVER['REQUEST_URI']; ?></p>
+
+    <main>
+        <h1>Page Not Found</h1>
+        <p><?php echo $_SERVER['REQUEST_URI']; ?></p>
+    </main>
+
+    <?php require __DIR__.'/footer.php'; ?>
 </body>
 </html>

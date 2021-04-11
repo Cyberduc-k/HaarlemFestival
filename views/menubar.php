@@ -40,9 +40,9 @@ echo '<a href="/" id="logo">' . file_get_contents('css/Logo.svg') . '</a>';
 echo '<ul><li><a href="" class="icon instagram"></a></li><li><a href="" class="icon facebook"></a></li>';
 
 if (isset($_SESSION['userType'])) {
-    echo '<li><a href="account.php" ' . getActiveString("account") . '>Account</a></li></ul>';
+    echo '<li><a href="/account" ' . getActiveString("/account") . '>Account</a></li></ul>';
 } else {
-    echo '<li><a href="login.php" ' . getActiveString("login") . '>Login</a></li></ul>';
+    echo '<li><a href="/login" ' . getActiveString("/login") . '>Login</a></li></ul>';
 }
 
 echo '<ul><li><a '.getActiveString("/").' href="/">Home</a></li>';
@@ -77,7 +77,7 @@ if (isset($_SESSION['userType'])) {
             break;
     }
     
-    echo "<li class='right'><a href='logout.php'>Logout</a></li>";
+    echo "<li class='right'><a href='/logout.php'>Logout</a></li>";
 }
 
 echo "</ul></header>";

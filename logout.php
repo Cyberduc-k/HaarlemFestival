@@ -2,7 +2,8 @@
 
 // Remove session to log user out
 if (!isset($_SESSION)) session_start();
-    session_destroy();
+
+session_destroy();
 
 // Make cookies expire on page reset
 if (isset($_SERVER['HTTP_COOKIE'])) {
@@ -17,6 +18,6 @@ if (isset($_SERVER['HTTP_COOKIE'])) {
 }
 
 // Go back to login
-header("Location: index.php");
+header("Location: /");
 
 ?>

@@ -7,35 +7,37 @@
     <body>
         <?php require __DIR__.'/menubar.php'; ?>
 
-        <header id="header">
-            <h1>Haarlem Festival</h1>
-        </header>
+        <main>
+            <header id="header">
+                <h1>Haarlem Festival</h1>
+            </header>
 
-        <section id="event">
-            <?php foreach ($events as $ev) { ?>
-                <article>
-                    <?php
-                        $en = ucfirst($ev->getName());
-                        $eid = $ev->getId();
+            <section id="event">
+                <?php foreach ($events as $ev) { ?>
+                    <article>
+                        <?php
+                            $en = ucfirst($ev->getName());
+                            $eid = $ev->getId();
 
-                        $content = $cs->getByEventId($eid);
+                            $content = $cs->getByEventId($eid);
 
-                        $img = $rc->retrieveImage($content->getId());
+                            $img = $rc->retrieveImage($content->getId());
 
-                        echo "<h2 class='events'>$en</h2>";
+                            echo "<h2 class='events'>$en</h2>";
 
-                        if (!empty($img)){
-                            $id = $img->getId();
-                            $name = $img->getName();
+                            if (!empty($img)){
+                                $id = $img->getId();
+                                $name = $img->getName();
 
-                            echo "<img id='eventImg' src='uploads/uploadedIMG/$id-$name'/>";
-                        }
+                                echo "<img id='eventImg' src='uploads/uploadedIMG/$id-$name'/>";
+                            }
 
-                        echo "<a class='events' id='eventMore' href='/eventPage.php?event=$eid'>More...</a>";
-                    ?>
-                </article>
-            <?php } ?>
-        </section>
+                            echo "<a class='events' id='eventMore' href='/eventPage.php?event=$eid'>More...</a>";
+                        ?>
+                    </article>
+                <?php } ?>
+            </section>
+        </main>
 
         <?php require_once __DIR__.'/footer.php'; ?>
     </body>

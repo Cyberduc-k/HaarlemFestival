@@ -21,6 +21,10 @@ Route::get('/tickets/{name}', function($name) {
     run($name);
 })->word('name');
 
+Route::add(['GET', 'POST'], '/login', function() {
+    require __DIR__.'/controllers/login.php';
+});
+
 Route::pageNotFound(function() {
     require __DIR__.'/views/404.php';
 });
