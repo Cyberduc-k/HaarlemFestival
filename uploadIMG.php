@@ -1,11 +1,11 @@
 <?php
-require_once("models/Image.php");
-require_once("services/ImageService.php");
+require_once __DIR__.'/models/Image.php';
+require_once __DIR__.'services/ImageService.php';
 
 //file upload path and other variables like filename
 $targetDir = "uploads/uploadedIMG/";
 $contentPageId = $_GET["contentId"];
-$eventId = $_GET["eventId"];
+$event = $_GET["event"];
 $statusMsg = '';
 
 if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
@@ -74,6 +74,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 echo $statusMsg;
 
 // Back to event page
-header("Location: editEventPage.php?event=" .$eventId);
+header("Location: event/".$event."/edit");
+
 ?>
 

@@ -1,8 +1,8 @@
 <?php
 
-require_once("services/TicketService.php");
-require_once("services/RestaurantService.php");
-require_once("models/FoodType.php");
+require_once __DIR__.'/services/TicketService.php';
+require_once __DIR__.'/services/RestaurantService.php';
+require_once __DIR__.'/models/FoodType.php';
 
 header("Content-Type: application/json");
 
@@ -14,24 +14,24 @@ if (isset($_POST["day"]) && isset($_POST["eventID"])) {
     $eventType = (int)$_POST["eventID"];
     $date = "";
 
-    switch($day){
-        case "Thursday":
+    switch ($day) {
+        case "thursday":
             $date = "07-26";
             break;
-        case "Friday":
+        case "friday":
             $date = "07-27";
             break;
-        case "Saturday":
+        case "saturday":
             $date = "07-28";
             break;
-        case "Sunday":
+        case "sunday":
             $date = "07-29";
             break;
     }
 
     if ($eventType == 3) {
         $tickets = $ts->getHistoricTicketsPerDay($date);
-    }elseif($eventType == 2){
+    } else if ($eventType == 2) {
         $tickets = array_map(function($restaurant){
             return [
                 "id" => $restaurant->getId(),
@@ -41,7 +41,7 @@ if (isset($_POST["day"]) && isset($_POST["eventID"])) {
                 "price" => $restaurant->getPrice()
             ];
         }, $rs->getAll());
-    }else{
+    } else {
         $tickets = $ts->getMusicTicketsPerDay($eventType, $date);
     }
 

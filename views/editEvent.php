@@ -21,7 +21,7 @@
                 <button id="saveBtn" onclick="saveContent()">Save</button>
             </p>
 
-            <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>&eventId=<?php echo $event->getId(); ?>" method="post" enctype="multipart/form-data">
+            <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>&event=<?php echo $name; ?>" method="post" enctype="multipart/form-data">
                 <fieldset>
                     <label>Select files to upload:</label>
                     <p>

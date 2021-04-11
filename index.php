@@ -16,6 +16,11 @@ Route::get('/event/{name}/edit', function($name) {
     run($name);
 })->word('name');
 
+Route::get('/tickets/{name}', function($name) {
+    require __DIR__.'/controllers/tickets.php';
+    run($name);
+})->word('name');
+
 Route::pageNotFound(function() {
     require __DIR__.'/views/404.php';
 });
