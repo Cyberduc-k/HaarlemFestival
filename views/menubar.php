@@ -13,8 +13,22 @@ if (!isset($_SESSION)) session_start();
 // A function to add class=active to the appropriate menu bar item
 function getActiveString(string $page): string {
     $parsed_url = parse_url($_SERVER['REQUEST_URI']);
+    $path = $parsed_url['path'] ?? "";
 
-    if ($page == $parsed_url['path'])
+    if (preg_match_all('/(\*)/', $page, $matches, PREG_PATTERN_ORDER)) {
+        $replacements = [];
+
+        foreach ($matches[1] as $part) {
+            $replacements[] = '([^/]+)';
+        }
+
+        $matcher = '/^'.str_replace('/', '\/', str_replace($matches[0], $replacements, $page)).'$/';
+
+        if (preg_match($matcher, $path))
+            return "class='active'";
+    }
+
+    if ($path === $page)
         return "class='active'";
 
     return "";
@@ -42,7 +56,10 @@ foreach ($events as $ev) {
     echo '<li><a ' . getActiveString("/event/$eln") . ' href="/event/'.$eln.'">'.$en.'</a></li>';
 }
 
-echo '<li><a ' . getActiveString("tickets") . ' href="tickets.php?event=2">Tickets</a></li>';
+if (isset($name) && isset($event))
+    echo '<li><a ' . getActiveString("/tickets/*") . ' href="/tickets/'.$name.'">Tickets</a></li>';
+else
+    echo '<li><a href="/tickets/food">Tickets</a></li>';
 
 // first validate if user is logged in, only then allow access
 if (isset($_SESSION['userType'])) {
