@@ -3,11 +3,12 @@
     <title><?php echo $eventName; ?></title>
     <link type="text/css" rel="stylesheet" href="/css/style.css" />
     <link type="text/css" rel="stylesheet" href="/css/eventPage.css" />
+    <script src="/js/hash.js"></script>
 </head>
 <body class="<?php echo $event->getColour(); ?>">
     <?php require __DIR__.'/menubar.php'; ?>
     
-    <header id="header" style="background-image: url('')">
+    <header id="header" style="background-image: url('<?php echo $image; ?>')">
         <?php
             if (isset($_SESSION['userType']))
                 switch ($_SESSION['userType']) {
@@ -21,19 +22,19 @@
 
     <nav>
         <ul>
-            <li id="aboutNav">
-                <a onclick="showAbout()">About</a>
+            <li>
+                <a id="about-tab" onclick="setTab(this, 'about')">About</a>
             </li>
             <?php if ($name == "food") { ?>
-                <li id="restaurantsNav">
-                    <a onclick="showRestaurants()">Restaurants</a>
+                <li>
+                    <a id="restaurants-tab" onclick="setTab(this, 'restaurants')">Restaurants</a>
                 </li>
             <?php } else { ?>
-                <li id="scheduleNav">
-                    <a onclick="showSchedule()">Schedule</a>
+                <li>
+                    <a id="schedule-tab" onclick="setTab(this, 'schedule')">Schedule</a>
                 </li>
             <?php } ?>
-            <li id="ticketsHav">
+            <li>
                 <a href="/tickets/<?php echo $name; ?>">Tickets</a>
             </li>
         </ul>
@@ -49,11 +50,91 @@
         </article>
     </section>
 
-    <?php
-        if ($name == "Food") {
-        } else {
-        }
-    ?>
+    <?php if ($name != "food") { ?>
+        <section id="schedule">
+            <?php if ($name == "jazz" || $name == "dance") { ?>
+                <nav id="days">
+                    <ul>
+                        <?php if ($name == "jazz") { ?>
+                            <li>
+                                <a id="thursday" onclick="setDay(this, 'thursday')">Thursday</a>
+                            </li>
+                        <?php } ?>
+                        <li>
+                            <a id="friday" onclick="setDay(this, 'friday')">Friday</a>
+                        </li>
+                        <li>
+                            <a id="saturday" onclick="setDay(this, 'saturday')">Saturday</a>
+                        </li>
+                        <li>
+                            <a id="sunday" onclick="setDay(this, 'sunday')">Sunday</a>
+                        </li>
+                    </ul>
+                </nav>
+            <?php } ?>
+
+            <article id="daySchedule">
+                <header>
+                    <h2>Schedule</h2>
+                </header>
+
+                <?php
+                    if ($name == "historic") {
+                        $schedule->getHistoricSchedule();
+                    }
+                ?>
+            </article>
+        </section>
+
+        <script>const eventID = <?php echo $event->getId(); ?></script>
+        <script src="/js/event-schedule.js"></script>
+
+        <script>
+            function initDay() {
+                <?php if ($name != "historic") { ?>
+                    switch (getHash("day")) {
+                        case undefined:
+                            const d = document.getElementById("thursday");
+                            if (d) setDay(d, "thursday");
+                            else setDay(document.getElementById("friday"), "friday");
+                            break;
+                        default:
+                            setDay(document.getElementById(getHash("day")), getHash("day"));
+                            break;
+                    }
+                <?php } ?>
+            }
+        </script>
+    <?php } else { ?>
+        <section id="restaurants">
+            <article>
+                <header>
+                    <h2>Restaurants</h2>
+                </header>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($restaurants as $restaurant) { ?>
+                            <tr>
+                                <td><?php echo $restaurant->getName(); ?></td>
+                                <td><?php echo $restaurant->getLocation(); ?></td>
+                                <td><?php echo FoodType::getType($restaurant->getFoodType()); ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+    <?php } ?>
+
+    <script src="/js/event.js"></script>
 
     <?php require __DIR__.'/footer.php'; ?>
 </body>

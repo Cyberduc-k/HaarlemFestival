@@ -48,15 +48,9 @@ class Route {
     }
 
     public static function run() {
-        $parsed_url = parse_url($_SERVER['REQUEST_URI']);
-
-        if (isset($parsed_url['path'])) {
-            $path = $parsed_url['path'];
-        } else {
-            $path = '/';
-        }
-
-        $method = $_SERVER['REQUEST_METHOD'];
+        $request = new Request();
+        $path = $request->path();
+        $method = $request->method();
         $path_match_found = false;
 
         foreach (self::$routes[$method] as $route) {

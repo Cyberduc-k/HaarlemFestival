@@ -1,8 +1,8 @@
 <?php
 
-require_once ("models/UserTypes.php");
-require_once ("models/Event.php");
-require_once ("services/EventService.php");
+require_once __DIR__.'/../models/UserTypes.php';
+require_once __DIR__.'/../models/Event.php';
+require_once __DIR__.'/../services/EventService.php';
 
 $es = new EventService();
 $events = $es->getAll();
@@ -12,23 +12,17 @@ if (!isset($_SESSION)) session_start();
 
 // A function to add class=active to the appropriate menu bar item
 function getActiveString(string $page): string {
-    if ($page.".php" == basename($_SERVER['PHP_SELF']))
+    $parsed_url = parse_url($_SERVER['REQUEST_URI']);
+
+    if ($page == $parsed_url['path'])
         return "class='active'";
-
-    return "";
-}
-
-// A function to add class=active to the appropriate menu bar item
-function getActiveStringEvent(int $event): string {
-    if (isset($_GET["event"]) && (int)$_GET["event"] == $event)
-        return getActiveString("eventPage");
 
     return "";
 }
 
 // Show the menubar
 echo '<header id="menubar">';
-echo '<a href="./" id="logo">' . file_get_contents('css/Logo.svg') . '</a>';
+echo '<a href="/" id="logo">' . file_get_contents('css/Logo.svg') . '</a>';
 echo '<ul><li><a href="" class="icon instagram"></a></li><li><a href="" class="icon facebook"></a></li>';
 
 if (isset($_SESSION['userType'])) {
@@ -37,16 +31,15 @@ if (isset($_SESSION['userType'])) {
     echo '<li><a href="login.php" ' . getActiveString("login") . '>Login</a></li></ul>';
 }
 
-echo '<ul><li><a '.getActiveString("index").' href="./">Home</a></li>';
+echo '<ul><li><a '.getActiveString("/").' href="/">Home</a></li>';
 
 foreach ($events as $ev) {
     //get the event name and page name
-    $en = ucfirst($ev->getName());
-    $eid = $ev->getId();
+    $eln = $ev->getName();
+    $en = ucfirst($eln);
 
     //create working menuitem for each event
-    echo "<li><a " . getActiveStringEvent($eid) . " 
-    href='eventPage.php?event=$eid'>$en</a></li>";
+    echo '<li><a ' . getActiveString("/event/$eln") . ' href="/event/'.$eln.'">'.$en.'</a></li>';
 }
 
 echo '<li><a ' . getActiveString("tickets") . ' href="tickets.php?event=2">Tickets</a></li>';

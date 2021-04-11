@@ -12,11 +12,10 @@ require_once __DIR__.'/../models/UserTypes.php';
 function run(string $name) {
     $schedule = new EventSchedule();
     $es = new EventService();
-    $rs = new RestaurantService();
     $rc = new RetrieveContent();
     $event = $es->getByName($name);
 
-    if (is_null($event)) {
+    if (!isset($event)) {
         require __DIR__.'/../views/404.php';
         return;
     }
@@ -26,7 +25,26 @@ function run(string $name) {
     $img = $rc->retrieveImage($content->getId());
     $image = !is_null($img) ? "uploads/uploadedIMG/".$img->getId()."-".$img->getName() : "";
 
+    if ($name == "food") {
+        $rs = new RestaurantService();
+        $restaurants = $rs->getAll();
+    }
+
     require __DIR__.'/../views/event.php';
+}
+
+function isTabActive(string $name): string {
+    if ($_GET['tab'] == $name)
+        return "class='active'";
+
+    return "";
+}
+
+function isDayActive(string $name): string {
+    if ($_GET['day'] == $name)
+        return "class='active'";
+
+    return "";
 }
 
 ?>

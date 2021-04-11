@@ -56,16 +56,16 @@ class EventSchedule {
 
         // get date of each day
         switch ($day) {
-            case "Thursday":
+            case "thursday":
                 $date = "07-26";
                 break;
-            case "Friday":
+            case "friday":
                 $date = "07-27";
                 break;
-            case "Saturday":
+            case "saturday":
                 $date = "07-28";
                 break;
-            case "Sunday":
+            case "sunday":
                 $date = "07-29";
                 break;
         }

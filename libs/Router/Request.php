@@ -1,25 +1,26 @@
 <?php
 
 class Request {
-    protected string $uri;
-    protected array $params;
+    private string $path;
+    private string $method;
 
     public function __construct() {
-        $this->uri = $_SERVER['REQUEST_URI'];
-        $this->params = [];
+        $parsed_url = parse_url($_SERVER['REQUEST_URI']);
+
+        if (isset($parsed_url['path']))
+            $this->path = $parsed_url['path'];
+        else
+            $this->path = "/";
+
+        $this->method = $_SERVER['REQUEST_METHOD'];
     }
 
-    public function __get($k) {
-        switch ($k) {
-            case 'uri':
-                return $this->$k;
-            default:
-                return isset($this->params[$k]) ? $this->params[$k] : null;
-        }
+    public function method(): string {
+        return $this->method;
     }
 
-    public function __set($k, $v) {
-        $this->params[$k] = $v;
+    public function path(): string {
+        return $this->path;
     }
 }
 
