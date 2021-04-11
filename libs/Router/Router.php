@@ -61,7 +61,6 @@ class Route {
 
         foreach (self::$routes[$method] as $route) {
             if (preg_match($route['matcher'], $path, $matches)) {
-                $path_match_found = true;
                 array_shift($matches);
 
                 if (isset($route['where'])) {
@@ -72,6 +71,7 @@ class Route {
                     }
                 }
 
+                $path_match_found = true;
                 call_user_func_array($route['handler'], $matches);
                 break;
             }
