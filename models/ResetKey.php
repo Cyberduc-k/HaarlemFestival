@@ -38,7 +38,7 @@ class ResetKey {
     // Get the reset link for this ResetKey
     public function getLink(): ?String {
         if(!empty($this->getUserId()) && !empty($this->getKey()) && !empty($this->getExpDateString()))
-            return "haarlemfestival2021.nl/resetPasswordHandler.php?userId=".$this->getUserId()."&key=".$this->getKey();
+            return "haarlemfestival2021.nl/password_reset/confirm?userId=".$this->getUserId()."&key=".$this->getKey();
 
         return null;
     }

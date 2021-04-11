@@ -40,8 +40,8 @@
                 </div>
             </div>
             <div id='userNotes'>
-                <p>Forgot password? <a href='resetPassword.php'>Reset it</a></p>
-                <p>New here? <a href='register.php'>Register for free</a></p>
+                <p>Forgot password? <a href='/password_reset'>Reset it</a></p>
+                <p>New here? <a href='/register'>Register for free</a></p>
             </div>
         </form>
     </main>

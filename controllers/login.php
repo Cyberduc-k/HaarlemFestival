@@ -35,8 +35,8 @@ if ($_POST) {
 
     //Login with supplied credentials
     if (!empty($_POST["email"]) && !empty($_POST["password"])) {
-        require_once("services/UserService.php");
-        require_once("models/User.php");
+        require_once __DIR__.'/../services/UserService.php';
+        require_once __DIR__.'/../models/User.php';
 
         $userService = new UserService();
         $valid = $userService->validateLogin(htmlentities($_POST["email"]), htmlentities($_POST["password"]));

@@ -25,6 +25,18 @@ Route::add(['GET', 'POST'], '/login', function() {
     require __DIR__.'/controllers/login.php';
 });
 
+Route::add(['GET', 'POST'], '/register', function() {
+    require __DIR__.'/controllers/register.php';
+});
+
+Route::add(['GET', 'POST'], '/password_reset', function() {
+    require __DIR__.'/controllers/resetPassword.php';
+});
+
+Route::add(['GET', 'POST'], '/password_reset/confirm', function() {
+    require __DIR__.'/controllers/resetPasswordHandler.php';
+});
+
 Route::pageNotFound(function() {
     require __DIR__.'/views/404.php';
 });
