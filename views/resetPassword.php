@@ -1,8 +1,8 @@
 <html lang="en">
 <head>
     <title>Reset Password</title>
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <link type="text/css" rel="stylesheet" href="css/resetPassword.css" />
+    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/css/resetPassword.css" />
 </head>
 <body>
     <?php require __DIR__.'/menubar.php'; ?>

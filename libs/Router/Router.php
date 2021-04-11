@@ -14,18 +14,38 @@ class Route {
             $matcher = $route;
             $keys = [];
 
-            if (preg_match_all('/\{([^}]+)\}/', $route, $match, PREG_PATTERN_ORDER)) {
+            if (preg_match_all('/\{([^}]+)\}|\/\{([^}]+\?)\}/', $route, $match, PREG_PATTERN_ORDER)) {
                 $args = $match[1];
+                $opt_args = $match[2];
 
                 if (count($args) > 0) {
                     $replacements = [];
 
                     foreach ($args as $k => $arg) {
-                        $keys[rtrim($arg, '*')] = $k;
-                        $replacements[] = (substr($arg, -1) == '*') ? '(.+?)' : '([^/]+)';
+                        if ($arg !== '') {
+                            $keys[rtrim($arg, '*')] = $k;
+                            $replacements[$k] = (substr($arg, -1) == '*') ? '(.*?)' : '([^/]+)';
+                        }
                     }
 
-                    $matcher = str_replace($match[0], $replacements, $route);
+                    foreach ($replacements as $k => $repl) {
+                        $matcher = str_replace($match[0][$k], $repl, $matcher);
+                    }
+                }
+
+                if (count($opt_args) > 0) {
+                    $replacements = [];
+
+                    foreach ($opt_args as $k => $arg) {
+                        if ($arg !== '') {
+                            $keys[rtrim($arg, '*?')] = $k;
+                            $replacements[$k] = (substr($arg, -2) == '*?') ? '(?:/(.*?))?' : '(?:/([^/]+))?';
+                        }
+                    }
+
+                    foreach ($replacements as $k => $repl) {
+                        $matcher = str_replace($match[0][$k], $repl, $matcher);
+                    }
                 }
             }
 
@@ -59,13 +79,17 @@ class Route {
         $method = $request->method();
         $path_match_found = false;
 
+        if ($path !== '/') {
+            $path = rtrim($path, '/');
+        }
+
         foreach (self::$routes[$method] as $route) {
             if (preg_match($route['matcher'], $path, $matches)) {
                 array_shift($matches);
 
                 if (isset($route['where'])) {
                     foreach ($route['where'] as $idx => $matcher) {
-                        if (!preg_match($matcher, $matches[$idx])) {
+                        if (isset($matches[$idx]) && !preg_match($matcher, $matches[$idx])) {
                             continue 2;
                         }
                     }
