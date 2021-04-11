@@ -405,7 +405,7 @@ class TicketDAO extends DAOUtils {
                             JOIN musicians ON musicians.id=musicianId
                             JOIN acts ON acts.id=actId
                             JOIN tickets ON acts.id=tickets.eventId
-                            WHERE acts.eventId = :eventId AND acts.date LIKE :day
+                            WHERE acts.eventId = :eventId AND acts.date LIKE :day AND (eventType = 3 OR eventType = 0)
                             ORDER BY acts.startTime";
 
             $stmt = Base::getInstance()->conn->prepare($query);
