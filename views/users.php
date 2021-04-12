@@ -1,8 +1,8 @@
 <html lang="en">
 <head>
     <title>User List</title>
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <link type="text/css" rel="stylesheet" href="css/viewUsers.css" />
+    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/css/viewUsers.css" />
 </head>
 <body>
     <?php require __DIR__.'/menubar.php'; ?>

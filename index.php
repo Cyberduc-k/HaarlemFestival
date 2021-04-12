@@ -6,6 +6,10 @@ Route::get('/', function() {
     require __DIR__.'/controllers/home.php';
 });
 
+Route::add(['GET', 'POST'], '/event/add', function() {
+    require __DIR__.'/controllers/addDeleteEvent.php';
+});
+
 Route::get('/event/{name}', function($name) {
     require __DIR__.'/controllers/event.php';
     run($name);

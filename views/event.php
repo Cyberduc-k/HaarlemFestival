@@ -92,7 +92,7 @@
 
             <script>
                 function initDay() {
-                    <?php if ($name != "historic") { ?>
+                    <?php if (in_array($name, ['jazz', 'dance'])) { ?>
                         switch (getHash("day")) {
                             case undefined:
                                 const d = document.getElementById("thursday");

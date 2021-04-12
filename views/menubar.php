@@ -67,7 +67,7 @@ if (isset($_SESSION['userType'])) {
         // There is no break so that the "lower" admin links will always show
         case UserTypes::SUPERADMIN:
             echo "<li><a ".getActiveString("/user/create"). " href='/user/create'>Create user</a></li>";
-            echo "<li><a ".getActiveString("addDeleteEventPage"). " href='addDeleteEventPage.php'>Add Page</a></li>";
+            echo "<li><a ".getActiveString("/event/add"). " href='/event/add'>Add Page</a></li>";
             echo "<li><a ".getActiveString("viewApiKeys")." href='viewApiKeys.php'>Manage API keys</a></li>";
             echo "<li><a ".getActiveString("export")." href='export.php'>Export data</a></li>";
 
