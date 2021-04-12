@@ -1,7 +1,7 @@
 <?php
-require_once ("services/RestaurantService.php");
-require_once ("models/Restaurant.php");
-require_once ("models/FoodType.php");
+require_once("services/RestaurantService.php");
+require_once("models/Restaurant.php");
+require_once("models/FoodType.php");
 
 $rs = new RestaurantService;
 
