@@ -57,6 +57,10 @@ Router::add(['GET', 'POST'], '/invoice/create', function() {
     require __DIR__.'/controllers/createInvoice.php';
 });
 
+Router::get('/export', function() {
+    require __DIR__.'/controllers/export.php';
+});
+
 Router::add(['GET', 'POST'], '/api/keys', function() {
     require __DIR__.'/controllers/apiKeys.php';
 });

@@ -31,7 +31,7 @@ if($_POST){
     }
     else{
         $_SESSION["exportInvoicesError"] = "Select at least one column";
-        header("Location: ../export.php");
+        header("Location: /export");
         exit;
     }
 
@@ -98,13 +98,13 @@ if($_POST){
         }
         catch (Exception $e){
             $_SESSION["exportInvoicesError"] = "An error occured, try again later";
-            header("Location: ../export.php");
+            header("Location: /export");
             exit;
         }
     }
     else{
         $_SESSION["exportInvoicesError"] = "Nothing to export";
-        header("Location: ../export.php");
+        header("Location: /export");
         exit;
     }
 }

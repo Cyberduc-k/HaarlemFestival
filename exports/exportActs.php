@@ -32,7 +32,7 @@ if($_POST){
     }
     else{
         $_SESSION["exportActsError"] = "Select at least one column";
-        header("Location: ../export.php");
+        header("Location: /export");
         exit;
     }
 
@@ -99,13 +99,13 @@ if($_POST){
         }
         catch (Exception $e){
             $_SESSION["exportError"] = "An error occured, try again later";
-            header("Location: ../export.php");
+            header("Location: /export");
             exit;
         }
     }
     else{
         $_SESSION["exportError"] = "Nothing to export";
-        header("Location: ../export.php");
+        header("Location: /export");
         exit;
     }
 }
