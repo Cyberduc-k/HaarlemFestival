@@ -14,7 +14,7 @@ class Router {
             $matcher = $route;
             $keys = [];
 
-            if (preg_match_all('/\{([^}]+)\}|\/\{([^}]+\?)\}/', $route, $match, PREG_PATTERN_ORDER)) {
+            if (preg_match_all('/<([^}]+)>|\/<([^}]+\?)>/', $route, $match, PREG_PATTERN_ORDER)) {
                 $args = $match[1];
                 $opt_args = $match[2];
 

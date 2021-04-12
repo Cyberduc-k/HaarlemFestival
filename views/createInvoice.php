@@ -1,75 +1,23 @@
-<?php if (!isset($_SESSION)) session_start(); ?>
-
 <html lang="en">
 <head>
     <title>Create an invoice</title>
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <link type="text/css" rel="stylesheet" href="css/createInvoice.css" />
+    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/css/createInvoice.css" />
 </head>
-</html>
+<body>
+    <?php require __DIR__.'/menubar.php'; ?>
 
-<?php
-
-require_once("models/Invoice.php");
-require_once("models/EventType.php");
-require_once("services/InvoiceService.php");
-require_once("services/UserService.php");
-require_once("services/TicketService.php");
-require_once("services/PaymentService.php");
-// require_once("validate.php");
-require_once("menubar.php");
-
-if ($_POST) {
-    $pService = new PaymentService();
-    $tService = new TicketService();
-    $service = new InvoiceService();
-    $invoice = new Invoice();
-
-    $invoice->setUserId((int)$_POST["user"]);
-    $invoice->setUserAddress($_POST["userAddress"]);
-    $invoice->setUserPhone($_POST["userPhone"]);
-    $invoice->setTax((float)$_POST["tax"] / 100.0);
-    $invoice->setDate(new DateTime());
-    $invoice->setDueDate(new DateTime($_POST["dueDate"]));
-    $invoiceAmount = 0;
-
-    $ticketIds = $_POST["ticketId"];
-    $ticketCounts = $_POST["ticketCount"];
-
-    if ($service->create($invoice)) {
-        for ($i = 0; $i < count($ticketIds); $i++) {
-            // $invoiceAmount += $tService->getPrice((int)$ticketIds[$i]);
-            if (!$service->addTicket($invoice->getId(), (int)$ticketIds[$i], (int)$ticketCounts[$i])) {
-                header("Location: createInvoice.php");
-                exit;
-            }
-        }
-        // $pService->createPayment($invoice->getUserId(), $invoiceAmount);
-        echo "Succesfully created invoice";
-    } else {
-        header("Location: createInvoice.php");
-        exit;
-    }
-} else {
-?>
     <section class="content">
         <h1>Create a new invoice</h1>
-        <form id="form" action="createInvoice.php" method="post">
+        <form id="form" method="post">
             <fieldset>
                 <label for="user">For User:</label>
                 <input id="userInput" name="user" type="text" list="userList" required />
                 <datalist id="userList">
                     <?php
-        
-                    $service = new UserService();
-                    $users = $service->getAll();
-
-                    if ($users == null) $users = [];
-
-                    foreach ($users as $user) {
-                        echo '<option value="' . $user->getId() . '">' . $user->getFullName() . '</option>';
-                    }
-
+                        foreach ($users as $user) {
+                            echo '<option value="' . $user->getId() . '">' . $user->getFullName() . '</option>';
+                        }
                     ?>
                 </datalist>
             </fieldset>
@@ -95,14 +43,9 @@ if ($_POST) {
                 </table>
                 <datalist id="ticketList">
                     <?php
-
-                    $service = new TicketService();
-                    $tickets = $service->getAll();
-
-                    foreach ($tickets as $ticket) {
-                        echo '<option value="' . $ticket->getId() . '">' . $service->getDescription($ticket) . '</option>';
-                    }
-
+                        foreach ($tickets as $ticket) {
+                            echo '<option value="' . $ticket->getId() . '">' . $tService->getDescription($ticket) . '</option>';
+                        }
                     ?>
                 </datalist>
                 <input onclick="addTicket()" type="button" value="Add Ticket" />
@@ -124,6 +67,7 @@ if ($_POST) {
             <input type="submit" value="Create Invoice" />
         </form>
     </section>
+
     <script>
         const ticketTable = document.getElementById("ticketTable").children[1];
         let ticketIds = 0;
@@ -171,6 +115,7 @@ if ($_POST) {
             ticketTable.appendChild(row);
         }
     </script>
-<?php } ?>
+
+    <?php require __DIR__.'/footer.php'; ?>
 </body>
 </html>

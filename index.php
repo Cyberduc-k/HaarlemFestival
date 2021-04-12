@@ -10,17 +10,17 @@ Router::add(['GET', 'POST'], '/event/add', function() {
     require __DIR__.'/controllers/addDeleteEvent.php';
 });
 
-Router::get('/event/{name}', function($name) {
+Router::get('/event/<name>', function($name) {
     require __DIR__.'/controllers/event.php';
     run($name);
 })->word('name');
 
-Router::get('/event/{name}/edit', function($name) {
+Router::get('/event/<name>/edit', function($name) {
     require __DIR__.'/controllers/editEvent.php';
     run($name);
 })->word('name');
 
-Router::get('/tickets/{name}', function($name) {
+Router::get('/tickets/<name>', function($name) {
     require __DIR__.'/controllers/tickets.php';
     run($name);
 })->word('name');
@@ -47,11 +47,15 @@ Router::post('/user/delete', function() {
 
 array_map(
     function(&$route) { $route->number('id'); },
-    Router::add(['GET', 'POST'], '/user/{id?}/edit', function($id = null) {
+    Router::add(['GET', 'POST'], '/user/<id?>/edit', function($id = null) {
         require __DIR__.'/controllers/editUser.php';
         run($id);
     })
 );
+
+Router::add(['GET', 'POST'], '/invoice/create', function() {
+    require __DIR__.'/controllers/createInvoice.php';
+});
 
 Router::add(['GET', 'POST'], '/api/keys', function() {
     require __DIR__.'/controllers/apiKeys.php';
