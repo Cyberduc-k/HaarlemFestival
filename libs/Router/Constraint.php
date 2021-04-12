@@ -8,7 +8,7 @@ class RouteConstraint {
     }
 
     public function where(string $name, string $regex) {
-        foreach ($this->routes as $route) {
+        foreach ($this->routes as &$route) {
             $idx = (int)$route['keys'][$name];
             $route['where'][$idx] = '/^'.str_replace('/', '\/', $regex).'$/';
         }
