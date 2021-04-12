@@ -53,6 +53,10 @@ array_map(
     })
 );
 
+Router::add(['GET', 'POST'], '/api/keys', function() {
+    require __DIR__.'/controllers/apiKeys.php';
+});
+
 Router::add(['GET', 'POST'], '/login', function() {
     require __DIR__.'/controllers/login.php';
 });

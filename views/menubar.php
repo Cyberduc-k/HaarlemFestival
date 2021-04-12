@@ -68,7 +68,7 @@ if (isset($_SESSION['userType'])) {
         case UserTypes::SUPERADMIN:
             echo "<li><a ".getActiveString("/user/create"). " href='/user/create'>Create user</a></li>";
             echo "<li><a ".getActiveString("/event/add"). " href='/event/add'>Add Page</a></li>";
-            echo "<li><a ".getActiveString("viewApiKeys")." href='viewApiKeys.php'>Manage API keys</a></li>";
+            echo "<li><a ".getActiveString("/api/keys")." href='/api/keys'>Manage API keys</a></li>";
             echo "<li><a ".getActiveString("export")." href='export.php'>Export data</a></li>";
 
         case UserTypes::VOLUNTEER:

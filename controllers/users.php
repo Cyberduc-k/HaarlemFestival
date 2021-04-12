@@ -6,6 +6,16 @@ require_once __DIR__.'/../services/UserService.php';
 require_once __DIR__.'/../models/User.php';
 require_once __DIR__.'/../models/UserTypes.php';
 
+if (!isset($_SESSION['userType'])) {
+    header("Location: /login");
+    exit;
+}
+
+if ($_SESSION['userType'] == UserTypes::CLIENT) {
+    echo "<h1>You do not have permission to access this page";
+    exit;
+}
+
 const VALID_KEYS = ['firstname', 'lastname', 'email', 'registerDate'];
 
 $userService = new UserService();
