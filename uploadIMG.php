@@ -74,7 +74,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
 echo $statusMsg;
 
 // Back to event page
-header("Location: event/".$event."/edit");
+header("Location: /event/".$event."/edit");
 
 ?>
 

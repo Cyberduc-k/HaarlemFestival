@@ -39,7 +39,7 @@ if ($_GET) {
 
                     if (!empty($_SESSION["bothKeysOK"]) && (int)$_SESSION["bothKeysOK"] == 1) {
                         if ($userEditsService->performEdit($editEmailKey->getId())) {
-                            echo " Your info has been updated. <a href='home.php'> Home </a>";
+                            echo " Your info has been updated. <a href='/'> Home </a>";
                             unset($_SESSION["bothKeysOK"]);
                         } else {
                             echo "Edit couldn't be executed";
@@ -63,7 +63,7 @@ if ($_GET) {
                 if ($editKey->getExpDate()->getTimestamp() > time()) {
                     if ($editKey->getKey() == (string) htmlentities($_GET["key"])) {
                         if ($userEditsService->performEdit($editKey->getId())) {
-                            echo "Info has been updated. <a href='home.php'> Home </a>";
+                            echo "Info has been updated. <a href='/'> Home </a>";
                         } else {
                             echo "Edit couldn't be executed";
                         }
