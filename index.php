@@ -37,6 +37,10 @@ Router::add(['GET', 'POST'], '/cart', function() {
     require __DIR__.'/controllers/cart.php';
 });
 
+Router::get('/payment', function() {
+    require __DIR__.'/controllers/payment.php';
+});
+
 Router::add(['GET', 'POST'], '/users', function() {
     require __DIR__.'/controllers/users.php';
 });

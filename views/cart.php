@@ -3,11 +3,29 @@
     <title>Cart</title>
     <link type="text/css" rel="stylesheet" href="/css/style.css">
     <link type="text/css" rel="stylesheet" href="/css/tickets.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/innerNav.css" />
 </head>
 <body>
     <?php require __DIR__.'/menubar.php'; ?>
 
     <main>
+        <nav>
+            <ul>
+                <li>
+                    <a href='/programme'>Programme</a>
+                </li>
+                <li>
+                    <a href='/user/edit'>Edit my information</a>
+                </li>
+                <li>
+                    <a href='/user/change_avatar'>Change Avatar</a>
+                </li>
+                <li class="active">
+                    <a href="/cart">Cart</a>
+                </li>
+            </ul>
+        </nav>
+
         <section id="tickets">
             <?php
                 foreach ($tickets as $twc) {
