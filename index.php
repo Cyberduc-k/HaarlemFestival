@@ -45,6 +45,10 @@ Router::post('/user/delete', function() {
     require __DIR__.'/controllers/deleteUser.php';
 });
 
+Router::add(['GET', 'POST'], '/user/change_avatar', function() {
+    require __DIR__.'/controllers/changeAvatar.php';
+});
+
 Router::add(['GET', 'POST'], '/user/<id?>/edit', function($id = null) {
     require __DIR__.'/controllers/editUser.php';
     run($id);

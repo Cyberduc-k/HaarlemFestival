@@ -3,11 +3,31 @@
     <title>Edit Info</title>
     <link type="text/css" rel="stylesheet" href="/css/style.css" />
     <link type="text/css" rel="stylesheet" href="/css/editUser.css" />
+    <link type="text/css" rel="stylesheet" href="/css/innerNav.css" />
 </head>
 <body>
     <?php require __DIR__.'/menubar.php'; ?>
 
     <main>
+        <?php if (is_null($id)) { ?>
+            <nav>
+                <ul>
+                    <li>
+                        <a href='/programme'>Programme</a>
+                    </li>
+                    <li class="active">
+                        <a href='/user/edit'>Edit my information</a>
+                    </li>
+                    <li>
+                        <a href='/user/change_avatar'>Change Avatar</a>
+                    </li>
+                    <li>
+                        <a href="/cart">Cart</a>
+                    </li>
+                </ul>
+            </nav>
+        <?php } ?>
+
         <section class="content">
             <h1>Edit User</h1>
             <form name="editForm" method="post">
