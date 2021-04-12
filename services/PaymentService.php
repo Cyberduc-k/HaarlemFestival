@@ -22,20 +22,18 @@ class PaymentService extends ServiceUtils
         $this->dao = new PaymentDAO();
     }
 
-    function createPayment($userId, $amount): bool {
+    function createPayment(int $userId, float $amount): bool {
         $mollie = new MollieApiClient();
         $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
 
         try {
             // create random and unique order ID
             $orderId = $this->createUniqueOrderId();
-            $amountString = (string)$amount . ".00";
-
+            $amountString = number_format($amount, 2, '.', null);
 
             // determine the URL parts
             $protocol = isset($_SERVER['HTTPS']) && strcasecmp('off', $_SERVER['HTTPS']) !== 0 ? "https" : "http";
             $hostname = $_SERVER['HTTP_HOST'];
-            $path = dirname(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF']);
 
             // create new payment
             $payment = $mollie->payments->create([
@@ -44,8 +42,8 @@ class PaymentService extends ServiceUtils
                     "value" => "{$amountString}", // You must send the correct number of decimals, thus we enforce the use of strings
                 ],
                 "description" => "Order",
-                "redirectUrl" => "{$protocol}://{$hostname}{$path}/return.php?order_id={$orderId}",
-                "webhookUrl" => "{$protocol}://{$hostname}{$path}/webhook.php",
+                "redirectUrl" => "{$protocol}://{$hostname}/payment?order_id={$orderId}",
+                "webhookUrl" => "{$protocol}://{$hostname}/webhook.php",
                 "metadata" => [
                     "order_id" => $orderId,
                 ],

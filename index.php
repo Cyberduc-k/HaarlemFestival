@@ -33,6 +33,10 @@ Router::get('/programme', function() {
     require __DIR__.'/controllers/programme.php';
 });
 
+Router::add(['GET', 'POST'], '/cart', function() {
+    require __DIR__.'/controllers/cart.php';
+});
+
 Router::add(['GET', 'POST'], '/users', function() {
     require __DIR__.'/controllers/users.php';
 });
