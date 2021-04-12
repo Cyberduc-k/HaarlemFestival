@@ -73,7 +73,7 @@ if (isset($_SESSION['userType'])) {
 
         case UserTypes::VOLUNTEER:
             echo "<li><a ".getActiveString("createInvoice"). " href='createInvoice.php'>Create Invoice</a></li>";
-            echo "<li><a ".getActiveString("viewUsers")." href='viewUsers.php'>View users</a></li>";
+            echo "<li><a ".getActiveString("/users")." href='/users'>View users</a></li>";
             break;
     }
     

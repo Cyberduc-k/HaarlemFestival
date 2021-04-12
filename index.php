@@ -29,6 +29,10 @@ Route::get('/programme', function() {
     require __DIR__.'/controllers/programme.php';
 });
 
+Route::add(['GET', 'POST'], '/users', function() {
+    require __DIR__.'/controllers/users.php';
+});
+
 array_map(
     function(&$route) { $route->number('id'); },
     Route::add(['GET', 'POST'], '/user/{id?}/edit', function($id = null) {
