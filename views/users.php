@@ -39,7 +39,7 @@
                                 if ($loggedInUserType > $shownUserType) {
                                     ?>
                                     <a class="tableBtn" href="/user/<?php echo $user->getId(); ?>/edit">Edit</a>
-                                    <form class="tableForm" action="loginForUser.php" method="post">
+                                    <form class="tableForm" action="/loginForUser.php" method="post">
                                         <input type="hidden" name="id" value="<?php echo $user->getId()?>"/>
                                         <input class='tableBtn' type="submit" value="Login"/>
                                     </form>
