@@ -1,60 +1,97 @@
-<?php if(!isset($_SESSION)) session_start(); ?>
+<?php
 
-<html lang="en">
-    <head>
-        <title>Home</title>
-        <link type="text/css" rel="stylesheet" href="css/style.css" />
-        <link type="text/css" rel="stylesheet" href="css/home.css" />
-    </head>
-        <?php
-        require_once ("menubar.php");
-        require_once ("services/EventService.php");
-        require_once ("retreiveContent.php");
-        require_once ("services/ContentService.php");
+require_once __DIR__.'/libs/Router/Router.php';
 
-        $es = new EventService();
-        $rc = new retrieveContent();
-        $cs = new ContentService();
+Router::get('/', function() {
+    require __DIR__.'/controllers/home.php';
+});
 
-        $events = $es->getAll();
+Router::add(['GET', 'POST'], '/event/add', function() {
+    require __DIR__.'/controllers/addDeleteEvent.php';
+});
 
-            echo "<header id='header'><h1>Haarlem Festival</h1></header>";
-            ?>
-    <body>
-        <section id="event">
-            <?php
+Router::get('/event/<name>', function($name) {
+    require __DIR__.'/controllers/event.php';
+    run($name);
+})->word('name');
 
-            foreach ($events as $ev)
-            {
-                ?>
-            <article>
-                <?php
-                $en = ucfirst($ev->getName());
-                $eid = $ev->getId();
+Router::add(['GET', 'POST'], '/event/<name>/edit', function($name) {
+    require __DIR__.'/controllers/editEvent.php';
+    run($name);
+})->word('name');
 
-                $content = $cs->getByEventId($eid);
+Router::get('/tickets/<name>', function($name) {
+    require __DIR__.'/controllers/tickets.php';
+    run($name);
+})->word('name');
 
-                $img = $rc->retrieveImage($content->getId());
+Router::get('/account', function() {
+    require __DIR__.'/controllers/account.php';
+});
 
-                echo "<h2 class='events'>$en</h2>";
+Router::get('/programme', function() {
+    require __DIR__.'/controllers/programme.php';
+});
 
-                if (!empty($img)){
-                    $id = $img->getId();
-                    $name = $img->getName();
+Router::add(['GET', 'POST'], '/cart', function() {
+    require __DIR__.'/controllers/cart.php';
+});
 
-                    echo "<img id='eventImg' src='uploads/uploadedIMG/$id-$name'/>";
-                }
+Router::get('/payment', function() {
+    require __DIR__.'/controllers/payment.php';
+});
 
-                echo "<a class='events' id='eventMore' href='/eventPage.php?event=$eid'>More...</a>";
-                ?>
-            </article>
-                <?php
-            }
-            ?>
+Router::add(['GET', 'POST'], '/users', function() {
+    require __DIR__.'/controllers/users.php';
+});
 
-        </section>
-    </body>
-    <?php
-    require_once ("footer.php");
-    ?>
-</html>
+Router::add(['GET', 'POST'], '/user/create', function() {
+    require __DIR__.'/controllers/createUser.php';
+});
+
+Router::post('/user/delete', function() {
+    require __DIR__.'/controllers/deleteUser.php';
+});
+
+Router::add(['GET', 'POST'], '/user/change_avatar', function() {
+    require __DIR__.'/controllers/changeAvatar.php';
+});
+
+Router::add(['GET', 'POST'], '/user/<id?>/edit', function($id = null) {
+    require __DIR__.'/controllers/editUser.php';
+    run($id);
+})->number('id');
+
+Router::add(['GET', 'POST'], '/invoice/create', function() {
+    require __DIR__.'/controllers/createInvoice.php';
+});
+
+Router::get('/export', function() {
+    require __DIR__.'/controllers/export.php';
+});
+
+Router::add(['GET', 'POST'], '/api/keys', function() {
+    require __DIR__.'/controllers/apiKeys.php';
+});
+
+Router::add(['GET', 'POST'], '/login', function() {
+    require __DIR__.'/controllers/login.php';
+});
+
+Router::add(['GET', 'POST'], '/register', function() {
+    require __DIR__.'/controllers/register.php';
+});
+
+Router::add(['GET', 'POST'], '/password_reset', function() {
+    require __DIR__.'/controllers/resetPassword.php';
+});
+
+Router::add(['GET', 'POST'], '/password_reset/confirm', function() {
+    require __DIR__.'/controllers/resetPasswordHandler.php';
+});
+
+Router::pageNotFound(function() {
+    require __DIR__.'/views/404.php';
+});
+
+Router::run();

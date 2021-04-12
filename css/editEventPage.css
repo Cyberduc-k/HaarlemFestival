@@ -2,28 +2,28 @@ body{
     margin: auto;
 }
 
-#about{
+.content {
     max-width: 80%;
     margin: auto;
 }
 
-#mytextarea{
+#mytextarea {
     size: 1000px;
     margin: auto;
     height: 600px;
     max-width: 80%;
 }
 
-#saveBtn{
+#saveBtn {
     height: 40px;
     font-size: 20px;
 }
 
-fieldset{
+fieldset {
     border: none;
 }
 
-img{
+img {
     height: 200px;
     width: 200px;
 }

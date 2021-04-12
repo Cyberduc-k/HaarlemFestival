@@ -110,7 +110,7 @@ class UserEditsService extends ServiceUtils {
                 return (int)$row["stashId"] + 1;
             }
 
-            return null;
+            return 0;
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());

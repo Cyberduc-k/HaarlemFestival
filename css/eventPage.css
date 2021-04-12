@@ -29,14 +29,16 @@
     z-index: 1;
 }
 
-#editPageBtn{
+#editPageBtn {
     display: block;
     text-decoration: none;
     font-size: 30px;
-    color: white;
+    color: black;
     cursor: pointer;
-    float: right;
-    padding-right: 80px;
+    position: absolute;
+    right: 30px;
+    top: 15px;
+    z-index: 1;
 }
 
 nav {

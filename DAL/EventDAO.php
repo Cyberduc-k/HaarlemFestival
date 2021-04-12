@@ -29,7 +29,7 @@ class EventDAO extends DAOUtils
         }
     }
 
-    public function getById(int $id): PDOStatement{
+    public function getById(int $id): PDOStatement {
         try {
             $query = "SELECT
                           id, name, colour
@@ -41,6 +41,28 @@ class EventDAO extends DAOUtils
             Base::getInstance()->conn->beginTransaction();
 
             $stmt->bindParam(":id", $id);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
+    public function getByName(string $name): PDOStatement {
+        try {
+            $query = "SELECT
+                          id, name, colour
+                      FROM " . $this->tableName . "
+                      WHERE name = :name";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":name", $name);
             $stmt->execute();
 
             Base::getInstance()->conn->commit();

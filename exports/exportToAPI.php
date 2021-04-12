@@ -36,7 +36,7 @@ if($_POST){
     }
     else{
         $_SESSION["exportAPIError"] = "No users found to export to API";
-        header("Location: viewUsers.php");
+        header("Location: /users");
         exit;
     }
 }

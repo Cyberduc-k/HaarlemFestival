@@ -25,7 +25,7 @@ if ($_POST) {
                 $_SESSION["userId"] = $user->getId();
                 $_SESSION["userType"] = $user->getUsertype();
                 $_SESSION["email"] = $user->getEmail();
-                header("Location: home.php");
+                header("Location: /");
             } else {
                 echo "<h2>We cannot find a user with that id</h2>";
             }
