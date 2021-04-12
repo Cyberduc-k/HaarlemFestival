@@ -3,7 +3,7 @@
 require_once __DIR__.'/Request.php';
 require_once __DIR__.'/Constraint.php';
 
-class Route {
+class Router {
     private static array $routes = ['GET' => [], 'POST' => []];
     private static ?Closure $pageNotFound = null;
 

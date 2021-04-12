@@ -2,75 +2,75 @@
 
 require_once __DIR__.'/libs/Router/Router.php';
 
-Route::get('/', function() {
+Router::get('/', function() {
     require __DIR__.'/controllers/home.php';
 });
 
-Route::add(['GET', 'POST'], '/event/add', function() {
+Router::add(['GET', 'POST'], '/event/add', function() {
     require __DIR__.'/controllers/addDeleteEvent.php';
 });
 
-Route::get('/event/{name}', function($name) {
+Router::get('/event/{name}', function($name) {
     require __DIR__.'/controllers/event.php';
     run($name);
 })->word('name');
 
-Route::get('/event/{name}/edit', function($name) {
+Router::get('/event/{name}/edit', function($name) {
     require __DIR__.'/controllers/editEvent.php';
     run($name);
 })->word('name');
 
-Route::get('/tickets/{name}', function($name) {
+Router::get('/tickets/{name}', function($name) {
     require __DIR__.'/controllers/tickets.php';
     run($name);
 })->word('name');
 
-Route::get('/account', function() {
+Router::get('/account', function() {
     require __DIR__.'/controllers/account.php';
 });
 
-Route::get('/programme', function() {
+Router::get('/programme', function() {
     require __DIR__.'/controllers/programme.php';
 });
 
-Route::add(['GET', 'POST'], '/users', function() {
+Router::add(['GET', 'POST'], '/users', function() {
     require __DIR__.'/controllers/users.php';
 });
 
-Route::add(['GET', 'POST'], '/user/create', function() {
+Router::add(['GET', 'POST'], '/user/create', function() {
     require __DIR__.'/controllers/createUser.php';
 });
 
-Route::post('/user/delete', function() {
+Router::post('/user/delete', function() {
     require __DIR__.'/controllers/deleteUser.php';
 });
 
 array_map(
     function(&$route) { $route->number('id'); },
-    Route::add(['GET', 'POST'], '/user/{id?}/edit', function($id = null) {
+    Router::add(['GET', 'POST'], '/user/{id?}/edit', function($id = null) {
         require __DIR__.'/controllers/editUser.php';
         run($id);
     })
 );
 
-Route::add(['GET', 'POST'], '/login', function() {
+Router::add(['GET', 'POST'], '/login', function() {
     require __DIR__.'/controllers/login.php';
 });
 
-Route::add(['GET', 'POST'], '/register', function() {
+Router::add(['GET', 'POST'], '/register', function() {
     require __DIR__.'/controllers/register.php';
 });
 
-Route::add(['GET', 'POST'], '/password_reset', function() {
+Router::add(['GET', 'POST'], '/password_reset', function() {
     require __DIR__.'/controllers/resetPassword.php';
 });
 
-Route::add(['GET', 'POST'], '/password_reset/confirm', function() {
+Router::add(['GET', 'POST'], '/password_reset/confirm', function() {
     require __DIR__.'/controllers/resetPasswordHandler.php';
 });
 
-Route::pageNotFound(function() {
+Router::pageNotFound(function() {
     require __DIR__.'/views/404.php';
 });
 
-Route::run();
+Router::run();
