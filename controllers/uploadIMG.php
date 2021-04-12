@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__.'/models/Image.php';
-require_once __DIR__.'services/ImageService.php';
+require_once __DIR__ . '/models/Image.php';
+require_once __DIR__ . 'services/ImageService.php';
 
 //file upload path and other variables like filename
 $targetDir = "uploads/uploadedIMG/";
