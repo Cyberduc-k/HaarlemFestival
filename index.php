@@ -25,10 +25,17 @@ Route::get('/account', function() {
     require __DIR__.'/controllers/account.php';
 });
 
-Route::add(['GET', 'POST'], '/user/{id?}/edit', function($id = null) {
-    require __DIR__.'/controllers/editUser.php';
-    run($id);
+Route::get('/programme', function() {
+    require __DIR__.'/controllers/programme.php';
 });
+
+array_map(
+    function(&$route) { $route->number('id'); },
+    Route::add(['GET', 'POST'], '/user/{id?}/edit', function($id = null) {
+        require __DIR__.'/controllers/editUser.php';
+        run($id);
+    })
+);
 
 Route::add(['GET', 'POST'], '/login', function() {
     require __DIR__.'/controllers/login.php';

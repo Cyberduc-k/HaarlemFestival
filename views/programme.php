@@ -1,21 +1,11 @@
-<?php
-
-if (!isset($_SESSION)) session_start();
-
-if (!isset($_SESSION["userType"])) {
-    header("Location: login.php");
-    exit;
-} else {
-?>
-
 <html lang="en">
 <head>
-    <title>Schedule</title>
+    <title>Programme</title>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
     <link type="text/css" rel="stylesheet" href="css/schedule.css" />
 </head>
 <body>
-    <?php require_once("menubar.php"); ?>
+    <?php require_once __DIR__.'/menubar.php'; ?>
 
     <main class="content">
         <h1>Programme</h1>
@@ -53,44 +43,6 @@ if (!isset($_SESSION["userType"])) {
                 </tr>
             </tbody>
             <?php
-                require_once("services/TicketService.php");
-                require_once("models/EventType.php");
-
-                $ticketService = new TicketService();
-                $tickets = $ticketService->getAllForUser((int)$_SESSION["userId"]);
-
-                $tickets_thursday = [];
-                $tickets_friday = [];
-                $tickets_saturday = [];
-                $tickets_sunday = [];
-
-                if ($tickets == null) {
-                    $tickets = [];
-                }
-
-                $tickets = array_map(function($twc) use ($ticketService) {
-                    $ticket = $twc->ticket;
-                    $start = $ticketService->getStartDate($ticket);
-                    $end = $ticketService->getEndDate($ticket);
-
-                    return ['ticket' => $ticket, 'start' => $start, 'end' => $end];
-                }, $tickets);
-
-                function timeDiff(DateTime $start, DateTime $end): int {
-                    $start2 = new DateTime($start->format('H:i:s'));
-                    $end2 = new DateTime($end->format('H:i:s'));
-
-                    if ($start2 > $end2) {
-                        $end2->add(new DateInterval('P1D'));
-                    }
-
-                    $diff = $start2->diff($end2);
-                    $res = $diff->i / 30;
-                    $res += $diff->h * 2;
-
-                    return $res;
-                }
-
                 foreach ($tickets as $tkt) {
                     $diff = timeDiff($tkt['start'], $tkt['end']);
 
@@ -109,6 +61,7 @@ if (!isset($_SESSION["userType"])) {
             ?>
         </table>
     </main>
+
+    <?php require_once __DIR__.'/footer.php'; ?>
 </body>
 </html>
-<?php } ?>
