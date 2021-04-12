@@ -7,8 +7,8 @@ class Router {
     private static array $routes = ['GET' => [], 'POST' => []];
     private static ?Closure $pageNotFound = null;
 
-    public static function add(array $methods, string $route, callable $handler): array {
-        $constraints = [];
+    public static function add(array $methods, string $route, callable $handler): RouteConstraint {
+        $routes = [];
 
         foreach ($methods as $method) {
             $matcher = $route;
@@ -55,18 +55,18 @@ class Router {
                 'keys' => $keys,
             ]);
 
-            array_push($constraints, new RouteConstraint(self::$routes[$method][$count - 1]));
+            $routes[] = &self::$routes[$method][$count - 1];
         }
 
-        return $constraints;
+        return new RouteConstraint($routes);
     }
 
     public static function get(string $route, callable $handler): RouteConstraint {
-        return self::add(['GET'], $route, $handler)[0];
+        return self::add(['GET'], $route, $handler);
     }
 
     public static function post(string $route, callable $handler): RouteConstraint {
-        return self::add(['POST'], $route, $handler)[0];
+        return self::add(['POST'], $route, $handler);
     }
 
     public static function pageNotFound(callable $handler) {

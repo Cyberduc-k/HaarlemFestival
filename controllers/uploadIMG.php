@@ -1,14 +1,15 @@
 <?php
-require_once __DIR__ . '/models/Image.php';
-require_once __DIR__ . 'services/ImageService.php';
+
+require_once __DIR__.'/../services/ImageService.php';
+require_once __DIR__.'/../models/Image.php';
 
 //file upload path and other variables like filename
-$targetDir = "uploads/uploadedIMG/";
+$targetDir = __DIR__.'/../uploads/uploadedIMG/';
 $contentPageId = $_GET["contentId"];
 $event = $_GET["event"];
 $statusMsg = '';
 
-if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
+if (!empty($_FILES["file"]["name"])) {
 
     // Create new instance of the image service
     $service = new ImageService();

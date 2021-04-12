@@ -22,7 +22,7 @@
                     <button id="saveBtn" onclick="saveContent()">Save</button>
                 </p>
 
-                <form action="uploadIMG.php?contentId=<?php echo $content->getId(); ?>&event=<?php echo $name; ?>" method="post" enctype="multipart/form-data">
+                <form action="/controllers/uploadIMG.php?contentId=<?php echo $content->getId(); ?>&event=<?php echo $name; ?>" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <label>Select files to upload:</label>
                         <p>
@@ -37,7 +37,7 @@
                 <form method="post">
                     <?php foreach ($images as $image) { ?>
                         <div>
-                            <img src="uploads/uploadedIMG/<?php echo $image->getId().'-'.$image->getName(); ?>" />
+                            <img src="/uploads/uploadedIMG/<?php echo $image->getId().'-'.$image->getName(); ?>" />
                             <input type="radio" name="img" value="<?php echo $image->getId(); ?>" />
                         </div>
                     <?php } ?>

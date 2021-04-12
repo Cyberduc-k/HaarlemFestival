@@ -23,7 +23,7 @@ function run(string $name) {
     $eventName = ucfirst($name);
     $content = $rc->retrieve($event->getId());
     $img = $rc->retrieveImage($content->getId());
-    $image = !is_null($img) ? "uploads/uploadedIMG/".$img->getId()."-".$img->getName() : "";
+    $image = !is_null($img) ? "/uploads/uploadedIMG/".$img->getId()."-".$img->getName() : "";
 
     if ($name == "food") {
         $rs = new RestaurantService();

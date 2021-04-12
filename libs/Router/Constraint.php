@@ -1,15 +1,17 @@
 <?php
 
 class RouteConstraint {
-    private $route;
+    private $routes;
 
-    function __construct(&$route) {
-        $this->route = &$route;
+    function __construct($routes) {
+        $this->routes = $routes;
     }
 
     public function where(string $name, string $regex) {
-        $idx = (int)$this->route['keys'][$name];
-        $this->route['where'][$idx] = '/^'.str_replace('/', '\/', $regex).'$/';
+        foreach ($this->routes as $route) {
+            $idx = (int)$route['keys'][$name];
+            $route['where'][$idx] = '/^'.str_replace('/', '\/', $regex).'$/';
+        }
     }
 
     public function word(string $name) {

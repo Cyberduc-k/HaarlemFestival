@@ -15,7 +15,7 @@ Router::get('/event/<name>', function($name) {
     run($name);
 })->word('name');
 
-Router::get('/event/<name>/edit', function($name) {
+Router::add(['GET', 'POST'], '/event/<name>/edit', function($name) {
     require __DIR__.'/controllers/editEvent.php';
     run($name);
 })->word('name');
@@ -45,13 +45,10 @@ Router::post('/user/delete', function() {
     require __DIR__.'/controllers/deleteUser.php';
 });
 
-array_map(
-    function(&$route) { $route->number('id'); },
-    Router::add(['GET', 'POST'], '/user/<id?>/edit', function($id = null) {
-        require __DIR__.'/controllers/editUser.php';
-        run($id);
-    })
-);
+Router::add(['GET', 'POST'], '/user/<id?>/edit', function($id = null) {
+    require __DIR__.'/controllers/editUser.php';
+    run($id);
+})->number('id');
 
 Router::add(['GET', 'POST'], '/invoice/create', function() {
     require __DIR__.'/controllers/createInvoice.php';
