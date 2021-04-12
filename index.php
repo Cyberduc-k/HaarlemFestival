@@ -37,6 +37,10 @@ Route::add(['GET', 'POST'], '/user/create', function() {
     require __DIR__.'/controllers/createUser.php';
 });
 
+Route::post('/user/delete', function() {
+    require __DIR__.'/controllers/deleteUser.php';
+});
+
 array_map(
     function(&$route) { $route->number('id'); },
     Route::add(['GET', 'POST'], '/user/{id?}/edit', function($id = null) {

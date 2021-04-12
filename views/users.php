@@ -44,7 +44,7 @@
                                         <input class='tableBtn' type="submit" value="Login"/>
                                     </form>
                                     <?php if ($loggedInUserType == UserTypes::SUPERADMIN) { ?>
-                                        <form class="tableForm" action="deleteUser.php" method="post">
+                                        <form class="tableForm" action="/user/delete" method="post">
                                             <input type="hidden" name="id" value="<?php echo $user->getId()?>"/>
                                             <input class='tableBtn' type="submit" value="Delete"/>
                                         </form>

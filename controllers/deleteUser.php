@@ -1,7 +1,7 @@
 <?php
 
-require_once ("models/User.php");
-require_once ("services/UserService.php");
+require_once __DIR__.'/../models/User.php';
+require_once __DIR__.'/../services/UserService.php';
 
 // Used to delete a user
 if ($_POST) {
@@ -18,7 +18,7 @@ if ($_POST) {
         ) {
             // Delete the user
             if ($userService->delete((int)(htmlentities($_POST["id"])))) {
-                echo "<h2>User successfully deleted! <a href='viewUsers.php'>View list</a>";
+                echo "<h2>User successfully deleted! <a href='/users'>View list</a>";
             } else {
                 echo "<h2>We couldnt delete the user, sorry</h2>";
             }
