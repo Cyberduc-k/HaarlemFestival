@@ -33,6 +33,10 @@ Route::add(['GET', 'POST'], '/users', function() {
     require __DIR__.'/controllers/users.php';
 });
 
+Route::add(['GET', 'POST'], '/user/create', function() {
+    require __DIR__.'/controllers/createUser.php';
+});
+
 array_map(
     function(&$route) { $route->number('id'); },
     Route::add(['GET', 'POST'], '/user/{id?}/edit', function($id = null) {

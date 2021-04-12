@@ -52,3 +52,7 @@ label {
 .block {
     display: inline-block;
 }
+
+.red {
+    color: red;
+}
