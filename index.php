@@ -70,6 +70,11 @@ Router::add(['GET', 'POST'], '/invoice/create', function() {
     require __DIR__.'/controllers/createInvoice.php';
 });
 
+Router::get('/invoice/<id>', function($id) {
+    require __DIR__.'/controllers/invoicePdf.php';
+    run($id);
+})->number('id');
+
 Router::get('/export', function() {
     require __DIR__.'/controllers/export.php';
 });

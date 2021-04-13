@@ -12,8 +12,9 @@ class InvoiceDAO extends DAOUtils {
     public function getAll(): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, userId, userAddress, userPhone, tax, date, dueDate
-                      FROM " . $this->tableName;
+                          id, userId, userAddress, userPhone, tax, `date`, dueDate
+                      FROM " . $this->tableName . "
+                      ORDER BY `date` DESC";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
@@ -33,7 +34,7 @@ class InvoiceDAO extends DAOUtils {
     public function getById(int $id): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, userId, userAddress, userPhone, tax, date, dueDate
+                          id, userId, userAddress, userPhone, tax, `date`, dueDate
                       FROM " . $this->tableName . "
                       WHERE id = :id";
 

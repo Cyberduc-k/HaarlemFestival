@@ -1,10 +1,10 @@
 <?php
 
-require_once("libs/TCPDF/config/tcpdf_config.php");
-require_once("libs/TCPDF/tcpdf.php");
-require_once("models/Invoice.php");
-require_once("services/InvoiceService.php");
-require_once("services/TicketService.php");
+require_once __DIR__.'/../libs/TCPDF/config/tcpdf_config.php';
+require_once __DIR__.'/../libs/TCPDF/tcpdf.php';
+require_once __DIR__.'/../models/Invoice.php';
+require_once __DIR__.'/InvoiceService.php';
+require_once __DIR__.'/TicketService.php';
 
 function generateInvoice(Invoice $invoice): TCPDF {
     $service = new TicketService();
