@@ -3,7 +3,6 @@
 if (!isset($_SESSION)) session_start();
 
 require_once __DIR__.'/../services/InvoiceService.php';
-require_once __DIR__.'/../services/PaymentService.php';
 require_once __DIR__.'/../services/TicketService.php';
 require_once __DIR__.'/../services/UserService.php';
 require_once __DIR__.'/../models/EventType.php';
@@ -28,7 +27,6 @@ if ($_POST) {
         !empty($_POST['dueDate']) && !empty($_POST['ticketId']) &&
         !empty($_POST['ticketCount'])
     ) {
-        $pService = new PaymentService();
         $iService = new InvoiceService();
         $invoice = new Invoice();
 
@@ -42,7 +40,19 @@ if ($_POST) {
         $ticketIds = $_POST["ticketId"];
         $ticketCounts = $_POST["ticketCount"];
 
-        echo "Succesfully created invoice";
+        if ($iService->create($invoice)) {
+            for ($i = 0; $i < count($ticketIds); $i++) {
+                if (!$iService->addTicket($invoice->getId(), (int)$ticketIds[$i], (int)$ticketCounts[$i])) {
+                    header("Location: /invoice/create");
+                    exit;
+                }
+            }
+
+            echo "Succesfully created invoice";
+        } else {
+            header("Location: /invoice/create");
+            exit;
+        }
     } else {
         header("Location: /invoice/create");
         exit;
