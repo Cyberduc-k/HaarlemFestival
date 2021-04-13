@@ -62,6 +62,10 @@ Router::add(['GET', 'POST'], '/user/<id?>/edit', function($id = null) {
     run($id);
 })->number('id');
 
+Router::get('/invoices', function() {
+    require __DIR__.'/controllers/invoices.php';
+});
+
 Router::add(['GET', 'POST'], '/invoice/create', function() {
     require __DIR__.'/controllers/createInvoice.php';
 });

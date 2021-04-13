@@ -1,0 +1,25 @@
+.content {
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    margin-top: 0;
+}
+
+.create {
+    display: inline-block;
+    padding: 10px;
+    background: var(--color);
+    border: 1px solid #707070;
+    color: black;
+    text-decoration: none;
+}
+
+.invoice {
+    margin: 15px 0;
+    padding: 15px;
+    color: black;
+    background: white;
+    border: 1px solid #707070;
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+}
