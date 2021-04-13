@@ -131,7 +131,21 @@
                             <?php } ?>
                         </tbody>
                     </table>
+                    <br><br>
+                    <?php
+                    if (isset($_SESSION['userType']))
+                        switch ($_SESSION['userType']) {
+                            case UserTypes::VOLUNTEER:
+                            case UserTypes::SUPERADMIN:
+                                ?><a id="addRestaurant-tab" onclick="setTab(this, 'addRestaurant')">Add restaurant</a><?php
+                        }
+                    ?>
                 </article>
+            </section id="addRestaurant">
+                <form>
+                    hihi :D
+                </form>
+            <section>
             </section>
         <?php } ?>
     </main>

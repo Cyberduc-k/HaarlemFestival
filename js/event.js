@@ -3,6 +3,7 @@ function setTab(self, name) {
     const about = document.getElementById("about");
     const schedule = document.getElementById("schedule");
     const restaurants = document.getElementById("restaurants");
+    const addRestaurant = document.getElementById("addRestaurant");
 
     switch (name) {
         case "about":
@@ -19,6 +20,11 @@ function setTab(self, name) {
         case "restaurants":
             about.style.display = "none";
             restaurants.style.display = "block";
+            unsetHash("day");
+            break;
+        case "addRestaurant":
+            about.style.display = "none";
+            addRestaurant.style.display = "block";
             unsetHash("day");
             break;
     }
