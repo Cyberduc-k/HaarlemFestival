@@ -141,11 +141,12 @@
                         }
                     ?>
                 </article>
-            </section id="addRestaurant">
+            </section>
+
+            <section id="addRestaurant">
                 <form>
                     hihi :D
                 </form>
-            <section>
             </section>
         <?php } ?>
     </main>
