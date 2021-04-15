@@ -144,7 +144,7 @@ class ServiceUtils {
         $invoice->setId((int)$row["id"]);
         $invoice->setUserId((int)$row["userId"]);
         $invoice->setUserAddress((string)$row["userAddress"]);
-        $invoice->setUserPhone((string)$row["userAddress"]);
+        $invoice->setUserPhone((string)$row["userPhone"]);
         $invoice->setTax((float)$row["tax"]);
         $invoice->setDate(new DateTime($row["date"]));
         $invoice->setDueDate(new DateTime($row["dueDate"]));

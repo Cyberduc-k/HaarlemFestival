@@ -5,16 +5,34 @@ require_once __DIR__.'/../libs/TCPDF/tcpdf.php';
 require_once __DIR__.'/../models/Invoice.php';
 require_once __DIR__.'/InvoiceService.php';
 require_once __DIR__.'/TicketService.php';
+require_once __DIR__.'/UserService.php';
 
 function generateInvoice(Invoice $invoice): TCPDF {
-    $service = new TicketService();
-    $tickets = $service->getAllForInvoice($invoice->getId());
+    $tService = new TicketService();
+    $uService = new UserService();
+    $tickets = $tService->getAllForInvoice($invoice->getId());
+    $user = $uService->getById($invoice->getUserId());
     $pdf = new TCPDF();
 
     $pdf->setPrintHeader(false);
     $pdf->setPrintFooter(false);
     $pdf->SetFont('helvetica');
+    $pdf->SetTitle("Invoice");
     $pdf->AddPage();
+
+    $pdf->setEqualColumns(2);
+    $pdf->selectColumn(0);
+
+    $pdf->Cell(25, 0, "NAME:", 0, false, 'R');
+    $pdf->Cell(0, 0, $user->getFullName(), 0, true);
+
+    $pdf->Cell(25, 0, "ADDRESS:", 0, false, 'R');
+    $pdf->Cell(0, 0, $invoice->getUserAddress(), 0, true);
+
+    $pdf->Cell(25, 0, "PHONE:", 0, false, 'R');
+    $pdf->Cell(0, 0, $invoice->getUserPhone(), 0, true);
+
+    $pdf->selectColumn(1);
 
     $pdf->Cell(25, 0, "DATE:", 0, false, 'R');
     $pdf->Cell(0, 0, $invoice->getDate()->format("d-m-Y"), 0, true);
@@ -24,6 +42,8 @@ function generateInvoice(Invoice $invoice): TCPDF {
 
     $pdf->Cell(25, 0, "INVOICE #:", 0, false, 'R');
     $pdf->Cell(0, 0, $invoice->getId(), 0, true);
+
+    $pdf->resetColumns();
 
     $pdf->Ln();
     $pdf->Ln();
@@ -46,7 +66,7 @@ function generateInvoice(Invoice $invoice): TCPDF {
     foreach ($tickets as $ticket) {
         $count = $ticket->count;
         $ticket = $ticket->ticket;
-        $description = $service->getDescription($ticket);
+        $description = $tService->getDescription($ticket);
         $price = $ticket->getPrice();
         $subtotal = $price * $count;
 
@@ -59,24 +79,15 @@ function generateInvoice(Invoice $invoice): TCPDF {
         $total += $subtotal;
     }
 
+    $table .= '<tr><td colspan="3" style="text-align: right">Subtotal</td>';
+    $table .= '<td>€ '.$total.'</td></tr>';
+    $table .= '<tr><td colspan="3" style="text-align: right">Tax</td>';
+    $table .= '<td>€ '.$invoice->getTax() * 100.0.'%</td></tr>';
+    $table .= '<tr><td colspan="3" style="text-align: right">Total</td>';
+    $table .= '<td>€ '.$total * (1.0 + $invoice->getTax()).'</td></tr>';
     $table .= '</tbody></table>';
 
     $pdf->writeHTML($table);
-
-    $border = ['all' => ['width' => 0.4]];
-
-    $pdf->Rect(152.5, 56.55, 47.47, 6.7, '', $border);
-    $pdf->Rect(152.5, 63.25, 47.47, 6.7, '', $border);
-    $pdf->Rect(152.5, 69.95, 47.47, 6.7, '', $border);
-
-    $pdf->Text(140, 57.35, "Total");
-    $pdf->Text(152, 57.35, "€ $total");
-
-    $pdf->Text(142, 64.05, "Tax");
-    $pdf->Text(152, 64.05, $invoice->getTax() * 100.0 . "%");
-
-    $pdf->Text(131.5, 70.75, "Total Due");
-    $pdf->Text(152, 70.75, "€ " . $total * (1.0 + $invoice->getTax()));
 
     return $pdf;
 }
