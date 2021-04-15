@@ -11,7 +11,7 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
 
-    --color: rgb(0, 254, 254);
+    --color: rgb(0, 204, 204);
 }
 
 body.orange {

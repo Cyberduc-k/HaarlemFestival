@@ -227,13 +227,13 @@ class TicketDAO extends DAOUtils {
         try {
             $tickets = $this->getAllForCart($userId);
             $query = "INSERT INTO `invoice_ticket` SET invoiceId = :invoiceId, ticketId = :ticketId, nTickets = :nTickets";
-            $stmt = Base::getInstance()->conn->prepare($query);
-            $stmt->bindParam(":invoiceId", $invoiceId);
 
             while ($row = $tickets->fetch(PDO::FETCH_ASSOC)) {
-                $stmt->bindParam(":ticketId", $row["ticketId"]);
-                $stmt->bindParam(":nTickets", $row["nTickets"]);
+                $stmt = Base::getInstance()->conn->prepare($query);
                 Base::getInstance()->conn->beginTransaction();
+                $stmt->bindParam(":invoiceId", $invoiceId);
+                $stmt->bindParam(":ticketId", $row["id"]);
+                $stmt->bindParam(":nTickets", $row["nTickets"]);
                 $stmt->execute();
                 Base::getInstance()->conn->commit();
             }
