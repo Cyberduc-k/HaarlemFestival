@@ -130,6 +130,10 @@
                 <?php } ?>
             </fieldset>
 
+            <div class="formField red">
+                <p><?php if (isset($_SESSION['addToCartError'])) { echo $_SESSION['addToCartError']; } ?></p>
+            </div>
+
             <input id="addToCart" type="submit" name="addToCart" value="Add to cart" />
             <input id="addToProgramme" type="submit" name="addToProgramme" value="Add to programme" />
         </form>

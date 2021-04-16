@@ -22,6 +22,9 @@ if ($_SESSION['userType'] == UserTypes::CLIENT) {
 $tService = new TicketService();
 
 if ($_POST) {
+    // unset any previous error
+    unset($_SESSION['createInvoiceError']);
+
     if (!empty($_POST['user']) && !empty($_POST['userAddress']) &&
         !empty($_POST['userPhone']) && !empty($_POST['tax']) &&
         !empty($_POST['dueDate']) && !empty($_POST['ticketId']) &&
@@ -42,7 +45,15 @@ if ($_POST) {
 
         if ($iService->create($invoice)) {
             for ($i = 0; $i < count($ticketIds); $i++) {
+                // make sure the ticket count > 0
+                if ($ticketCounts[$i] <= 0) {
+                    $_SESSION['createInvoiceError'] = "Cannot add a negative number of tickets";
+                    header("Location: /invoice/create");
+                    exit;
+                }
+
                 if (!$iService->addTicket($invoice->getId(), (int)$ticketIds[$i], (int)$ticketCounts[$i])) {
+                    $_SESSION['createInvoiceError'] = "Could not add a ticket to the invoice";
                     header("Location: /invoice/create");
                     exit;
                 }
@@ -50,10 +61,12 @@ if ($_POST) {
 
             echo "Succesfully created invoice";
         } else {
+            $_SESSION['createInvoiceError'] = "Failed to create invoice";
             header("Location: /invoice/create");
             exit;
         }
     } else {
+        $_SESSION['createInvoiceError'] = "Not all data is filled in";
         header("Location: /invoice/create");
         exit;
     }

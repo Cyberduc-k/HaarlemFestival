@@ -64,6 +64,10 @@
                 <input name="dueDate" type="date" required />
             </fieldset>
 
+            <div class="formField red">
+                <p><?php if (isset($_SESSION['createInvoiceError'])) { echo $_SESSION['createInvoiceError']; } ?></p>
+            </div>
+
             <input type="submit" value="Create Invoice" />
         </form>
     </section>
