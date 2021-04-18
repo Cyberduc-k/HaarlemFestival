@@ -2,21 +2,17 @@
 
 require_once __DIR__.'/libs/Router/Router.php';
 
-Router::get('/', function() {
-    require __DIR__.'/controllers/home.php';
-});
-
 Router::add(['GET', 'POST'], '/event/add', function() {
     require __DIR__.'/controllers/addDeleteEvent.php';
 });
 
-Router::get('/event/<name>', function($name) {
-    require __DIR__.'/controllers/event.php';
+Router::add(['GET', 'POST'], '/event/<name>/edit', function($name) {
+    require __DIR__.'/controllers/editEvent.php';
     run($name);
 })->word('name');
 
-Router::add(['GET', 'POST'], '/event/<name>/edit', function($name) {
-    require __DIR__.'/controllers/editEvent.php';
+Router::get('/event/<name>', function($name) {
+    require __DIR__.'/controllers/event.php';
     run($name);
 })->word('name');
 
@@ -91,12 +87,16 @@ Router::add(['GET', 'POST'], '/register', function() {
     require __DIR__.'/controllers/register.php';
 });
 
+Router::add(['GET', 'POST'], '/password_reset/confirm', function() {
+    require __DIR__.'/controllers/resetPasswordHandler.php';
+});
+
 Router::add(['GET', 'POST'], '/password_reset', function() {
     require __DIR__.'/controllers/resetPassword.php';
 });
 
-Router::add(['GET', 'POST'], '/password_reset/confirm', function() {
-    require __DIR__.'/controllers/resetPasswordHandler.php';
+Router::get('/', function() {
+    require __DIR__.'/controllers/home.php';
 });
 
 Router::pageNotFound(function() {

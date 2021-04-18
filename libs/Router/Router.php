@@ -1,64 +1,37 @@
 <?php
 
+require_once __DIR__.'/Route.php';
 require_once __DIR__.'/Request.php';
 require_once __DIR__.'/Constraint.php';
 
 class Router {
-    private static array $routes = ['GET' => [], 'POST' => []];
-    private static ?Closure $pageNotFound = null;
+    private static Router $instance;
 
-    public static function add(array $methods, string $route, callable $handler): RouteConstraint {
-        $routes = [];
+    private array $routes = [];
+    private ?Closure $pageNotFound = null;
 
-        foreach ($methods as $method) {
-            $matcher = $route;
-            $keys = [];
-
-            if (preg_match_all('/<([^}]+)>|\/<([^}]+\?)>/', $route, $match, PREG_PATTERN_ORDER)) {
-                $args = $match[1];
-                $opt_args = $match[2];
-
-                if (count($args) > 0) {
-                    $replacements = [];
-
-                    foreach ($args as $k => $arg) {
-                        if ($arg !== '') {
-                            $keys[rtrim($arg, '*')] = $k;
-                            $replacements[$k] = (substr($arg, -1) == '*') ? '(.*?)' : '([^/]+)';
-                        }
-                    }
-
-                    foreach ($replacements as $k => $repl) {
-                        $matcher = str_replace($match[0][$k], $repl, $matcher);
-                    }
-                }
-
-                if (count($opt_args) > 0) {
-                    $replacements = [];
-
-                    foreach ($opt_args as $k => $arg) {
-                        if ($arg !== '') {
-                            $keys[rtrim($arg, '*?')] = $k;
-                            $replacements[$k] = (substr($arg, -2) == '*?') ? '(?:/(.*?))?' : '(?:/([^/]+))?';
-                        }
-                    }
-
-                    foreach ($replacements as $k => $repl) {
-                        $matcher = str_replace($match[0][$k], $repl, $matcher);
-                    }
-                }
-            }
-
-            $count = array_push(self::$routes[$method], [
-                'matcher' => '/^'.str_replace('/', '\/', $matcher).'$/',
-                'handler' => $handler,
-                'keys' => $keys,
-            ]);
-
-            $routes[] = &self::$routes[$method][$count - 1];
+    public static function instance(): Self {
+        if (!isset(Self::$instance)) {
+            Self::$instance = new Router();
         }
 
-        return new RouteConstraint($routes);
+        return Self::$instance;
+    }
+
+    public static function add(array $methods, string $path, callable $handler): RouteConstraint {
+        $path = ends_with($path, "/") ? substr($path, 0, strlen($path) - 1) : $path;
+        $parts = array_map('RouteData::new', explode('/', $path));
+        $params = [];
+
+        foreach ($methods as $method) {
+            if (!isset(Self::instance()->routes[$method])) {
+                Self::instance()->routes[$method] = Route::base();
+            }
+
+            Self::instance()->routes[$method]->add($parts, $handler, $params);
+        }
+
+        return new RouteConstraint($params);
     }
 
     public static function get(string $route, callable $handler): RouteConstraint {
@@ -70,42 +43,40 @@ class Router {
     }
 
     public static function pageNotFound(callable $handler) {
-        self::$pageNotFound = $handler;
+        self::instance()->pageNotFound = $handler;
     }
 
-    public static function run() {
-        $request = new Request();
+    private function matches(string $method, string $path, ?array &$params = null): ?Closure {
+        $path = ends_with($path, "/") ? substr($path, 0, strlen($path) - 1) : $path;
+        $parts = explode('/', $path);
+
+        if (!isset(Self::instance()->routes[$method])) {
+            return null;
+        }
+
+        $params ??= [];
+
+        return Self::instance()->routes[$method]->matches($parts, $params);
+    }
+
+    public static function run(?string $uri = null) {
+        $request = new Request($uri);
         $path = $request->path();
         $method = $request->method();
-        $path_match_found = false;
 
         if ($path !== '/') {
             $path = rtrim($path, '/');
         }
 
-        foreach (self::$routes[$method] as $route) {
-            if (preg_match($route['matcher'], $path, $matches)) {
-                array_shift($matches);
+        if (!is_null($handler = Self::instance()->matches($method, $path, $params))) {
+            call_user_func_array($handler, $params);
+        } else {
+            header($_SERVER['SERVER_PROTOCOL'] . " 404 Not Found");
 
-                if (isset($route['where'])) {
-                    foreach ($route['where'] as $idx => $matcher) {
-                        if (isset($matches[$idx]) && !preg_match($matcher, $matches[$idx])) {
-                            continue 2;
-                        }
-                    }
-                }
-
-                $path_match_found = true;
-                call_user_func_array($route['handler'], $matches);
-                break;
-            }
-        }
-
-        if (!$path_match_found) {
-            header("HTTP/1.0 404 Not Found");
-
-            if (self::$pageNotFound) {
-                call_user_func_array(self::$pageNotFound, [$path]);
+            if (!is_null(Self::instance()->pageNotFound)) {
+                call_user_func_array(Self::instance()->pageNotFound, [$path]);
+            } else {
+                echo "Not Found";
             }
         }
     }

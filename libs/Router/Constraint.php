@@ -1,25 +1,32 @@
 <?php
 
 class RouteConstraint {
-    private $routes;
+    private array $params;
 
-    function __construct($routes) {
-        $this->routes = $routes;
+    function __construct($params) {
+        $this->params = $params;
     }
 
-    public function where(string $name, string $regex) {
-        foreach ($this->routes as &$route) {
-            $idx = (int)$route['keys'][$name];
-            $route['where'][$idx] = '/^'.str_replace('/', '\/', $regex).'$/';
+    public function where(string $name, string $regex): self {
+        $regex = '/^'.str_replace('/', '\/', $regex).'$/';
+
+        if (isset($this->params[$name])) {
+            foreach ($this->params[$name] as &$param) {
+                $param->regex = $regex;
+            }
+        } else {
+            die("route does not contain parameter &lt;$name&gt;");
         }
+
+        return $this;
     }
 
-    public function word(string $name) {
-        $this->where($name, '\w+');
+    public function word(string $name): self {
+        return $this->where($name, '\w+');
     }
 
-    public function number(string $name) {
-        $this->where($name, '\d+');
+    public function number(string $name): self {
+        return $this->where($name, '\d+');
     }
 }
 
