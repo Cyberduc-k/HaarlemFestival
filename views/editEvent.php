@@ -16,6 +16,23 @@
                 <h1><?php echo $eventName; ?></h1>
             </header>
 
+            <form action="../controllers/addRestaurant.php" method="post">
+                <fieldset>
+                    <p>
+                        Add a restaurant:
+                    </p>
+                    <p>
+                        <label> Name: </label>
+                        <input name="name" type="text" required>
+                        <br><br><label> Location: </label>
+                        <input name="location" type="text" required>
+                        <br><br><label> Food type (French, Dutch, etc): </label>
+                        <input name="foodType" type="text" required>
+                        <br><br><input type="submit" name="submit" value="submit" required>
+                    </p>
+                </fieldset>
+            </form>
+            <br>
             <article>
                 <textarea id="mytextarea" name="mytextarea"></textarea>
                 <p>
