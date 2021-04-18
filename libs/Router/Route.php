@@ -1,5 +1,22 @@
 <?php
 
+/*
+ * A trie data structure to more efficiently represent registered routes with common prefixes.
+ * This also increases the effeciency of matching routes.
+ * 
+ * For example two routes like this:
+ * /user/create
+ * /user/edit
+ * 
+ * Are represented like this:
+ * /user /create
+ *       /edit
+ *
+ * Where /create and /edit are both children of the /user route.
+ *
+ * This is better because each segment only has to be registered and matched once
+ * and parameters are extracted automatically.
+ */
 class Route {
     private RouteData $data;
     private array $children;
@@ -73,6 +90,10 @@ function ends_with(string $whole, string $sub): bool {
     return substr($whole, -strlen($sub)) == $sub;
 }
 
+/*
+ * Enumeration type for different kinds of route segments
+ * such as exact matches, parameters and optional parameters.
+ */
 abstract class RouteData {
     public static function Root(): self {
         return new RouteDataRoot();

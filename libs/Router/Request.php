@@ -1,5 +1,6 @@
 <?php
 
+/// Class which contains information about a request
 class Request {
     private string $path;
     private string $method;

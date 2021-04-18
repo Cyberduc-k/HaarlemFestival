@@ -1,5 +1,6 @@
 <?php
 
+/// Constrain routing parameters using regex
 class RouteConstraint {
     private array $params;
 
@@ -7,6 +8,7 @@ class RouteConstraint {
         $this->params = $params;
     }
 
+    /// Add a regex constraint to paramater with name $name
     public function where(string $name, string $regex): self {
         $regex = '/^'.str_replace('/', '\/', $regex).'$/';
 
@@ -21,10 +23,12 @@ class RouteConstraint {
         return $this;
     }
 
+    /// Constrain the paramater to words
     public function word(string $name): self {
         return $this->where($name, '\w+');
     }
 
+    /// Constrain the paramter to nubmers
     public function number(string $name): self {
         return $this->where($name, '\d+');
     }

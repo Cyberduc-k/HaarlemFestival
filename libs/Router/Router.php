@@ -18,6 +18,7 @@ class Router {
         return Self::$instance;
     }
 
+    /// Add a new route for the given $methods with handler $handler
     public static function add(array $methods, string $path, callable $handler): RouteConstraint {
         $path = ends_with($path, "/") ? substr($path, 0, strlen($path) - 1) : $path;
         $parts = array_map('RouteData::new', explode('/', $path));
@@ -42,10 +43,12 @@ class Router {
         return self::add(['POST'], $route, $handler);
     }
 
+    /// Register a fallback handler for when no route matches
     public static function pageNotFound(callable $handler) {
         self::instance()->pageNotFound = $handler;
     }
 
+    /// Match the given uri path to the registered routes
     private function matches(string $method, string $path, ?array &$params = null): ?Closure {
         $path = ends_with($path, "/") ? substr($path, 0, strlen($path) - 1) : $path;
         $parts = explode('/', $path);
@@ -59,6 +62,7 @@ class Router {
         return Self::instance()->routes[$method]->matches($parts, $params);
     }
 
+    /// Find which route matches the requested uri
     public static function run(?string $uri = null) {
         $request = new Request($uri);
         $path = $request->path();
