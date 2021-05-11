@@ -17,7 +17,7 @@
             </header>
 
             <!-- Add a restaurant -->
-            <form action="/controllers/addRestaurant.php" method="post">
+            <form action="/controllers/addRestaurant.php" method="post" onsubmit="return alert('Restaurant has been added!')">
                 <fieldset>
                     <p>
                         Add a restaurant:
@@ -29,10 +29,14 @@
                         <input name="location" type="text" required>
                         <br><br><label> Food type (French, Dutch, etc): </label>
                         <input name="foodType" type="text" required>
+                        <br><br><label> Price: </label>
+                        <input name="price" type="text" required>
                         <br><br><input type="submit" name="submit" value="submit" required>
                     </p>
                 </fieldset>
             </form>
+            <br>
+            <p id="restaurantAddConfirm"></p>
             <br>
             <article>
                 <textarea id="mytextarea" name="mytextarea"></textarea>
