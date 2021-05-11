@@ -1,7 +1,7 @@
 <?php
-require_once("services/RestaurantService.php");
-require_once("models/Restaurant.php");
-require_once("models/FoodType.php");
+require_once("../services/RestaurantService.php");
+require_once("../models/Restaurant.php");
+require_once("../models/FoodType.php");
 
 $rs = new RestaurantService;
 
@@ -35,7 +35,10 @@ $restaurant->setName($name);
 $restaurant->setLocation($location);
 $restaurant->setFoodType($foodType);
 $restaurant->setPrice($price);
-$rs->addRestaurant($restaurant);
+//$rs->addRestaurant($restaurant);
+
+
+echo '<script>alert("Restaurant has been added!")</script>';
 
 header("Location: eventPage.php?event=2")
 
