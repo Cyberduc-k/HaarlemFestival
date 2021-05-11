@@ -16,6 +16,7 @@
                 <h1><?php echo $eventName; ?></h1>
             </header>
 
+            // Add a restaurant
             <form action="../controllers/addRestaurant.php" method="post">
                 <fieldset>
                     <p>
@@ -23,7 +24,7 @@
                     </p>
                     <p>
                         <label> Name: </label>
-                        <input name="name" type="text" required>
+                        <input name="name" type="text" required> // "required" will make sure you cannot submit empty fields.
                         <br><br><label> Location: </label>
                         <input name="location" type="text" required>
                         <br><br><label> Food type (French, Dutch, etc): </label>
@@ -39,6 +40,7 @@
                     <button id="saveBtn" onclick="saveContent()">Save</button>
                 </p>
 
+                // Uploading images
                 <form action="/controllers/uploadIMG.php?contentId=<?php echo $content->getId(); ?>&event=<?php echo $name; ?>" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <label>Select files to upload:</label>
