@@ -16,6 +16,7 @@
                 <h1><?php echo $eventName; ?></h1>
             </header>
 
+            <?php if ($name == "food") { ?>
             <!-- Add a restaurant -->
             <form action="/controllers/addRestaurant.php" method="post" onsubmit="return alert('Restaurant has been added!')">
                 <fieldset>
@@ -38,6 +39,7 @@
             <br>
             <p id="restaurantAddConfirm"></p>
             <br>
+            <?php } ?>
             <article>
                 <textarea id="mytextarea" name="mytextarea"></textarea>
                 <p>
