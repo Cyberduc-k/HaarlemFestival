@@ -39,6 +39,9 @@
                         </tr>
                     </table>
                     </p>
+                    <p>
+                        <input type="submit" name="submit" value="submit">
+                    </p>
                 </fieldset>
             </form>
             <br>
