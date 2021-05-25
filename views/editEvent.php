@@ -24,15 +24,20 @@
                         Add a restaurant:
                     </p>
                     <p>
-                        <label> Name: </label>
-                        <input name="name" type="text" required> <!-- "required" will make sure you cannot submit empty fields. -->
-                        <br><br><label> Location: </label>
-                        <input name="location" type="text" required>
-                        <br><br><label> Food type (French, Dutch, etc): </label>
-                        <input name="foodType" type="text" required>
-                        <br><br><label> Price: </label>
-                        <input name="price" type="text" required>
-                        <br><br><input type="submit" name="submit" value="submit" required>
+                    <table id="addRestaurant">
+                        <tr>
+                            <td>Name:</td>
+                            <td>Location:</td>
+                            <td>Food type (French, Dutch, etc):</td>
+                            <td>Price:</td>
+                        </tr>
+                        <tr>
+                            <td><input name="name" type="text" required> <!-- "required" will make sure you cannot submit empty fields. -->
+                            <td><input name="location" type="text" required></td>
+                            <td><input name="foodType" type="text" required></td>
+                            <td><input name="price" type="text" required></td>
+                        </tr>
+                    </table>
                     </p>
                 </fieldset>
             </form>

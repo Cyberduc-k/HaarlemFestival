@@ -7,6 +7,10 @@ body{
     margin: auto;
 }
 
+#addRestaurant {
+    width: 100%;
+}
+
 #mytextarea {
     size: 1000px;
     margin: auto;
@@ -27,3 +31,5 @@ img {
     height: 200px;
     width: 200px;
 }
+
+
