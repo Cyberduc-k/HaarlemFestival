@@ -18,7 +18,7 @@
 
             <?php if ($name == "food") { ?>
             <!-- Add a restaurant -->
-            <form action="/controllers/addRestaurant.php" method="post" onsubmit="return alert('Restaurant has been added!')">
+            <form action="/controllers/addRestaurant.php" method="post">
                 <fieldset>
                     <p>
                         Add a restaurant:
@@ -44,10 +44,38 @@
                     </p>
                 </fieldset>
             </form>
+            <p id="restaurantAddMsg"></p>
             <br>
-            <p id="restaurantAddConfirm"></p>
-            <br>
-            <?php } ?>
+                <!-- Validation check and confirmation using sessions -->
+            <?php
+
+
+            if (isset($_COOKIE['PriceVal'])) {
+            $priceVal = (string)$_COOKIE['PriceVal'];
+            ?>
+                <script>
+                    document.getElementById("restaurantAddMsg").innerHTML = "Restaurant not added. <?php echo $priceVal; ?> is not a valid price.";
+                </script>
+            <?php
+            } elseif (isset($_COOKIE['LocationVal'])) {
+            $locationVal = $_COOKIE['LocationVal'];
+            ?>
+                <script>
+                    document.getElementById("restaurantAddMsg").innerHTML = "Restaurant not added. Please add a number to <?php echo $locationVal; ?>.";
+                </script>
+            <?php
+            } elseif (isset($_COOKIE['RestaurantAdded'])) {
+            $restaurantName = $_COOKIE['RestaurantAdded'];
+            ?>
+                <script>
+                    document.getElementById("restaurantAddMsg").innerHTML = "Restaurant <?php echo $restaurantName; ?> has been added!";
+                </script>
+            <?php
+            }
+
+            session_destroy();
+
+            } ?>
             <article>
                 <textarea id="mytextarea" name="mytextarea"></textarea>
                 <p>
