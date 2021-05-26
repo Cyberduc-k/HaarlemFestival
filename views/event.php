@@ -113,7 +113,7 @@
                         <h2>Restaurants</h2>
                     </header>
 
-                    <table>
+                    <table id="addRestaurant">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -124,9 +124,9 @@
                         <tbody>
                             <?php foreach ($restaurants as $restaurant) { ?>
                                 <tr>
-                                    <td><?php echo $restaurant->getName(); ?></td>
-                                    <td><?php echo $restaurant->getLocation(); ?></td>
-                                    <td><?php echo FoodType::getType($restaurant->getFoodType()); ?></td>
+                                    <td id="td"><?php echo $restaurant->getName(); ?></td>
+                                    <td id="td"><?php echo $restaurant->getLocation(); ?></td>
+                                    <td id="td"><?php echo FoodType::getType($restaurant->getFoodType()); ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
