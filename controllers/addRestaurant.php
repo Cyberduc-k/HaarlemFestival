@@ -31,6 +31,14 @@ switch ($foodType) {
         $foodType = 5;
 }
 
+if ($price < 0) {
+
+}
+
+if (strpbrk($name, '1234567890') !== FALSE) {
+
+}
+
 $restaurant = new Restaurant();
 $restaurant->setName($name);
 $restaurant->setLocation($location);
