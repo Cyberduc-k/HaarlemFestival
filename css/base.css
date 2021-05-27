@@ -72,6 +72,10 @@ label {
     animation: fadeout 1s 10s forwards;
 }
 
+.popup.error {
+    background: red;
+}
+
 @keyframes fadeout {
     0% {
         opacity: 1;

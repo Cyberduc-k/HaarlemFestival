@@ -2,6 +2,7 @@
 <html lang="end">
 <head>
     <title>Edit <?php echo $eventName; ?></title>
+    <link type="text/css" rel="stylesheet" href="/css/base.css" />
     <link type="text/css" rel="stylesheet" href="/css/style.css" />
     <link type="text/css" rel="stylesheet" href="/css/editEventPage.css" />
     <script src="https://cdn.tiny.cloud/1/dr4sffq9mze32bw2u01wp5edapqoq9qsjlrp2egutz2i8bvw/tinymce/5/tinymce.min.js"
@@ -28,14 +29,20 @@
                         <tr>
                             <td>Name:</td>
                             <td>Location:</td>
-                            <td>Food type (French, Dutch, etc):</td>
                             <td>Price:</td>
+                            <td>Food type (French, Dutch, etc):</td>
                         </tr>
                         <tr>
                             <td><input name="name" type="text" required> <!-- "required" will make sure you cannot submit empty fields. -->
                             <td><input name="location" type="text" required></td>
-                            <td><input name="foodType" type="text" required></td>
                             <td><input name="price" type="text" required></td>
+                            <td><select name="foodType" required>
+                                    <option value="0">French</option>
+                                    <option value="1">Italian</option>
+                                    <option value="2">Dutch</option>
+                                    <option value="3">Mexican</option>
+                                    <option value="4">Asian</option>
+                                </select></td>
                         </tr>
                     </table>
                     </p>
@@ -44,7 +51,9 @@
                     </p>
                 </fieldset>
             </form>
-            <p id="restaurantAddMsg"></p>
+                <div class="popup">
+                    <p id="restaurantAddMsg"></p>
+                </div>
             <br>
                 <!-- Validation check and confirmation using sessions -->
             <?php
@@ -54,6 +63,7 @@
             $priceVal = (string)$_COOKIE['PriceVal'];
             ?>
                 <script>
+                    document.getElementById("restaurantAddMsg").parentElement.classList.add("error");
                     document.getElementById("restaurantAddMsg").innerHTML = "Restaurant not added. <?php echo $priceVal; ?> is not a valid price.";
                 </script>
             <?php
@@ -61,6 +71,7 @@
             $locationVal = $_COOKIE['LocationVal'];
             ?>
                 <script>
+                    document.getElementById("restaurantAddMsg").parentElement.classList.add("error");
                     document.getElementById("restaurantAddMsg").innerHTML = "Restaurant not added. Please add a number to <?php echo $locationVal; ?>.";
                 </script>
             <?php
@@ -71,9 +82,10 @@
                     document.getElementById("restaurantAddMsg").innerHTML = "Restaurant <?php echo $restaurantName; ?> has been added!";
                 </script>
             <?php
+            } else {
+                ?><script> document.getElementById("restaurantAddMsg").parentElement.style.display = "none"; </script><?php
             }
 
-            session_destroy();
 
             } ?>
             <article>
