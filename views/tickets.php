@@ -95,10 +95,16 @@
                     </li>
                 </ul>
             </nav>
+            <div class="formField greed">
+                <p><?php if(isset($_SESSION['addToCartSuccess'])) {echo $_SESSION['addToCartSuccess']; }
+                    unset($_SESSION['addToCartSuccess']); ?></p>
+            </div>
 
             <article id="tickets">
             </article>
         </section>
+
+
 
         <form id="options" method="post" action="/addToCart.php?eventId=<?php echo $event->getId(); ?>&next=tickets/<?php echo $name; ?>">
             <fieldset>
@@ -132,6 +138,7 @@
                 <label class="price">Price:</label>
                 
                 <input id="ticketId" type="hidden" name="ticketId" required />
+                <input id="inStock" type="hidden" name="inStock" required />
 
                 <?php if ($name == "food") { ?>
                     <input id="day" type="hidden" name="day" required />
@@ -139,7 +146,8 @@
             </fieldset>
 
             <div class="formField red">
-                <p><?php if (isset($_SESSION['addToCartError'])) { echo $_SESSION['addToCartError']; } ?></p>
+                <p><?php if (isset($_SESSION['addToCartError'])) { echo $_SESSION['addToCartError']; }
+                    unset($_SESSION['addToCartError']); ?></p>
             </div>
 
             <input id="addToCart" type="submit" name="addToCart" value="Add to cart" />
@@ -150,6 +158,7 @@
     <script>
         const section = document.getElementById("tickets");
         const ticketId = document.getElementById("ticketId");
+        const inStock = document.getElementById("inStock");
         const price = document.getElementById("price");
         let ticketType = 0;
         let tickets = [];
@@ -232,6 +241,7 @@
                 price.innerText = `€ ${ticketPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
 
             ticketId.value = id;
+            inStock.value = filtered[idx].inStock;
 
             for (const el of document.querySelectorAll(".ticket")) {
                 el.classList.remove("selected");

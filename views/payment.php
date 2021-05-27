@@ -6,36 +6,34 @@
     <link rel="stylesheet" type="text/css" href="/css/tickets.css">
 </head>
 <body>
-    <?php require __DIR__.'/menubar.php'; ?>
-
-    <main>
-        <article class="content">
-            Thank you for your order.<br>
-            The current status of your order is: <?php echo $status; ?>
-        </article>
-
-        <article class="content">
-            <?php
-                foreach ($tickets as $twc) {
-                    $ticket = $twc->ticket;
-                    $start = $ts->getStartDate($ticket);
-                    $startDate = $start->format('d-m-Y H:i');
-                    $name = $ts->getDescription($ticket);
-                    $location = $ts->getLocation($ticket);
-                    $amount = $twc->count;
+<?php require __DIR__ . '/menubar.php'; //TODO: CSS?>
+<main>
+    <article class="content">
+        <?php
+        foreach ($tickets as $twc) {
+            $ticket = $twc->ticket;
+            $start = $ts->getStartDate($ticket);
+            $startDate = $start->format('d-m-Y H:i');
+            $name = $ts->getDescription($ticket);
+            $location = $ts->getLocation($ticket);
+            $price = $ticket->getPrice();
+            $amount = $twc->count;
             ?>
-                <div class="ticket">
-                    <span class="name"><?= $name ?></span>
-                    <span class="location"><?= $location ?></span>
-                    <span class="time"><?= $startDate ?> </span>
-                    <span class="numOfTickets"><?=$amount?> </span>
-                </div>
-            <?php } ?>
+            Thank you for your order.<br>
+            Here is an overview of your ordered items:
+            <div class="ticket">
+                <span class="name"><?= $name ?></span>
+                <span class="location"><?= $location ?></span>
+                <span class="time"><?= $startDate ?> </span>
+                <span class="numOfTickets"><?= $amount ?> </span>
+                <span class="price">€<?= $price ?></span>
+            </div>
+        <?php } ?>
 
-            <a href="/account">Return to my account"</a>
-        </article>
-    </main>
+        <button onclick="window.location.href='/account'">Return to my account</button>
+    </article>
+</main>
 
-    <?php require __DIR__.'/footer.php'; ?>
+<?php require __DIR__ . '/footer.php'; ?>
 </body>
 </html>

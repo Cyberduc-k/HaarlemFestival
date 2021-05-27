@@ -6,10 +6,7 @@ use PaymentService;
 require_once(__DIR__ . "/../Mollie/vendor/autoload.php");
 require_once(__DIR__ . "/../../services/PaymentService.php");
 
-/*
- * NOTE: The examples are using a text file as a database.
- * Please use a real database like MySQL in production code.
- */
+
 function database_read($orderId): string
 {
     $service = new PaymentService();
@@ -30,3 +27,4 @@ function database_update($orderId, $status): bool
     $service = new PaymentService();
     return $service->updatePaymentStatus($orderId, $status);
 }
+

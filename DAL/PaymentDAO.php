@@ -42,16 +42,16 @@ class PaymentDAO extends DAOUtils
             $query = "UPDATE
             " . $this->tableName . "
             SET
-                status=:status
+                status = :status
             WHERE
-                id =:id";
+                id = :orderId";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
             Base::getInstance()->conn->beginTransaction();
 
             // bind parameters
-            $stmt->bindParam(":id", $orderId);
+            $stmt->bindParam(":orderId", $orderId);
             $stmt->bindParam(":status", $status);
 
             // execute query
@@ -70,7 +70,7 @@ class PaymentDAO extends DAOUtils
     {
         try {
             $query = "SELECT 
-                id, status 
+                id, status
             FROM
                 " . $this->tableName . "
             WHERE 
@@ -110,7 +110,6 @@ class PaymentDAO extends DAOUtils
 
             // bind value
             $stmt->bindParam(":orderId", $orderId);
-
             // execute query
             $stmt->execute();
 
@@ -123,75 +122,24 @@ class PaymentDAO extends DAOUtils
         }
     }
 
-    function getUserId($orderId): ?PDOStatement {
+    function getOrdersFromUser(int $userId): ?PDOStatement {
         try {
-            $query = "SELECT
-                userId
-            FROM
-                " . $this->tableName . "
-            WHERE
-                id = :orderId LIMIT 0,1";
+            $query = "SELECT id, status, userId
+            FROM " . $this->tableName . "
+            WHERE userId = :userId";
 
             $stmt = Base::getInstance()->conn->prepare($query);
             Base::getInstance()->conn->beginTransaction();
 
-            $stmt->bindParam(":orderId", $orderId);
-
+            $stmt->bindParam(":userId", $userId);
             $stmt->execute();
 
             Base::getInstance()->conn->commit();
             return $stmt;
-        } catch (Exception $e) {
-            return $this->handleNullError($e, true);
-        }
-    }
 
-    function updateCartStatus($userId, $orderId): bool{
-        try {
-
-            $query = "UPDATE cart AS c
-            SET
-                c.orderId=:orderId
-            WHERE
-                c.userId =:userId";
-
-            $stmt = Base::getInstance()->conn->prepare($query);
-            Base::getInstance()->conn->beginTransaction();
-
-            $stmt->bindParam(":orderId", $orderId);
-            $stmt->bindParam(":userId", $userId);
-
-            $stmt->execute();
-
-            Base::getInstance()->conn->commit();
-            return true;
         }catch (Exception $e) {
-            return $this->handleFalseError($e, true);
-        }
-    }
-
-    function getStatusByUserId(int $userId): ?PDOStatement
-    {
-        try {
-            $query = "SELECT 
-                status
-            FROM
-                " . $this->tableName . "
-            WHERE 
-               userid = :userId ";
-
-            $stmt = Base::getInstance()->conn->prepare($query);
-            Base::getInstance()->conn->beginTransaction();
-
-            $stmt->bindParam(":userId", $userId);
-
-            $stmt->execute();
-
-            Base::getInstance()->conn->commit();
-            return $stmt;
-        } catch (Exception $e) {
             return $this->handleNullError($e, true);
         }
-
     }
+
 }

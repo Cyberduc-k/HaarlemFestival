@@ -104,7 +104,7 @@ class TicketService extends ServiceUtils {
         }
     }
 
-    // get all ticets for a given user's cart.
+    // get all tickets for a given user's cart.
     // NOTE: this returns an array of TicketWithCount
     public function getAllForCart(int $userId): ?array {
         try {
@@ -116,6 +116,27 @@ class TicketService extends ServiceUtils {
             }
 
             return $tickets;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
+    public function getAllForOverview(int $userId): ?array {
+        try {
+            $stmt = $this->dao->getAllForOverview($userId);
+            $tickets = [];
+
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($tickets, $this->rowToTicketWithCount($row));
+            }
+            return $tickets;
+
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
@@ -150,7 +171,7 @@ class TicketService extends ServiceUtils {
         }
     }
 
-    public function addToCart(int $userId, int $ticketId, int $count) {
+    public function addToCart(int $userId, int $ticketId, int $count): bool {
         try {
             return $this->dao->addToCart($userId, $ticketId, $count);
         } catch (Exception $e) {
@@ -160,7 +181,90 @@ class TicketService extends ServiceUtils {
 
             ErrorService::getInstance()->create($error);
 
-            return null;
+            return false;
+        }
+    }
+
+    public function deleteFromCart(int $userId, int $ticketId): bool {
+        try {
+            return $this->dao->deleteFromCart($userId, $ticketId);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return false;
+        }
+    }
+
+    public function updateCart(int $userId, int $ticketId, int $count): bool{
+        try {
+            return $this->dao->updateCart($userId, $ticketId, $count);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return false;
+        }
+    }
+
+    public function removeFromStock(int $ticketId): bool {
+        try {
+            return $this->dao->removeFromStock($ticketId);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+            return false;
+        }
+    }
+
+    public function addBackToStock(int $ticketId): bool {
+        try {
+            return $this->dao->addBackToStock($ticketId);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return false;
+        }
+    }
+
+    public function cancelTicketOrder(int $ticketId, int $amount): bool {
+        try {
+            return $this->dao->cancelTicketOrder($ticketId, $amount);
+        }catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return false;
+        }
+    }
+
+    public function update(Ticket $ticket): bool{
+        try {
+            return $this->dao->update($ticket);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error ->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return false;
         }
     }
 
@@ -189,6 +293,19 @@ class TicketService extends ServiceUtils {
             ErrorService::getInstance()->create($error);
 
             return false;
+        }
+    }
+
+    public function getStock(int $ticketId): ?PDOStatement {
+        try {
+            return $this->dao->getById($ticketId);
+        }catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+            return null;
         }
     }
 

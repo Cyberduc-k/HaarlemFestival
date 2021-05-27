@@ -43,6 +43,7 @@ $ts = new TicketService();
 $userId = (int)$_SESSION["userId"];
 $ticketId = (int)$_POST["ticketId"];
 $count = (int)$_POST["amount"];
+$maxTickets = (int) $_POST["inStock"];
 
 // in case we order a food ticket also create a new reservation
 if ($eventID == 2) {
@@ -71,13 +72,21 @@ if ($eventID == 2) {
 }
 
 if (isset($_POST["addToCart"])) {
+
     $ts->addToCart($userId, $ticketId, $count);
     $_SESSION['addToCart'] = "Added to cart";
+    if($count > $maxTickets && $eventID != 2) {
+        $_SESSION['addToCartError'] = "Cannot add more tickets than available";
+        header("Location: $next");
+        exit;
+    } else {
+        $_SESSION['addToCartSuccess'] = "Ticket(s) added to cart!";
+        $ts->addToCart($userId, $ticketId, $count);
+    }
 } else if (isset($_POST["addToProgramme"])) {
     $ts->addToSchedule($userId, $ticketId, $count);
     $_SESSION['addToCart'] = "Added to programme";
 }
-
 header("Location: $next");
 
 ?>

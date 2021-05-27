@@ -135,10 +135,35 @@ class TicketDAO extends DAOUtils {
     public function getAllForCart(int $userId): ?PDOStatement {
         try {
             $query = "SELECT
-                          tickets.id, ticketType, eventId, eventType, price, inStock, nTickets
+                          id, ticketType, eventId, eventType, price, inStock, nTickets
                       FROM tickets
                       JOIN `cart` ON `cart`.ticketId = tickets.id
                       WHERE `cart`.userId = :userId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":userId", $userId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
+    public function getAllForOverview(int $userId): ?PDOStatement {
+        try {
+            $query = "SELECT
+                          T.id, ticketType, eventId, eventType, price, inStock, nTickets
+                      FROM tickets AS T
+                      JOIN `invoice_ticket` AS IT ON IT.ticketId = T.id
+                      JOIN `invoices` AS I ON I.id = IT.invoiceId
+                      WHERE I.userId = :userId";
+
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
@@ -182,7 +207,63 @@ class TicketDAO extends DAOUtils {
     public function addToCart(int $userId, int $ticketId, int $count): bool {
         try {
             $query = "INSERT INTO cart
-                      SET userId = :userId, ticketId = :ticketId, nTickets = :count";
+                      SET userId = :userId, ticketId = :ticketId, nTickets = :count
+                      ON DUPLICATE KEY UPDATE nTickets = nTickets + :count";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->bindParam(":count", $count);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+
+            $query = "UPDATE tickets
+            SET inStock = inStock - :count WHERE id = :ticketId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->bindParam(":count", $count);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
+    public function deleteFromCart(int $userId, int $ticketId): bool {
+        try {
+            $query = "DELETE FROM cart WHERE userId = :userId AND ticketId = :ticketId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
+    public function updateCart(int $userId, int $ticketId, int $count): bool{
+        try {
+            $query = "UPDATE cart
+            SET nTickets = :count 
+            WHERE userId = :userId AND ticketId = :ticketId";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
@@ -191,6 +272,66 @@ class TicketDAO extends DAOUtils {
             $stmt->bindParam(":userId", $userId);
             $stmt->bindParam(":ticketId", $ticketId);
             $stmt->bindParam(":count", $count);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
+    public function removeFromStock(int $ticketId): bool {
+        try {
+            $query = "UPDATE tickets
+            SET inStock = inStock -1  WHERE id = :ticketId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
+    public function addBackToStock(int $ticketId): bool {
+        try {
+            $query = "UPDATE tickets
+            SET inStock = instock +1 WHERE id = :ticketId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
+    public function cancelTicketOrder(int $ticketId, int $amount): bool {
+        try {
+            $query = "UPDATE tickets SET inStock = inStock + :amount WHERE id = :ticketId;";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->bindParam(":amount", $amount);
             $stmt->execute();
 
             Base::getInstance()->conn->commit();
@@ -449,31 +590,7 @@ class TicketDAO extends DAOUtils {
         }
     }
 
-    public function updateTicketAmount(string $orderId): bool {
-        try {
-            $query = "UPDATE
-                " .$this->tableName . " AS t
-                JOIN cart AS c
-             ON
-                  c.orderId =:orderId
-             SET
-                 t.inStock =(t.inStock - c.nTickets)
-            WHERE
-              t.id = c.ticketId;";
 
-            $stmt = Base::getInstance()->conn->prepare($query);
-
-            Base::getInstance()->conn->beginTransaction();
-            $stmt->bindParam(":orderId", $orderId);
-            $stmt->execute();
-
-            Base::getInstance();
-
-            return true;
-        } catch (Exception $e) {
-            return $this->handleFalseError($e, true);
-        }
-    }
 
 }
 

@@ -122,6 +122,7 @@ class InvoiceService extends ServiceUtils {
             return false;
         }
     }
+
 }
 
 ?>

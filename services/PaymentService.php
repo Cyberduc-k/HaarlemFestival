@@ -50,6 +50,9 @@ class PaymentService extends ServiceUtils
             ]);
 
             // write payment to database
+//            if($this->userHasOrders($userId))
+//                $orderId = $this->getUserOrderId($userId);
+
             $this->dao->newPayment($orderId, $payment->status, $userId);
             // get checkout url to finish transaction
             Header("Location: " . $payment->getCheckoutUrl(), true, 303);
@@ -127,7 +130,7 @@ class PaymentService extends ServiceUtils
             $stmt = $this->dao->orderIdExists($orderId);
             $num = $stmt->rowCount();
 
-            return ($num == 1);
+            return ($num >= 1);
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
@@ -138,10 +141,12 @@ class PaymentService extends ServiceUtils
         return true;
     }
 
-    function updateCartStatus(string $orderId): bool{
+    function userHasOrders(int $userId): bool {
         try {
-            $userId = (int)$this->getUserId($orderId);
-            return $stmt = $this->dao->updateCartStatus($userId, $orderId);
+            $stmt = $this->dao->getOrdersFromUser($userId);
+            $num = $stmt->rowCount();
+
+            return ($num >= 1);
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());
@@ -152,35 +157,15 @@ class PaymentService extends ServiceUtils
         return false;
     }
 
-    function getUserId(string $orderId): int {
+    function getUserOrderId(int $userId): string
+    {
         try {
-            $stmt = $this->dao->getUserId($orderId);
-            $num = $stmt ->rowCount();
-
-            if($num == 1) {
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                return (int)$row["userId"];
-            }
-
-        } catch (Exception $e) {
-            $error = new ErrorLog();
-            $error->setMessage($e->getMessage());
-            $error->setStackTrace($e->getTraceAsString());
-
-            ErrorService::getInstance()->create($error);
-        }
-        return 999999;
-    }
-
-    function getStatusByUserId(int $userId) {
-        try {
-            $stmt = $this->dao->getStatusByUserId($userId);
+            $stmt = $this->dao->getOrdersFromUser($userId);
             $num = $stmt->rowCount();
 
-            if ($num == 1) {
+            if ($num > 0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                return (string)$row["status"];
+                return (string)$row["id"];
             }
 
         } catch (Exception $e) {
@@ -192,6 +177,5 @@ class PaymentService extends ServiceUtils
         }
         return "";
     }
-
 
 }
