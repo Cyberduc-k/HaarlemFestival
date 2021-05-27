@@ -58,3 +58,31 @@ label {
 .red {
     color: red;
 }
+
+.popup {
+    position: fixed;
+    z-index: 9999;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: green;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    animation: fadeout 1s 10s forwards;
+}
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
+    
+    99% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}

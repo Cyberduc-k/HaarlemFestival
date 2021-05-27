@@ -72,8 +72,10 @@ if ($eventID == 2) {
 
 if (isset($_POST["addToCart"])) {
     $ts->addToCart($userId, $ticketId, $count);
+    $_SESSION['addToCart'] = "Added to cart";
 } else if (isset($_POST["addToProgramme"])) {
     $ts->addToSchedule($userId, $ticketId, $count);
+    $_SESSION['addToCart'] = "Added to programme";
 }
 
 header("Location: $next");

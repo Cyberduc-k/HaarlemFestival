@@ -6,6 +6,14 @@
     <script src="/js/hash.js"></script>
 </head>
 <body class="<?php echo $event->getColour(); ?>" >
+    <?php
+    if (!isset($_SESSION)) session_start();
+    if (isset($_SESSION['addToCart'])) { ?>
+        <div class="popup">
+            <?php echo $_SESSION['addToCart']; ?>
+        </div>
+    <?php unset($_SESSION['addToCart']); } ?>
+
     <?php require_once __DIR__.'/menubar.php'; ?>
 
     <main>
