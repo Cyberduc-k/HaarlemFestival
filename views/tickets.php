@@ -134,6 +134,11 @@
                 <label for="amount">Amount:</label>
                 <input type="number" name="amount" min="1" value="1" />
 
+                <?php if ($name == "food") {?>
+                    <label for="comment">Comments(allergies):</label>
+                    <input type="text" name="comment" />
+                <?php } ?>
+
                 <span class="price" id="price">€ __.__</span>
                 <label class="price">Price:</label>
                 

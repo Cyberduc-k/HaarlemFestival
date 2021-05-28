@@ -44,7 +44,7 @@ if ($price < 0 || !ctype_digit($price)) {
     $restaurant->setLocation($location);
     $restaurant->setFoodType($foodType);
     $restaurant->setPrice($price);
-    //$rs->addRestaurant($restaurant);
+    $rs->addRestaurant($restaurant);
 
     setcookie('RestaurantAdded', $name, time() + 1, "/");
 }

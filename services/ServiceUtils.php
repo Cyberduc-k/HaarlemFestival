@@ -216,6 +216,7 @@ class ServiceUtils {
         $reservation->setRestaurantId((int)$row["restaurantId"]);
         $reservation->setName((string)$row["name"]);
         $reservation->setReservationTime(new DateTime($row["reservationTime"]));
+        $reservation->setComment((string)$row["comment"]);
 
         return $reservation;
     }

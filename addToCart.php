@@ -56,6 +56,7 @@ if ($eventID == 2) {
     $reservation->setName($_SESSION["firstname"]);
     $reservation->setRestaurantId($ticketId);
     $reservation->setReservationTime(new DateTime($_POST["ticketType"]));
+    $reservation->setComment($_POST["comment"]);
 
     $reses->addReservation($reservation);
 

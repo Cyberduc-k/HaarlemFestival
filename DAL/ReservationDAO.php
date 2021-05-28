@@ -11,7 +11,7 @@ class ReservationDAO extends DAOUtils
     {
         try {
             $query = "SELECT
-                          id, restaurantId, name, reservationTime
+                          id, restaurantId, name, reservationTime, comment
                       FROM " . $this->tableName . "
                       WHERE id = :id";
 
@@ -60,7 +60,7 @@ class ReservationDAO extends DAOUtils
             $query = "INSERT INTO
                 " . $this->tableName . "
             SET
-                restaurantId = :restaurantId, name = :name, reservationTime = :reservationTime";
+                restaurantId = :restaurantId, name = :name, reservationTime = :reservationTime, comment = :comment";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -70,11 +70,13 @@ class ReservationDAO extends DAOUtils
             $restaurantId = (int)$reservation->getRestaurantId();
             $name = (string)$reservation->getName();
             $reservationTime = $reservation->getReservationTime()->format("Y-m-d H:i:s");
+            $comment = (string)$reservation->getComment();
 
             // bind values
             $stmt->bindParam(":restaurantId", $restaurantId);
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":reservationTime", $reservationTime);
+            $stmt->bindParam(":comment", $comment);
 
             // execute query
             $stmt->execute();
