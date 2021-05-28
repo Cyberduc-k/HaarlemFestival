@@ -16,7 +16,8 @@
                 <?php foreach ($events as $ev) { ?>
                     <article>
                         <?php
-                            $en = ucfirst($ev->getName());
+                            $eventName = $ev->getName();
+                            $en = ucfirst($eventName);
                             $eid = $ev->getId();
 
                             $content = $cs->getByEventId($eid);
@@ -32,7 +33,7 @@
                                 echo "<img id='eventImg' src='uploads/uploadedIMG/$id-$name'/>";
                             }
 
-                            echo "<a class='events' id='eventMore' href='/eventPage.php?event=$eid'>More...</a>";
+                            echo "<a class='events' id='eventMore' href='/event/$eventName'>More...</a>";
                         ?>
                     </article>
                 <?php } ?>
