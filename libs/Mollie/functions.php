@@ -15,16 +15,16 @@ function database_read($orderId): string
     return $status ? $status : "unknown order";
 }
 
-function database_write(int $userId, float $amount): bool
+function database_write(string $orderId, string $paymentId, string $status): bool
 {
     $service = new PaymentService();
-    return $service->createPayment($userId, $amount);
+    return $service->updatePaymentStatus($orderId, $paymentId, $status, $_SESSION['userId']);
 
 }
 
-function database_update($orderId, $status): bool
-{
-    $service = new PaymentService();
-    return $service->updatePaymentStatus($orderId, $status);
-}
+//function database_update($orderId, $status): bool
+//{
+//    $service = new PaymentService();
+//    return $service->updatePaymentStatus($orderId, $status);
+//}
 

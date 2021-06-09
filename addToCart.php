@@ -74,14 +74,12 @@ if ($eventID == 2) {
 
 if (isset($_POST["addToCart"])) {
 
-    $ts->addToCart($userId, $ticketId, $count);
     $_SESSION['addToCart'] = "Added to cart";
     if($count > $maxTickets && $eventID != 2) {
         $_SESSION['addToCartError'] = "Cannot add more tickets than available";
         header("Location: $next");
         exit;
-    } else {
-        $_SESSION['addToCartSuccess'] = "Ticket(s) added to cart!";
+        } else {
         $ts->addToCart($userId, $ticketId, $count);
     }
 } else if (isset($_POST["addToProgramme"])) {

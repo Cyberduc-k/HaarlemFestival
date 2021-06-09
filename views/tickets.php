@@ -95,10 +95,6 @@
                     </li>
                 </ul>
             </nav>
-            <div class="formField greed">
-                <p><?php if(isset($_SESSION['addToCartSuccess'])) {echo $_SESSION['addToCartSuccess']; }
-                    unset($_SESSION['addToCartSuccess']); ?></p>
-            </div>
 
             <article id="tickets">
             </article>

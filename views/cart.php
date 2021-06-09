@@ -36,26 +36,25 @@
             $name = $ticketService->getDescription($ticket);
             $location = $ticketService->getLocation($ticket);
             $amount = $twc->count;
-            $price = $ticket->getPrice();
+            $price = number_format($ticket->getPrice(),2);
             $total += ($price * $amount);
+            $exVAT = number_format((($total/121)*100), 2);
+            $VAT = number_format(($total-$exVAT),2);
             ?>
 
             <div class="ticket">
                 <span class="name"><?= $name ?></span>
                 <span class="location"><?= $location ?></span>
                 <span class="time"><?= $startDate ?> </span>
-                <?php if ($ticket->getEventType() != 1) { ?>
-                    <span class="numOfTickets"><?= $amount ?> </span>
-                <?php } ?>
+                <span class="numOfTickets">(<?= $amount ?>x)</span>
                 <span class="price">€<?= $price ?></span>
 
-                <?php if ($ticket->getEventType() != 1) { ?>
-                    <form id="changeTicketAmount" name="changeTicketAmount" method="post"
-                          action="/controllers/cart.php?ticketId=<?= $ticket->getId() ?>&next=cart">
-                        <input id="addTicketButton" type="submit" name="addTicketButton" value="+">
-                        <input id="removeTicketButton" type="submit" name="removeTicketButton" value="-">
-                    </form>
-                <?php } ?>
+
+                <form id="changeTicketAmount" name="changeTicketAmount" method="post"
+                      action="/controllers/cart.php?ticketId=<?= $ticket->getId() ?>&next=cart">
+                    <input id="addTicketButton" type="submit" name="addTicketButton" value="+">
+                    <input id="removeTicketButton" type="submit" name="removeTicketButton" value="-">
+                </form>
 
                 <form id="deleteTicketsFromCart" name="deleteTicketsFromCart" method="post"
                       action="/deleteFromCart.php?ticketId=<?= $ticket->getId() ?>&next=cart">
@@ -68,8 +67,12 @@
             </div>
         <?php }
         if (count($tickets) >= 1) { ?>
-            Total price: €<?= $total ?>
-            <form id="agreement" method="post">
+            Price (ex. VAT):    €<?= $exVAT ?>
+                <br>
+            VAT:                €<?= $VAT ?>
+                <br>
+            Total price:        €<?= $total ?>
+            <form id="/agreement" method="post">
                 <input id="agreeButton" type="submit" name="agreeButton" value="Proceed to payment">
             </form>
         <?php } else {

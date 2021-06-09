@@ -25,7 +25,6 @@ if ($_POST) {
                     $amount++;
                     $ticketService->removeFromStock($ticketId);
                     $ticketService->updateCart($userId, $ticketId, $amount);
-
                 } else {
                     $_SESSION['cartAmountError'] = "We're sorry, but you have currently selected the maximum amount of available tickets";
                     header("Location: /cart");
@@ -35,7 +34,8 @@ if ($_POST) {
             header("Location: /cart");
         }
     }
-    if (!empty($_POST['removeTicketButton'])) {
+    if (!empty($_POST[
+        'removeTicketButton'])) {
         $ticketId = $_GET['ticketId'];
         foreach ($tickets as $twc) {
             $ticket = $twc->ticket;
