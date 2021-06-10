@@ -1,8 +1,16 @@
-.avatar{
+.avatar {
     max-width: 300px;
 }
 
 .content {
     max-width: 600px;
     margin: auto;
+}
+
+#tickets {
+    padding-top: 250px;
+}
+
+.ticket.numOfTickets {
+    text-align: right;
 }

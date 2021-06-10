@@ -21,7 +21,8 @@ if ($_POST) {
             $ticket = $twc->ticket;
             if ($ticket->getId() == $ticketId) {
                 $amount = $twc->count;
-                if ($amount <= $ticket->getInStock() - 1) {
+                if ($amount <= $ticket->getInStock() - 1 || $ticket->getEventType() == 1
+                ||$ticket->getEventType() == 2) {
                     $amount++;
                     $ticketService->removeFromStock($ticketId);
                     $ticketService->updateCart($userId, $ticketId, $amount);

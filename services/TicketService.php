@@ -133,6 +133,7 @@ class TicketService extends ServiceUtils {
             $tickets = [];
 
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
                 array_push($tickets, $this->rowToTicketWithCount($row));
             }
             return $tickets;

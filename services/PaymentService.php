@@ -100,15 +100,14 @@ class PaymentService extends ServiceUtils
                 return (string)$row["paymentId"];
 
             }
-        }
-        catch
-            (Exception $e) {
-                $error = new ErrorLog();
-                $error->setMessage($e->getMessage());
-                $error->setStackTrace($e->getTraceAsString());
+        } catch
+        (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
 
-                ErrorService::getInstance()->create($error);
-            }
+            ErrorService::getInstance()->create($error);
+        }
         return "";
     }
 
@@ -166,7 +165,6 @@ class PaymentService extends ServiceUtils
         }
         return true;
     }
-
 
 
 }
