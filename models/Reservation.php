@@ -5,7 +5,7 @@ class Reservation {
     private int $restaurantId;
     private String $name;
     private DateTime $reservationTime;
-    private ?String $comment;
+    private String $comment;
 
     public function getId(): int {
         return $this->id;
