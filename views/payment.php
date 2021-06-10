@@ -32,8 +32,9 @@
                 <span class="name"><?= $name ?></span>
                 <span class="location"><?= $location ?></span>
                 <span class="time"><?= $startDate ?> </span>
-                <span class="numOfTickets"><?= $amount ?> </span>
-                <span class="price">€<?= $price ?></span>
+                <span class="numOfTickets"><?= $amount ?> x </span>
+                <span class="price">€<?= number_format($price, 2, ".", ",") ?> =</span>
+                <span class="ticketPrice">€<?= number_format($ticketPrice, 2, ",", ".")?></span>
             </div>
         <?php } ?>
         <div class="amountcol">
