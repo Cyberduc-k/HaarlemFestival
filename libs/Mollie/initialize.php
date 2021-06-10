@@ -1,6 +1,7 @@
 <?php
 namespace _PhpScoperd8ff184be637;
 
+use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
 use function error_reporting;
 use function ini_set;
@@ -14,4 +15,7 @@ require_once __DIR__ . "/vendor/autoload.php";
 require_once __DIR__ . "/functions.php";
 
 $mollie = new MollieApiClient();
-$mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
+try {
+    $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
+} catch (ApiException $e) {
+}

@@ -1,59 +1,90 @@
-<?php
+<html lang="en">
+<head>
+    <title>Thank you</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/account.css">
+    <link rel="stylesheet" type="text/css" href="/css/tickets.css">
+</head>
+<body>
+<?php require __DIR__ . '/menubar.php'; //TODO: CSS?>
+<main>
+    <article class="content">
+        Thank you for your order.<br>
+        Here is an overview of your ordered items:
 
+        <?php
+        foreach ($tickets as $twc) {
+            $ticket = $twc->ticket;
+            $start = $ts->getStartDate($ticket);
+            $startDate = $start->format('d-m-Y H:i');
+            $name = $ts->getDescription($ticket);
+            $location = $ts->getLocation($ticket);
+            $price = $ticket->getPrice();
+            $amount = $twc->count;
+            ?>
+            <div class="ticket">
+                <span class="name"><?= $name ?></span>
+                <span class="location"><?= $location ?></span>
+                <span class="time"><?= $startDate ?> </span>
+                <span class="numOfTickets"><?= $amount ?> </span>
+                <span class="price">€<?= $price ?></span>
+            </div>
+        <?php } ?>
+
+        <button onclick="window.location.href='/account'">Return to my account</button>
+    </article>
+</main>
+
+<?php require __DIR__ . '/footer.php'; ?>
+</body>
+</html>
+
+<?php
 use Mollie\Api\Exceptions\ApiException;
-use Mollie\Api\MollieApiClient;
-use function _PhpScoperd8ff184be637\database_update;
+require_once ("libs/Mollie/initialize.php");
+require_once ("libs/Mollie/src/MollieApiClient.php");
+require_once ("services/PaymentService.php");
 
 try {
-    require_once("libs/Mollie/initialize.php");
-    require_once("services/PaymentService.php");
-    require_once("services/TicketService.php");
 
-    $mollie = new MollieApiClient();
+    $mollie = new Mollie\Api\MollieApiClient();
     $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
 
-    $paymentService = new PaymentService();
-    $ticketService = new TicketService();
+    $ps = new PaymentService();
+    $paymentId = $ps->getPaymentId($_GET['order_id']);
 
-    // Retrieve the payment's current state.
-    $payment = $mollie->payments->get($_POST["id"]);
+    $payment =$mollie->payments->get($paymentId);
     $orderId = $payment->metadata->order_id;
-
-    // Update the order in the database.
-    database_update($orderId, $payment->status);
+    $status = $payment->status;
 
 
-    if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
-        $paymentService->updatePaymentStatus($orderId, $payment->status);
-        http_send_status(200);
-        database_update($orderId, $payment->status);
+    if ($payment->isPaid() && ! $payment->hasRefunds() && ! $payment->hasChargebacks()) {
+        database_write($orderId, $paymentId, $status);
     } elseif ($payment->isOpen()) {
-        echo "open";
+        database_write($orderId, $paymentId, $status);
+        return http_response_code(200);
     } elseif ($payment->isPending()) {
-        $paymentService->updatePaymentStatus($orderId, $payment->status);
-        http_send_status(201);
-        database_update($orderId, $payment->status);
+        database_write($orderId, $paymentId, $status);
+        return http_response_code(200);
     } elseif ($payment->isFailed()) {
-        $paymentService->updatePaymentStatus($orderId, $payment->status);
-        http_send_status(201);
-        database_update($orderId, $payment->status);
+        database_write($orderId, $paymentId, $status);
+        return http_response_code(200);
     } elseif ($payment->isExpired()) {
-        $paymentService->updatePaymentStatus($orderId, $payment->status);
-        http_send_status(201);
-        database_update($orderId, $payment->status);
+        database_write($orderId, $paymentId, $status);
+        return http_response_code(200);
     } elseif ($payment->isCanceled()) {
-        $paymentService->updatePaymentStatus($orderId, $payment->status);
-        http_send_status(200);
-        database_update($orderId, $payment->status);
+        database_write($orderId, $paymentId, $status);
+        return http_response_code(200);
     } elseif ($payment->hasRefunds()) {
-        $paymentService->updatePaymentStatus($orderId, $payment->status);
-        http_send_status(201);
-        database_update($orderId, $payment->status);
+        database_write($orderId, $paymentId, $status);
+        return http_response_code(200);
     } elseif ($payment->hasChargebacks()) {
-        $paymentService->updatePaymentStatus($orderId, $payment->status);
-        http_send_status(201);
-        database_update($orderId, $payment->status);
+        database_write($orderId, $paymentId, $status);
+        return http_response_code(200);
     }
 } catch (ApiException $e) {
-    echo "API call failed: " . \htmlspecialchars($e->getMessage());
+    echo "API call failed: " . htmlspecialchars($e->getMessage());
 }
+?>
+
+

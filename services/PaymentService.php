@@ -1,4 +1,5 @@
 <?php
+
 use JetBrains\PhpStorm\Pure;
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
@@ -22,7 +23,8 @@ class PaymentService extends ServiceUtils
         $this->dao = new PaymentDAO();
     }
 
-    function createPayment(int $userId, float $amount): bool {
+    function createPayment(int $userId, float $amount): bool
+    {
         $mollie = new MollieApiClient();
         $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
 
@@ -41,21 +43,20 @@ class PaymentService extends ServiceUtils
                     "currency" => "EUR",
                     "value" => "{$amountString}", // You must send the correct number of decimals, thus we enforce the use of strings
                 ],
-                "description" => "Order",
+                "description" => "Order {$orderId}",
                 "redirectUrl" => "{$protocol}://{$hostname}/payment?order_id={$orderId}",
-                "webhookUrl" => "{$protocol}://{$hostname}/webhook.php",
+                "webhookUrl" => "{$protocol}://{$hostname}/payment",
                 "metadata" => [
                     "order_id" => $orderId,
                 ],
             ]);
 
             // write payment to database
-//            if($this->userHasOrders($userId))
-//                $orderId = $this->getUserOrderId($userId);
+            database_write($orderId, $payment->id, $payment->status);
 
-            $this->dao->newPayment($orderId, $payment->status, $userId);
             // get checkout url to finish transaction
             Header("Location: " . $payment->getCheckoutUrl(), true, 303);
+
 
             return true;
         } catch (ApiException $e) {
@@ -87,10 +88,33 @@ class PaymentService extends ServiceUtils
         return "";
     }
 
-    function updatePaymentStatus(string $orderId, string $status): bool
+    function getPaymentId(string $orderId): string
     {
         try {
-            return ($this->dao->updateStatus($orderId, $status));
+            $stmt = $this->dao->getPaymentId($orderId);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                return (string)$row["paymentId"];
+
+            }
+        } catch
+        (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+        }
+        return "";
+    }
+
+    function updatePaymentStatus(string $orderId, string $paymentId, string $status, string $userId): bool
+    {
+        try {
+            return ($this->dao->updateStatus($orderId, $paymentId, $status, $userId));
 
         } catch (Exception $e) {
             $error = new ErrorLog();
@@ -125,7 +149,8 @@ class PaymentService extends ServiceUtils
         return "";
     }
 
-    function orderIdExists(string $orderId): bool {
+    function orderIdExists(string $orderId): bool
+    {
         try {
             $stmt = $this->dao->orderIdExists($orderId);
             $num = $stmt->rowCount();
@@ -141,41 +166,5 @@ class PaymentService extends ServiceUtils
         return true;
     }
 
-    function userHasOrders(int $userId): bool {
-        try {
-            $stmt = $this->dao->getOrdersFromUser($userId);
-            $num = $stmt->rowCount();
-
-            return ($num >= 1);
-        } catch (Exception $e) {
-            $error = new ErrorLog();
-            $error->setMessage($e->getMessage());
-            $error->setStackTrace($e->getTraceAsString());
-
-            ErrorService::getInstance()->create($error);
-        }
-        return false;
-    }
-
-    function getUserOrderId(int $userId): string
-    {
-        try {
-            $stmt = $this->dao->getOrdersFromUser($userId);
-            $num = $stmt->rowCount();
-
-            if ($num > 0) {
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                return (string)$row["id"];
-            }
-
-        } catch (Exception $e) {
-            $error = new ErrorLog();
-            $error->setMessage($e->getMessage());
-            $error->setStackTrace($e->getTraceAsString());
-
-            ErrorService::getInstance()->create($error);
-        }
-        return "";
-    }
 
 }

@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="@HaarlemFestival">
-  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.20">
+  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.21">
     <root id="1">
       <ServerVersion>10.4.15</ServerVersion>
+      <Grants>u844582952_hf|schema||u844582952_hf_user||ALTER|G
+u844582952_hf|schema||u844582952_hf_user||ALTER ROUTINE|G
+u844582952_hf|schema||u844582952_hf_user||CREATE|G
+u844582952_hf|schema||u844582952_hf_user||CREATE ROUTINE|G
+u844582952_hf|schema||u844582952_hf_user||CREATE TEMPORARY TABLES|G
+u844582952_hf|schema||u844582952_hf_user||CREATE VIEW|G
+u844582952_hf|schema||u844582952_hf_user||DELETE|G
+u844582952_hf|schema||u844582952_hf_user||DELETE HISTORY|G
+u844582952_hf|schema||u844582952_hf_user||DROP|G
+u844582952_hf|schema||u844582952_hf_user||EVENT|G
+u844582952_hf|schema||u844582952_hf_user||EXECUTE|G
+u844582952_hf|schema||u844582952_hf_user||INDEX|G
+u844582952_hf|schema||u844582952_hf_user||INSERT|G
+u844582952_hf|schema||u844582952_hf_user||LOCK TABLES|G
+u844582952_hf|schema||u844582952_hf_user||REFERENCES|G
+u844582952_hf|schema||u844582952_hf_user||SELECT|G
+u844582952_hf|schema||u844582952_hf_user||SHOW VIEW|G
+u844582952_hf|schema||u844582952_hf_user||TRIGGER|G
+u844582952_hf|schema||u844582952_hf_user||UPDATE|G</Grants>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultCasing>exact</DefaultCasing>
     </root>
@@ -1019,26 +1038,6 @@
     <collation id="325" parent="1" name="utf8mb4_vietnamese_ci">
       <Charset>utf8mb4</Charset>
     </collation>
-    <user id="326" parent="1" name="u844582952_hf_user">
-      <Host>%</Host>
-      <ObjectGrants>ALL PRIVILEGES|u844582952_hf
-</ObjectGrants>
-    </user>
-    <table id="327" parent="3" name="untitled_table_1"/>
-    <column id="328" parent="327" name="id">
-      <Position>1</Position>
-      <DataType>bigint(20) unsigned|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <index id="329" parent="327" name="id">
-      <ColNames>id</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <key id="330" parent="327" name="id">
-      <ColNames>id</ColNames>
-      <UnderlyingIndexName>id</UnderlyingIndexName>
-    </key>
+    <user id="326" parent="1" name="u844582952_hf_user"/>
   </database-model>
 </dataSource>

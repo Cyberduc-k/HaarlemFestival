@@ -36,15 +36,15 @@ class PaymentDAO extends DAOUtils
         }
     }
 
-    function updateStatus(string $orderId, string $status): ?bool
+    function updateStatus(string $orderId, string $paymentId, string $status, string $userId): ?bool
     {
         try {
-            $query = "UPDATE
-            " . $this->tableName . "
-            SET
-                status = :status
-            WHERE
-                id = :orderId";
+            $query = "INSERT INTO
+              " . $this->tableName . "
+              SET
+              id=:orderId, paymentId=:paymentId, status=:status, userId=:userId
+              ON DUPLICATE KEY UPDATE
+              status=:status";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -52,7 +52,9 @@ class PaymentDAO extends DAOUtils
 
             // bind parameters
             $stmt->bindParam(":orderId", $orderId);
+            $stmt->bindParam(":paymentId", $paymentId);
             $stmt->bindParam(":status", $status);
+            $stmt->bindParam("userId", $userId);
 
             // execute query
             $stmt->execute();
@@ -62,6 +64,28 @@ class PaymentDAO extends DAOUtils
 
             return true;
         } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
+
+    function getPaymentId(string $orderId): ?PDOStatement {
+        try {
+            $query = "SELECT
+            paymentId
+            FROM "
+            . $this->tableName . "
+            WHERE id=:orderId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":orderId", $orderId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e ) {
             return $this->handleNullError($e, true);
         }
     }
