@@ -15,10 +15,10 @@ function database_read($orderId): string
     return $status ? $status : "unknown order";
 }
 
-function database_write(string $orderId, string $paymentId, string $status): bool
+function database_write(string $orderId, string $paymentId, string $status, string $userId): bool
 {
     $service = new PaymentService();
-    return $service->updatePaymentStatus($orderId, $paymentId, $status, $_SESSION['userId']);
+    return $service->updatePaymentStatus($orderId, $paymentId, $status, $userId);
 
 }
 

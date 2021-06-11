@@ -1,6 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\Pure;
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
 
@@ -28,6 +27,7 @@ class PaymentService extends ServiceUtils
         $mollie = new MollieApiClient();
         $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
 
+
         try {
             // create random and unique order ID
             $orderId = $this->createUniqueOrderId();
@@ -45,14 +45,14 @@ class PaymentService extends ServiceUtils
                 ],
                 "description" => "Order {$orderId}",
                 "redirectUrl" => "{$protocol}://{$hostname}/payment?order_id={$orderId}",
-                "webhookUrl" => "{$protocol}://{$hostname}/payment",
+                "webhookUrl" => "{$protocol}://{$hostname}/webhook.php/",
                 "metadata" => [
                     "order_id" => $orderId,
                 ],
             ]);
 
             // write payment to database
-            database_write($orderId, $payment->id, $payment->status);
+            database_write($orderId, $payment->id, $payment->status, $_SESSION['userId']);
 
             // get checkout url to finish transaction
             Header("Location: " . $payment->getCheckoutUrl(), true, 303);

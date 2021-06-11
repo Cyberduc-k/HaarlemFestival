@@ -37,6 +37,10 @@ Router::get('/payment', function() {
     require __DIR__.'/controllers/payment.php';
 });
 
+Router::get('/webhook', function (){
+    require __DIR__ . '/controllers/webhook.php';
+});
+
 Router::add(['GET', 'POST'], '/users', function() {
     require __DIR__.'/controllers/users.php';
 });
