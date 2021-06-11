@@ -328,7 +328,8 @@ class TicketService extends ServiceUtils {
                                 return "Jazz Three Day Ticket";
                         case TicketType::Normal:
                             $service = new ActService();
-                            $musicians = $service->getMusiciansForAct($ticket->getEventId()) or [];
+                            $musicians = $service->getMusiciansForAct($ticket->getEventId());
+                            if (is_null($musicians)) $musicians = [];
                             $description = "";
 
                             for ($i = 0; $i < count($musicians); $i++) {
@@ -350,7 +351,11 @@ class TicketService extends ServiceUtils {
                 case EventType::Food:
                     $rs = new ReservationService();
                     $restaurant = $rs->getReservationRestaurant($ticket->getEventId());
-                    return $restaurant->getName();
+
+                    if (!is_null($restaurant))
+                        return $restaurant->getName();
+                    else
+                        return "Reservation";
                 default: die();
             }
         } catch (Exception $e) {

@@ -79,12 +79,13 @@ function generateInvoice(Invoice $invoice): TCPDF {
         $total += $subtotal;
     }
 
+    $subtotal = $total / (1.0 + $invoice->getTax());
     $table .= '<tr><td colspan="3" style="text-align: right">Subtotal</td>';
-    $table .= '<td>€ '.$total.'</td></tr>';
+    $table .= '<td>€ '.round(($subtotal * 100.0)) / 100.0.'</td></tr>';
     $table .= '<tr><td colspan="3" style="text-align: right">Tax</td>';
     $table .= '<td>€ '.$invoice->getTax() * 100.0.'%</td></tr>';
     $table .= '<tr><td colspan="3" style="text-align: right">Total</td>';
-    $table .= '<td>€ '.$total * (1.0 + $invoice->getTax()).'</td></tr>';
+    $table .= '<td>€ '.$total.'</td></tr>';
     $table .= '</tbody></table>';
 
     $pdf->writeHTML($table);
