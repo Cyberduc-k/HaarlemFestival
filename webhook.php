@@ -1,36 +1,36 @@
 <?php
 use Mollie\Api\Exceptions\ApiException;
-use Mollie\Api\MollieApiClient;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf;
 
 require_once ("libs/Mollie/initialize.php");
-require_once ("libs/Mollie/src/MollieApiClient.php");
-require_once ("services/PaymentService.php");
 require_once ("services/InvoiceService.php");
 require_once ("services/TicketService.php");
+require_once ("services/PaymentService.php");
+require_once ("services/invoicePdf.php");
+require_once ("models/Invoice.php");
 
 try {
-    $mollie = new MollieApiClient();
-    $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
-
     $ps = new PaymentService();
     $us = new UserService();
     $is = new InvoiceService();
+    $mailer = MailService::getInstance();
 
     $payment = $mollie->payments->get($_POST['id']);
     $orderId = $payment->metadata->order_id;
     $status = $payment->status;
     $userId = $ps->getUserId($orderId);
     $user = $us->getById($userId);
+    $invoice = $is->getForOrder($userId, $orderId);
 
-    $mailer = MailService::getInstance();
 
     database_write($orderId, $status);
 
 
     if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
         $subject = "Thank you for your order";
-        $body = "Your order ";
-        $mailer->sendMail($user->getEmail(), $subject, $body);
+        $body = "test";
+        $pdf = generateInvoice($invoice);
+        $mailer->sendMailWithInvoice($user->getEmail(), $subject, $body, $pdf);
     } elseif ($payment->isOpen()) {
         return http_response_code(200);
     } elseif ($payment->isPending()) {

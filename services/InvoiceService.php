@@ -123,6 +123,28 @@ class InvoiceService extends ServiceUtils {
         }
     }
 
+    public function getForOrder(int $userId, string $orderId): ?Invoice {
+        try {
+            $stmt = $this->dao->getForOrder($userId, $orderId);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                return $this->rowToInvoice($row);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
 }
 
 ?>

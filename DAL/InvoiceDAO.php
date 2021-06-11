@@ -155,6 +155,29 @@ class InvoiceDAO extends DAOUtils {
             return $this->handleFalseError($e, true);
         }
     }
+
+    public function getForOrder(int $userId, string $orderId): ?PDOStatement{
+        try {
+            $query = "SELECT i.id, i.userId, i.userAddress, i.userPhone, i.tax, i.`date`, i.dueDate 
+            FROM " . $this->tableName . " AS i 
+            JOIN orders AS o on o.userId = i.userId
+            WHERE i.userId = :userId AND o.id = :orderId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":orderId", $orderId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleNullError($e, true);
+        }
+    }
 }
 
 ?>

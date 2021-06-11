@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__.'/../libs/TCPDF/config/tcpdf_config.php';
+require_once __DIR__.'/../libs/TCPDF/tcpdf.php';
 
 class MailService {
     private static $instance = null;
@@ -18,6 +20,41 @@ class MailService {
         }
 
         return self::$instance;
+    }
+
+    public function sendMailWithInvoice(String $to, String $subject, String $body, TCPDF $pdf): bool{
+        require_once(__DIR__."/../libs/PHPMailer/PHPMailerAutoload.php");
+
+        $invoice = $pdf->Output('', 'S');
+
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->SMTPSecure = "ssl";
+        $mail->Host = self::HOST;
+        $mail->SMTPAuth = true;
+        $mail->Username = self::FROM;
+        $mail->Password = self::PASSWORD;
+        $mail->Port = self::PORT;
+        $mail->IsHTML(true);
+        $mail->From = self::FROM;
+        $mail->FromName = self::FROM_NAME;
+        $mail->Sender = self::FROM;
+        $mail->Body = $body;
+        $mail->Subject = $subject;
+        $mail->addAddress($to);
+        $mail->addStringAttachment($invoice, 'invoice.pdf');
+
+        try {
+            if ($mail->Send()) {
+                return true;
+            } else {
+                echo "Mailer ErrorLog: " . $mail->ErrorInfo;
+                return false;
+            }
+        } catch (phpmailerException $e) {
+            echo "Mailer ErrorLog: ".$e;
+            return false;
+        }
     }
 
     // Send an email using the PHPMailer library: https://github.com/PHPMailer/PHPMailer

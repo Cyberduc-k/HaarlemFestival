@@ -92,7 +92,7 @@ class PaymentService extends ServiceUtils
         return "";
     }
 
-    function getUserId(string $orderId): string
+    function getUserId(string $orderId): int
     {
         try {
             $stmt = $this->dao->getUserId($orderId);
@@ -101,7 +101,7 @@ class PaymentService extends ServiceUtils
             if($num > 0){
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                return (string)$row["userId"];
+                return (int)$row["userId"];
             }
         } catch (Exception $e) {
             $error = new ErrorLog();
@@ -110,7 +110,7 @@ class PaymentService extends ServiceUtils
 
             ErrorService::getInstance()->create($error);
         }
-        return "";
+        return 0;
     }
 
     function getPaymentId(string $orderId): string
