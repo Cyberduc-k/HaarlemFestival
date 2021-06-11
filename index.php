@@ -21,6 +21,11 @@ Router::get('/tickets/<name>', function($name) {
     run($name);
 })->word('name');
 
+Router::get('/ticket/<id>', function($name) {
+    require __DIR__.'/controllers/ticket.php';
+    run($name);
+})->number('id');
+
 Router::get('/account', function() {
     require __DIR__.'/controllers/account.php';
 });

@@ -47,6 +47,23 @@ class TicketService extends ServiceUtils {
         }
     }
 
+    public function getById(int $id): ?Ticket {
+        try {
+            $stmt = $this->dao->getById($id);
+            $num = $stmt->rowCount();
+
+            if ($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                return $this->rowToTicket($row);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
     // get all tickets for the given event type
     public function getAllForEvent(int $eventType): ?array {
         try {

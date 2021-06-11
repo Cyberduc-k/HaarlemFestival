@@ -132,6 +132,7 @@
                         </tbody>
                     </table>
                 </article>
+            </section>
         <?php } ?>
     </main>
 

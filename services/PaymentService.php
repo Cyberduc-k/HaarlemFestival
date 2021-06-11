@@ -45,14 +45,15 @@ class PaymentService extends ServiceUtils
                 ],
                 "description" => "Order {$orderId}",
                 "redirectUrl" => "{$protocol}://{$hostname}/payment?order_id={$orderId}",
-                "webhookUrl" => "{$protocol}://{$hostname}/webhook.php/",
+                "webhookUrl" => "{$protocol}://{$hostname}/webhook.php",
                 "metadata" => [
                     "order_id" => $orderId,
                 ],
             ]);
 
             // write payment to database
-            database_write($orderId, $payment->id, $payment->status, $_SESSION['userId']);
+            $this->dao->newPayment($orderId, $payment->status, $_SESSION['userId']);
+
 
             // get checkout url to finish transaction
             Header("Location: " . $payment->getCheckoutUrl(), true, 303);
@@ -111,10 +112,10 @@ class PaymentService extends ServiceUtils
         return "";
     }
 
-    function updatePaymentStatus(string $orderId, string $paymentId, string $status, string $userId): bool
+    function updatePaymentStatus(string $orderId, string $status): bool
     {
         try {
-            return ($this->dao->updateStatus($orderId, $paymentId, $status, $userId));
+            return ($this->dao->updateStatus($orderId, $status));
 
         } catch (Exception $e) {
             $error = new ErrorLog();

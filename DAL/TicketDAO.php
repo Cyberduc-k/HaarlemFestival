@@ -65,7 +65,7 @@ class TicketDAO extends DAOUtils {
     public function getById(int $id): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, ticketType, eventType, eventId, date, price, inStock
+                          id, ticketType, eventType, eventId, price, inStock
                       FROM " . $this->tableName . "
                       WHERE id = :id";
             
@@ -88,7 +88,7 @@ class TicketDAO extends DAOUtils {
     public function getAllForEvent(int $eventType): ?PDOStatement {
         try {
             $query = "SELECT
-                          id, ticketType, eventType, eventId, date, price, inStock
+                          id, ticketType, eventType, eventId, price, inStock
                       FROM " . $this->tableName . "
                       WHERE eventType = :eventType";
             

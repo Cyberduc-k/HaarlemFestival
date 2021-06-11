@@ -13,18 +13,21 @@ try {
     $mollie = new MollieApiClient();
     $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
 
+
     $ps = new PaymentService();
     $us = new UserService();
     $is = new InvoiceService();
 
-    $user = $us->getById($_SESSION['userId']);
-    $payment = $mollie->payments->get($_REQUEST['id']);
+    var_dump($_POST);
+
+//    $user = $us->getById($_SESSION['userId']);
+    $payment = $mollie->payments->get($_POST['id']);
     $orderId = $payment->metadata->order_id;
     $status = $payment->status;
     $mailer = MailService::getInstance();
 
 
-    database_write($orderId, $payment->id, $status, $_SESSION['userId']);
+    database_write($orderId, $status);
 
 
     if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
@@ -40,18 +43,18 @@ try {
     } elseif ($payment->isExpired()) {
         $subject = "Your order " . $orderId . " has expired";
         $body = "The order you placed for your Haarlem Festival tickets has expired.";
-        $mailer->sendMail($user->getEmail(), $subject, $body);
+//        $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     } elseif ($payment->isCanceled()) {
         $subject = "Your order " . $orderId . " has been canceled";
         $body = "Your order for your Haarlem Festival tickets has been canceled";
-        $mailer->sendMail($user->getEmail(), $subject, $body);
+//        $mailer->sendMail($user->getEmail(), $subject, $body);
 //        database_write($orderId, $paymentId, $status);
         return http_response_code(200);
     } elseif ($payment->hasRefunds()) {
         $subject = "Your order " . $orderId . "has been refunded";
         $body = "Your order " . $orderId . "Has succesfully been refunded";
-        $mailer->sendMail($user->getEmail(), $subject, $body);
+//        $mailer->sendMail($user->getEmail(), $subject, $body);
 //        database_write($orderId, $paymentId, $status);
         return http_response_code(200);
     } elseif ($payment->hasChargebacks()) {
