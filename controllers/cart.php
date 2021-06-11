@@ -22,7 +22,7 @@ if ($_POST) {
             if ($ticket->getId() == $ticketId) {
                 $amount = $twc->count;
                 if ($amount <= $ticket->getInStock() - 1 || $ticket->getEventType() == 1
-                ||$ticket->getEventType() == 2) {
+                    || $ticket->getEventType() == 2) {
                     $amount++;
                     $ticketService->removeFromStock($ticketId);
                     $ticketService->updateCart($userId, $ticketId, $amount);
@@ -35,8 +35,7 @@ if ($_POST) {
             header("Location: /cart");
         }
     }
-    if (!empty($_POST[
-        'removeTicketButton'])) {
+    if (!empty($_POST['removeTicketButton'])) {
         $ticketId = $_GET['ticketId'];
         foreach ($tickets as $twc) {
             $ticket = $twc->ticket;
@@ -77,7 +76,7 @@ if ($_POST) {
             $price = $ticket->getPrice();
             $total += ($amount * $price);
         }
-            $ps->createPayment($userId, $total);
+        $ps->createPayment($userId, $total);
     } else {
         header("Location: /cart");
         exit;

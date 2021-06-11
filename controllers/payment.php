@@ -19,7 +19,6 @@ require_once __DIR__.'/../libs/Mollie/functions.php';
 
 $ps = new PaymentService();
 $ts = new TicketService();
-$status = database_read($_GET['order_id']);
 $tickets = $ts->getAllForCart($_SESSION['userId']);
 $orderId = $_GET['order_id'];
 $invoiceService = new InvoiceService();

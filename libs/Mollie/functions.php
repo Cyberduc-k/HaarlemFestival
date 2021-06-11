@@ -22,9 +22,3 @@ function database_write(string $orderId, string $status): bool
 
 }
 
-//function database_update($orderId, $status): bool
-//{
-//    $service = new PaymentService();
-//    return $service->updatePaymentStatus($orderId, $status);
-//}
-

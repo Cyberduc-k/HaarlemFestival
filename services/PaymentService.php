@@ -24,9 +24,11 @@ class PaymentService extends ServiceUtils
 
     function createPayment(int $userId, float $amount): bool
     {
+        $us = new UserService();
+
         $mollie = new MollieApiClient();
         $mollie->setApiKey("test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
-
+        $user = $us->getById($userId);
 
         try {
             // create random and unique order ID
@@ -44,6 +46,7 @@ class PaymentService extends ServiceUtils
                     "value" => "{$amountString}", // You must send the correct number of decimals, thus we enforce the use of strings
                 ],
                 "description" => "Order {$orderId}",
+                "billingEmail" => $user->getEmail(),
                 "redirectUrl" => "{$protocol}://{$hostname}/payment?order_id={$orderId}",
                 "webhookUrl" => "{$protocol}://{$hostname}/webhook.php",
                 "metadata" => [
@@ -79,6 +82,27 @@ class PaymentService extends ServiceUtils
                 return (string)$row["status"];
             }
 
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+        }
+        return "";
+    }
+
+    function getUserId(string $orderId): string
+    {
+        try {
+            $stmt = $this->dao->getUserId($orderId);
+            $num = $stmt->rowCount();
+
+            if($num > 0){
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                return (string)$row["userId"];
+            }
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());

@@ -63,12 +63,13 @@ class PaymentDAO extends DAOUtils
         }
     }
 
-    function getPaymentId(string $orderId): ?PDOStatement {
+    function getPaymentId(string $orderId): ?PDOStatement
+    {
         try {
             $query = "SELECT
             paymentId
             FROM "
-            . $this->tableName . "
+                . $this->tableName . "
             WHERE id=:orderId";
 
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -80,7 +81,7 @@ class PaymentDAO extends DAOUtils
             Base::getInstance()->conn->commit();
 
             return $stmt;
-        } catch (Exception $e ) {
+        } catch (Exception $e) {
             return $this->handleNullError($e, true);
         }
     }
@@ -114,7 +115,8 @@ class PaymentDAO extends DAOUtils
         }
     }
 
-    function orderIdExists(string $orderId): ?PDOStatement {
+    function orderIdExists(string $orderId): ?PDOStatement
+    {
         try {
             $query = "SELECT
                 1
@@ -141,22 +143,23 @@ class PaymentDAO extends DAOUtils
         }
     }
 
-    function getOrdersFromUser(int $userId): ?PDOStatement {
+    function getUserId(string $orderId): ?PDOStatement
+    {
         try {
-            $query = "SELECT id, status, userId
+            $query = "SELECT userId
             FROM " . $this->tableName . "
-            WHERE userId = :userId";
+            WHERE id=:orderId";
 
             $stmt = Base::getInstance()->conn->prepare($query);
             Base::getInstance()->conn->beginTransaction();
 
-            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":orderId", $orderId);
             $stmt->execute();
 
             Base::getInstance()->conn->commit();
             return $stmt;
 
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             return $this->handleNullError($e, true);
         }
     }
