@@ -282,16 +282,17 @@ class TicketDAO extends DAOUtils {
         }
     }
 
-    public function removeFromStock(int $ticketId): bool {
+    public function removeFromStock(int $ticketId, int $amount): bool {
         try {
             $query = "UPDATE tickets
-            SET inStock = inStock -1  WHERE id = :ticketId";
+            SET inStock = inStock -:amount  WHERE id = :ticketId";
 
             $stmt = Base::getInstance()->conn->prepare($query);
 
             Base::getInstance()->conn->beginTransaction();
 
             $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->bindParam(":amount", $amount);
             $stmt->execute();
 
             Base::getInstance()->conn->commit();
