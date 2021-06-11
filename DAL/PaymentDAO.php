@@ -12,8 +12,7 @@ class PaymentDAO extends DAOUtils
             // query to insert record
             $query = "INSERT INTO
                 " . $this->tableName . "
-            SET
-                id=:orderId, status=:status, userId=:userId";
+            VALUES (:orderId, :status, :userId)";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -36,15 +35,13 @@ class PaymentDAO extends DAOUtils
         }
     }
 
-    function updateStatus(string $orderId, string $paymentId, string $status, string $userId): ?bool
+    function updateStatus(string $orderId, string $status): ?bool
     {
         try {
-            $query = "INSERT INTO
+            $query = "UPDATE
               " . $this->tableName . "
               SET
-              id=:orderId, paymentId=:paymentId, status=:status, userId=:userId
-              ON DUPLICATE KEY UPDATE
-              status=:status";
+              status=:status WHERE id=:orderId";
 
             // prepare query
             $stmt = Base::getInstance()->conn->prepare($query);
@@ -52,9 +49,7 @@ class PaymentDAO extends DAOUtils
 
             // bind parameters
             $stmt->bindParam(":orderId", $orderId);
-            $stmt->bindParam(":paymentId", $paymentId);
             $stmt->bindParam(":status", $status);
-            $stmt->bindParam("userId", $userId);
 
             // execute query
             $stmt->execute();
