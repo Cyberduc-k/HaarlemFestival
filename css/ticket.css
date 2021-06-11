@@ -1,0 +1,26 @@
+#ticket {
+    max-width: 1200px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+#ticket table {
+    width: 100%;
+    padding: 5px;
+    background: #242424;
+    border: 1px solid #707070;
+}
+
+#ticket table thead th {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #707070;
+}
+
+#ticket table th {
+    text-align: left;
+}
+
+#ticket tbody td {
+    padding-top: 10px;
+}
