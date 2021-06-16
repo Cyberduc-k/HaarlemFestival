@@ -86,7 +86,7 @@ class PaymentDAO extends DAOUtils
         }
     }
 
-    function getStatusByOrderId($orderId): ?PDOStatement
+    function getStatusByOrderId(string $orderId): ?PDOStatement
     {
         try {
             $query = "SELECT 
@@ -112,6 +112,25 @@ class PaymentDAO extends DAOUtils
             return $stmt;
         } catch (Exception $e) {
             return $this->handleNullError($e, true);
+        }
+    }
+
+    function deleteOrder(string $orderId) : bool {
+        try {
+            $query = "Delete from " . $this->tableName . "
+            WHERE id =:orderId";
+
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+
+            $stmt->bindParam(":orderId", $orderId);
+            $stmt -> execute();
+
+            Base::getInstance()->conn->commit();
+
+            return true;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
         }
     }
 

@@ -23,16 +23,16 @@ $tickets = $ts->getAllForCart($_SESSION['userId']);
 $orderId = $_GET['order_id'];
 $invoiceService = new InvoiceService();
 
-$invoice = new Invoice();
-$invoice->setUserId($_SESSION["userId"]);
-$invoice->setUserAddress("");
-$invoice->setUserPhone("");
-$invoice->setTax(0.21);
-$invoice->setDate(new DateTime());
-$invoice->setDueDate((new DateTime())->add(new DateInterval("P14D")));
-
-$invoiceService->create($invoice);
-$ts->moveCartToInvoice($_SESSION['userId'], $invoice->getId());
+//$invoice = new Invoice();
+//$invoice->setUserId($_SESSION["userId"]);
+//$invoice->setUserAddress("");
+//$invoice->setUserPhone("");
+//$invoice->setTax(0.21);
+//$invoice->setDate(new DateTime());
+//$invoice->setDueDate((new DateTime())->add(new DateInterval("P14D")));
+//
+//$invoiceService->create($invoice);
+//$ts->moveCartToInvoice($_SESSION['userId'], $invoice->getId());
 
 require __DIR__.'/../views/payment.php';
 

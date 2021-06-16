@@ -24,13 +24,31 @@ try {
 
     $userId = $ps->getUserId($orderId);
     $user = $us->getById($userId);
-    $invoice = $is->getForOrder($userId, $orderId);
     $tickets = $ts->getAllForCart($userId);
 
     database_write($orderId, $status);
 
 
     if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
+        // generate the tickets
+        $ticketPdf = generateTickets($user);
+
+        // set invoice details
+        $invoice = new Invoice();
+        $invoice->setUserId($userId);
+        $invoice->setUserAddress("");
+        $invoice->setUserPhone("");
+        $invoice->setTax(0.21);
+        $invoice->setDate(new DateTime());
+        $invoice->setDueDate((new DateTime())->add(new DateInterval("P14D")));
+
+        // create invoice
+        $is->create($invoice);
+        // move contents of the cart to the invoice table
+        $ts->moveCartToInvoice($userId, $invoice->getId());
+        // generate invoice PDF from moved items
+        $invoicePdf = generateInvoice($invoice);
+
         // remove tickets from stock
         foreach ($tickets as $twc){
             $ticket = $twc->ticket;
@@ -41,34 +59,53 @@ try {
 
         // send mail thanking customer containing the tickets and invoice as attachment
         $subject = "Thank you for your order";
-        $body = "Your order has been succesfully placed. Attached to this e-mail is your invoice.";
-        $ticketPdf = generateTickets($user);
-        $invoicePdf = generateInvoice($invoice);
-        $mailer->sendMailWithInvoice($user->getEmail(), $subject, $body, $ticketPdf, $invoicePdf);
+        $body = "Your order has been succesfully placed. \nAttached to this e-mail is your invoice.";
 
+        $mailer->sendMailWithInvoice($user->getEmail(), $subject, $body, $ticketPdf, $invoicePdf);
+        return http_response_code(200);
     } elseif ($payment->isOpen()) {
         return http_response_code(200);
     } elseif ($payment->isPending()) {
+        //inform the user about the pending order
+        $subject = "Your order is still pending";
+        $body = "Your order with order number " . $orderId . "is being processed. \nWe will notify you when the order has succeeded.";
+
+        $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     } elseif ($payment->isFailed()) {
+        // inform the user about the failed order
+        $subject = "Your order has failed";
+        $body = "Your order with " . $orderId . "has failed to be completed";
+
+        $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     } elseif ($payment->isExpired()) {
-
-
+        // inform the user about the expired order
         $subject = "Your order has expired";
         $body = "The order with order number ". $orderId ."you placed for your Haarlem Festival tickets has expired.";
+
+        $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     } elseif ($payment->isCanceled()) {
-//                $ticketService->cancelTicketOrder($ticketId, $amount);
         $subject = "Your order has been canceled";
-        $body = "Your order with ordernumber". $orderId ." for your Haarlem Festival tickets has been canceled";
+        $body = "Your order with order number". $orderId ." for your Haarlem Festival tickets has been canceled";
+
+        $mailer->sendMail($user->getEmail(), $subject, $body);
+        // delete the order
+        $ps->deleteOrder($orderId);
         return http_response_code(200);
     } elseif ($payment->hasRefunds()) {
-
-        $subject = "Your order " . $orderId . "has been refunded";
+        // inform the user about the refunded order
+        $subject = "Your order has been refunded";
         $body = "Your order " . $orderId . "Has succesfully been refunded";
+
+        $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     } elseif ($payment->hasChargebacks()) {
+        $subject = "Your order with order has been charged back";
+        $body = "Your order with order number " . $orderId . "has been charged back by your card issuer.";
+
+        $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     }
 } catch (ApiException $e) {

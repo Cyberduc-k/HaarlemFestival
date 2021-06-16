@@ -191,5 +191,18 @@ class PaymentService extends ServiceUtils
         return true;
     }
 
+    function deleteOrder(string $orderId) : bool {
+        try {
+            return $this->dao->deleteOrder($orderId);
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+        }
+        return false;
+    }
+
 
 }

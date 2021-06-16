@@ -35,7 +35,7 @@ class MailService {
         $mail->Username = self::FROM;
         $mail->Password = self::PASSWORD;
         $mail->Port = self::PORT;
-        $mail->IsHTML(true);
+        $mail->IsHTML(false);
         $mail->From = self::FROM;
         $mail->FromName = self::FROM_NAME;
         $mail->Sender = self::FROM;
