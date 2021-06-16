@@ -24,7 +24,7 @@ if ($_POST) {
                 if ($amount <= $ticket->getInStock() - 1 || $ticket->getEventType() == 1
                     || $ticket->getEventType() == 2) {
                     $amount++;
-                    $ticketService->removeFromStock($ticketId);
+//                    $ticketService->removeFromStock($ticketId, $amount);
                     $ticketService->updateCart($userId, $ticketId, $amount);
                 } else {
                     $_SESSION['cartAmountError'] = "We're sorry, but you have currently selected the maximum amount of available tickets";
@@ -43,7 +43,7 @@ if ($_POST) {
                 $amount = $twc->count;
                 if ($amount >= 2) {
                     $amount--;
-                    $ticketService->addBackToStock($ticket->getId());
+//                    $ticketService->addBackToStock($ticket->getId());
                     $ticketService->updateCart($userId, $ticketId, $amount);
                 }
             }
@@ -57,7 +57,7 @@ if ($_POST) {
             $ticket = $twc->ticket;
             if ($ticket->getId() == $ticketId) {
                 $amount = $twc->count;
-                $ticketService->cancelTicketOrder($ticketId, $amount);
+//                $ticketService->cancelTicketOrder($ticketId, $amount);
                 $ticketService->deleteFromCart($userId, $ticketId);
                 $_SESSION['cartTicketsRemoved'] = "removed tickets";
             }

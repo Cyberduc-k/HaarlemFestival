@@ -22,10 +22,10 @@ class MailService {
         return self::$instance;
     }
 
-    public function sendMailWithInvoice(String $to, String $subject, String $body, TCPDF $pdf): bool{
+    public function sendMailWithInvoice(String $to, String $subject, String $body, TCPDF $ticketPdf, TCPDF $invoicePdf): bool{
         require_once(__DIR__."/../libs/PHPMailer/PHPMailerAutoload.php");
-
-        $invoice = $pdf->Output('', 'S');
+        $tickets = $ticketPdf->Output('', 'S');
+        $invoice = $invoicePdf->Output('', 'S');
 
         $mail = new PHPMailer();
         $mail->isSMTP();
@@ -42,6 +42,7 @@ class MailService {
         $mail->Body = $body;
         $mail->Subject = $subject;
         $mail->addAddress($to);
+        $mail->addStringAttachment($tickets, 'tickets.pdf');
         $mail->addStringAttachment($invoice, 'invoice.pdf');
 
         try {

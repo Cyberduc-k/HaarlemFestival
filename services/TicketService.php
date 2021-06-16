@@ -231,9 +231,9 @@ class TicketService extends ServiceUtils {
         }
     }
 
-    public function removeFromStock(int $ticketId): bool {
+    public function removeFromStock(int $ticketId, int $amount): bool {
         try {
-            return $this->dao->removeFromStock($ticketId);
+            return $this->dao->removeFromStock($ticketId, $amount);
         } catch (Exception $e) {
             $error = new ErrorLog();
             $error->setMessage($e->getMessage());

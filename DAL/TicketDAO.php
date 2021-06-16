@@ -219,19 +219,19 @@ class TicketDAO extends DAOUtils {
             $stmt->execute();
 
             Base::getInstance()->conn->commit();
-
-
-            $query = "UPDATE tickets
-            SET inStock = inStock - :count WHERE id = :ticketId";
-
-            $stmt = Base::getInstance()->conn->prepare($query);
-            Base::getInstance()->conn->beginTransaction();
-
-            $stmt->bindParam(":ticketId", $ticketId);
-            $stmt->bindParam(":count", $count);
-            $stmt->execute();
-
-            Base::getInstance()->conn->commit();
+//
+//
+//            $query = "UPDATE tickets
+//            SET inStock = inStock - :count WHERE id = :ticketId";
+//
+//            $stmt = Base::getInstance()->conn->prepare($query);
+//            Base::getInstance()->conn->beginTransaction();
+//
+//            $stmt->bindParam(":ticketId", $ticketId);
+//            $stmt->bindParam(":count", $count);
+//            $stmt->execute();
+//
+//            Base::getInstance()->conn->commit();
 
             return true;
         } catch (Exception $e) {

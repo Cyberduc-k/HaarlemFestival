@@ -32,9 +32,7 @@
                 <fieldset>
                     <?php
                     $total = 0;
-                    foreach ($tickets
-
-                             as $twc) {
+                    foreach ($tickets as $twc) {
                         $ticket = $twc->ticket;
                         $start = $ticketService->getStartDate($ticket);
                         $startDate = $start->format('d-m-y H:i');
@@ -55,13 +53,13 @@
                             <span class="time"><?= $startDate ?> </span>
                             <span class="price">€<?= number_format($price, 2, ".", ",") ?></span>
 
-                    <form id="changeTicketAmount" name="changeTicketAmount" method="post"
-                          action="/controllers/cart.php?ticketId=<?= $ticket->getId() ?>&next=cart">
-                        <input id="removeTicketButton" type="submit" name="removeTicketButton" value="-">
+                            <form id="changeTicketAmount" name="changeTicketAmount" method="post"
+                                  action="/controllers/cart.php?ticketId=<?= $ticket->getId() ?>&next=cart">
+                                <input id="removeTicketButton" type="submit" name="removeTicketButton" value="-">
 
-                        <?= $amount ?>
-                        <input id="addTicketButton" type="submit" name="addTicketButton" value="+">
-                    </form>
+                                <?= $amount ?>
+                                <input id="addTicketButton" type="submit" name="addTicketButton" value="+">
+                            </form>
                             <form id="deleteTicketsFromCart"
                                   name="deleteTicketsFromCart" method="post"
                                   action="/deleteFromCart.php?ticketId=<?= $ticket->getId() ?>&next=cart">
@@ -70,7 +68,7 @@
                                        type="submit"
                                        onclick="return confirm('You are about to delete your ticket(s) from this cart. Continue?')">
                             </form>
-                            <span class="ticketPrice">€<?= number_format($ticketPrice,2,".", ",")?></span>
+                            <span class="ticketPrice">€<?= number_format($ticketPrice, 2, ".", ",") ?></span>
 
                         </div>
                     <?php } ?>

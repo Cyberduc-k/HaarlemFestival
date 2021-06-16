@@ -83,7 +83,7 @@ function generateInvoice(Invoice $invoice): TCPDF {
     $table .= '<tr><td colspan="3" style="text-align: right">Subtotal</td>';
     $table .= '<td>€ '.round(($subtotal * 100.0)) / 100.0.'</td></tr>';
     $table .= '<tr><td colspan="3" style="text-align: right">Tax</td>';
-    $table .= '<td>€ '.$invoice->getTax() * 100.0.'%</td></tr>';
+    $table .= '<td> '.$invoice->getTax() * 100.0.'%</td></tr>';
     $table .= '<tr><td colspan="3" style="text-align: right">Total</td>';
     $table .= '<td>€ '.$total.'</td></tr>';
     $table .= '</tbody></table>';

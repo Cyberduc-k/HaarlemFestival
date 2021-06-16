@@ -123,7 +123,7 @@ nav ul a {
     height: 30px;
     margin: 20px 0;
     display: grid;
-    grid-template-columns:7fr 6fr 5fr 4fr 3fr 2fr 1fr;
+    grid-template-columns:8fr 7fr 6fr 5fr 4fr 3fr 2fr 1fr;
     color: black;
     background: white;
     border: 1px solid #707070;

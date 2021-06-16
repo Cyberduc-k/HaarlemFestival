@@ -9,25 +9,30 @@ require_once("models/TicketType.php");
 require_once("models/EventType.php");
 require_once("services/TicketService.php");
 
-function generateTickets(User $user): void {
+function generateTickets(User $user): TCPDF {
     $service = new TicketService();
-    $tickets = $service->getAllForUser($user->getId());
+    $tickets = $service->getAllForCart($user->getId());
     $pdf = new TCPDF();
-
-    $pdf->setPrintHeader(false);
-    $pdf->setPrintFooter(false);
-    $pdf->SetFont('helvetica', 'B');
     $pdf->AddPage();
 
     $white = [255, 255, 255];
     $gray = [100, 100, 100];
     $black = [0, 0, 0];
+
+    $width = $pdf->getPageWidth();
+    $x = $pdf->GetX();
+    $y = $pdf->GetY();
     $i = 0;
 
-    foreach ($tickets as $ticket) {
-        $x = $pdf->GetX();
-        $y = $pdf->GetY();
-        $width = $pdf->getPageWidth();
+    foreach ($tickets as $twc) {
+    $ticket = $twc->ticket;
+
+    $pdf->setPrintHeader(false);
+    $pdf->setPrintFooter(false);
+    $pdf->SetFont('helvetica', 'B');
+
+
+
 
         // draw shapes
         $pdf->SetLineStyle(['width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $black]);
@@ -43,8 +48,8 @@ function generateTickets(User $user): void {
         $pdf->SetTextColorArray($gray);
         $pdf->Text($x + 12, $y + 3, "EVENT");
         $pdf->Text($x + 12, $y + 18, "LOCATION");
-        $pdf->Text($x + 12, $y + 33, "DATE AND TIME");
-        $pdf->Text($x + 12, $y + 45, "TO");
+        $pdf->Text($x + 12, $y + 33, "FROM");
+        $pdf->Text($x + 12, $y + 45, "TILL");
 
         $pdf->SetFontSize(12);
         $pdf->SetTextColorArray($black);
@@ -68,16 +73,18 @@ function generateTickets(User $user): void {
             'bgcolor' => [255, 255, 255],
         ];
 
-        $pdf->write2DBarcode("https://www.HaarlemFestival2021.com/ticket/" .$ticket->getId(), "QRCODE,H", 165, 22, 20, 20, $style, "N");
+        $pdf->write2DBarcode("https://www.HaarlemFestival2021.com/ticket/" .$ticket->getId(), "QRCODE,H", 165, $y+13, 20, 20, $style, "N");
 
         $i++;
+        $y += 70;
 
         if ($i % 4 == 0) {
             $pdf->AddPage();
+            $y = $pdf->getY();
         }
     }
 
-    $pdf->Output("ticket.pdf", 'F');
+    return $pdf;
 }
 
 ?>

@@ -34,8 +34,6 @@ $invoice->setDueDate((new DateTime())->add(new DateInterval("P14D")));
 $invoiceService->create($invoice);
 $ts->moveCartToInvoice($_SESSION['userId'], $invoice->getId());
 
-
-
 require __DIR__.'/../views/payment.php';
 
 ?>
