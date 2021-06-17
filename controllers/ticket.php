@@ -4,6 +4,11 @@ if (!isset($_SESSION)) session_start();
 
 require_once __DIR__.'/../services/TicketService.php';
 
+if (!isset($_SESSION['userType'])) {
+    header("Location: /login");
+    exit;
+}
+
 function run(int $id) {
     $ts = new TicketService();
     $ticket = $ts->getById($id);
