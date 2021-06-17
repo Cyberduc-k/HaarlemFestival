@@ -110,16 +110,25 @@ article {
     text-align: end;
 }
 
-#addRestaurant{
+#addRestaurant {
     width: 100%;
-    padding: 3px;
+    padding: 5px;
     background: #242424;
     border: 1px solid #707070;
 }
 
-#td{
-    padding: 1px;
-    border: 1px solid #707070;
+#addRestaurant thead th {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #707070;
+}
+
+#addRestaurant th {
+    text-align: left;
+}
+
+#addRestaurant td {
+    padding-top: 10px;
 }
 
 li.active {
