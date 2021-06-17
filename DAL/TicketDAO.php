@@ -397,6 +397,26 @@ class TicketDAO extends DAOUtils {
         }
     }
 
+    // check if this ticket belongs to user
+    public function belongsToUser(int $ticketId, int $userId): ?PDOStatement {
+        try {
+            $query = "SELECT * FROM `invoices` AS I "
+                   . "JOIN `invoice_ticket` AS IT ON IT.invoiceId = I.id "
+                   . "WHERE I.userId = :userId AND IT.ticketId = :ticketId";
+            $stmt = Base::getInstance()->conn->prepare($query);
+            Base::getInstance()->conn->beginTransaction();
+            $stmt->bindParam(":userId", $userId);
+            $stmt->bindParam(":ticketId", $ticketId);
+            $stmt->execute();
+
+            Base::getInstance()->conn->commit();
+
+            return $stmt;
+        } catch (Exception $e) {
+            return $this->handleFalseError($e, true);
+        }
+    }
+
     // get specific columns only
     public function getColumns(array $args): ?PDOStatement
     {

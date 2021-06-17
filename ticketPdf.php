@@ -73,7 +73,7 @@ function generateTickets(User $user): TCPDF {
                 'bgcolor' => [255, 255, 255],
             ];
 
-            $pdf->write2DBarcode("https://www.HaarlemFestival2021.com/ticket/" . $ticket->getId(), "QRCODE,H", 165, $y + 13, 20, 20, $style, "N");
+            $pdf->write2DBarcode("https://www.HaarlemFestival2021.nl/ticket/" . $ticket->getId(), "QRCODE,H", 165, $y + 13, 20, 20, $style, "N");
 
             $i++;
             $y += 70;

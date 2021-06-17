@@ -558,6 +558,22 @@ class TicketService extends ServiceUtils {
         }
     }
 
+    public function belongsToUser(int $ticketId, int $userId): bool {
+        try {
+            $stmt = $this->dao->belongsToUser($ticketId, $userId);
+            
+            return $stmt->rowCount() > 0;
+        } catch (Exception $e) {
+            $error = new ErrorLog();
+            $error->setMessage($e->getMessage());
+            $error->setStackTrace($e->getTraceAsString());
+
+            ErrorService::getInstance()->create($error);
+
+            return null;
+        }
+    }
+
     public function create(Ticket $ticket)
     {
         try {
