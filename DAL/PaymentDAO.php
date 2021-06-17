@@ -63,29 +63,6 @@ class PaymentDAO extends DAOUtils
         }
     }
 
-    function getPaymentId(string $orderId): ?PDOStatement
-    {
-        try {
-            $query = "SELECT
-            paymentId
-            FROM "
-                . $this->tableName . "
-            WHERE id=:orderId";
-
-            $stmt = Base::getInstance()->conn->prepare($query);
-            Base::getInstance()->conn->beginTransaction();
-
-            $stmt->bindParam(":orderId", $orderId);
-            $stmt->execute();
-
-            Base::getInstance()->conn->commit();
-
-            return $stmt;
-        } catch (Exception $e) {
-            return $this->handleNullError($e, true);
-        }
-    }
-
     function getStatusByOrderId(string $orderId): ?PDOStatement
     {
         try {

@@ -5,7 +5,7 @@ class Base{
     private static $instance = null;
 
     // Credentials
-    private String $host = "185.224.138.70";
+    private String $host = "localhost";
     private String $db_name = "u844582952_hf";
     private String $username = "u844582952_hf_user";
     private String $password = "HaarlemFestival2021";

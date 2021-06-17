@@ -39,19 +39,23 @@
                         $name = $ticketService->getDescription($ticket);
                         $location = $ticketService->getLocation($ticket);
                         $amount = $twc->count;
+                        if($amount >= $ticket->getInStock() && $ticket->getEventType() != 1 && $ticket->getEventType() != 2)
+                            $amount = $ticket->getInStock();
+                        if($ticket->getEventType() == 1){
+                            if($amount >= 15)
+                                $amount = 15;
+                        }
                         $price = $ticket->getPrice();
                         $ticketPrice = $amount * $price;
                         $total += $ticketPrice;
                         $exVAT = ($total / 121) * 100;
                         $VAT = ($total - $exVAT);
-//                $exVAT = number_format((($total / 121) * 100), 2, ".", ",");
-//                $VAT = number_format(($total - $exVAT), 2, ".", ",");
                         ?>
                         <div class="ticket">
                             <span class="name"><?= $name ?></span>
                             <span class="location"><?= $location ?></span>
                             <span class="time"><?= $startDate ?> </span>
-                            <span class="price">€<?= number_format($price, 2, ".", ",") ?></span>
+                            <span class="price">€<?= number_format($price, 2, ".", null) ?></span>
 
                             <form id="changeTicketAmount" name="changeTicketAmount" method="post"
                                   action="/controllers/cart.php?ticketId=<?= $ticket->getId() ?>&next=cart">
@@ -68,7 +72,7 @@
                                        type="submit"
                                        onclick="return confirm('You are about to delete your ticket(s) from this cart. Continue?')">
                             </form>
-                            <span class="ticketPrice">€<?= number_format($ticketPrice, 2, ".", ",") ?></span>
+                            <span class="ticketPrice">€<?= number_format($ticketPrice, 2, ".", null) ?></span>
 
                         </div>
                     <?php } ?>
@@ -79,10 +83,10 @@
             <form id="agreement" name="agreement" method="post">
                 <div class="amountcol">
                     <ul class="price-amounts">
-                        <li>€<?= number_format($exVAT, 2, ".", ",") ?> </li>
-                        <li>€<?= number_format($VAT, 2, ".", ",") ?> </li>
+                        <li>€<?= number_format($exVAT, 2, ".", null) ?> </li>
+                        <li>€<?= number_format($VAT, 2, ".", null) ?> </li>
                         <br>
-                        <li>€<?= number_format($total, 2, ".", ","); ?></li>
+                        <li>€<?= number_format($total, 2, ".", null); ?></li>
                         <input id="agreeButton" type="submit" name="agreeButton" value="Proceed to payment">
 
                     </ul>
@@ -111,7 +115,12 @@
         <p><?php if (isset($_SESSION['cartTicketsRemoved'])) {
                 echo $_SESSION['cartTicketsRemoved'];
             }
-            unset($_SESSION['cartTicketsRemoved']); ?></p>
+            unset($_SESSION['cartTicketsRemoved']);
+        if(isset($_SESSION['cartAmountError']))
+            echo $_SESSION['cartAmountError'];
+        unset($_SESSION['cartAmountError']);
+        ?>
+        </p>
     </div>
 </main>
 

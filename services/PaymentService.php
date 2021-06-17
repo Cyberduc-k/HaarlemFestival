@@ -22,7 +22,7 @@ class PaymentService extends ServiceUtils
         $this->dao = new PaymentDAO();
     }
 
-    function createPayment(int $userId, float $amount): bool
+    function createPayment(int $userId, string $amount): bool
     {
         $us = new UserService();
 
@@ -33,7 +33,6 @@ class PaymentService extends ServiceUtils
         try {
             // create random and unique order ID
             $orderId = $this->createUniqueOrderId();
-            $amountString = number_format($amount, 2, '.', null);
 
             // determine the URL parts
             $protocol = isset($_SERVER['HTTPS']) && strcasecmp('off', $_SERVER['HTTPS']) !== 0 ? "https" : "http";
@@ -43,7 +42,7 @@ class PaymentService extends ServiceUtils
             $payment = $mollie->payments->create([
                 "amount" => [
                     "currency" => "EUR",
-                    "value" => "{$amountString}", // You must send the correct number of decimals, thus we enforce the use of strings
+                    "value" => "{$amount}", // You must send the correct number of decimals, thus we enforce the use of strings
                 ],
                 "description" => "Order {$orderId}",
                 "billingEmail" => $user->getEmail(),
@@ -111,29 +110,6 @@ class PaymentService extends ServiceUtils
             ErrorService::getInstance()->create($error);
         }
         return 0;
-    }
-
-    function getPaymentId(string $orderId): string
-    {
-        try {
-            $stmt = $this->dao->getPaymentId($orderId);
-            $num = $stmt->rowCount();
-
-            if ($num > 0) {
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                return (string)$row["paymentId"];
-
-            }
-        } catch
-        (Exception $e) {
-            $error = new ErrorLog();
-            $error->setMessage($e->getMessage());
-            $error->setStackTrace($e->getTraceAsString());
-
-            ErrorService::getInstance()->create($error);
-        }
-        return "";
     }
 
     function updatePaymentStatus(string $orderId, string $status): bool

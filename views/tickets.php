@@ -8,6 +8,11 @@
 <body class="<?php echo $event->getColour(); ?>" >
     <?php
     if (!isset($_SESSION)) session_start();
+    if(isset($_SESSION['loginError'])) { ?>
+            <div class="popup">
+                <?php echo $_SESSION['loginError']; ?>
+            </div>
+        <?php unset($_SESSION['loginError']); }
     if (isset($_SESSION['addToCart'])) { ?>
         <div class="popup">
             <?php echo $_SESSION['addToCart']; ?>
@@ -40,8 +45,6 @@
             <?php if ($name != "food") { ?>
                 <span class="prices">Prices</span>
             <?php } ?>
-
-            <a class="cart" href="/cart">Cart</a>
 
             <?php if ($name == "jazz") { ?>
                 <span class="row1">Single Ticket</span>
@@ -101,7 +104,9 @@
         </section>
 
 
-
+        <?php if(!isset($_SESSION['userId'])) {?>
+            <button id="loginButton" name="loginButton" onclick="location.href = '/login'">Log in to add tickets</button>
+        <?php } else { ?>
         <form id="options" method="post" action="/addToCart.php?eventId=<?php echo $event->getId(); ?>&next=tickets/<?php echo $name; ?>">
             <fieldset>
                 <?php if ($name == "food") {?>
@@ -150,10 +155,10 @@
                 <p><?php if (isset($_SESSION['addToCartError'])) { echo $_SESSION['addToCartError']; }
                     unset($_SESSION['addToCartError']); ?></p>
             </div>
-
             <input id="addToCart" type="submit" name="addToCart" value="Add to cart" />
             <input id="addToProgramme" type="submit" name="addToProgramme" value="Add to programme" />
         </form>
+        <?php } ?>
     </main>
 
     <script>
@@ -285,6 +290,8 @@
                 break;
         }
     </script>
+
+
 
     <?php require_once __DIR__.'/footer.php'; ?>
 </body>

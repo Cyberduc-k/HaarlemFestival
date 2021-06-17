@@ -314,19 +314,6 @@ class TicketService extends ServiceUtils {
         }
     }
 
-    public function getStock(int $ticketId): ?PDOStatement {
-        try {
-            return $this->dao->getById($ticketId);
-        }catch (Exception $e) {
-            $error = new ErrorLog();
-            $error->setMessage($e->getMessage());
-            $error->setStackTrace($e->getTraceAsString());
-
-            ErrorService::getInstance()->create($error);
-            return null;
-        }
-    }
-
     public function getDescription(Ticket $ticket): string {
         try {
             switch ($ticket->getEventType()) {

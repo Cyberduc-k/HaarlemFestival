@@ -21,12 +21,18 @@ if ($_POST) {
             $ticket = $twc->ticket;
             if ($ticket->getId() == $ticketId) {
                 $amount = $twc->count;
-                if ($amount <= $ticket->getInStock() - 1 || $ticket->getEventType() == 1
-                    || $ticket->getEventType() == 2) {
+                if ($amount <= $ticket->getInStock() - 1 && $ticket->getEventType() != 1
+                    && $ticket->getEventType() != 2) {
                     $amount++;
-//                    $ticketService->removeFromStock($ticketId, $amount);
                     $ticketService->updateCart($userId, $ticketId, $amount);
-                } else {
+                } else if($ticket->getEventType() == 1 && $amount <= 14){
+                    $amount ++;
+                    $ticketService->updateCart($userId, $ticketId, $amount);
+                } else if($ticket->getEventType() == 2 && amount <=14){
+                    $amount ++;
+                    $ticketService->updateCart($userId, $ticketId, $amount);
+                }
+                else {
                     $_SESSION['cartAmountError'] = "We're sorry, but you have currently selected the maximum amount of available tickets";
                     header("Location: /cart");
                     exit;
@@ -74,8 +80,12 @@ if ($_POST) {
             $ticket = $twc->ticket;
             $amount = $twc->count;
             $price = $ticket->getPrice();
-            $total += ($amount * $price);
+            $ticketPrice = $amount * $price;
+            $total += $ticketPrice;
+
         }
+        $total = number_format($total, 2, '.', '');
+        $total = (string) $total;
         $ps->createPayment($userId, $total);
     } else {
         header("Location: /cart");
