@@ -34,9 +34,9 @@
                         <td id="td"><?php echo EventType::getType($ticket->getEventType()); ?></td>
                         <td id="td"><?php echo $ts->getDescription($ticket); ?></td>
                         <td id="td"><?php echo $ts->getLocation($ticket); ?></td>
-                        <td id="td"><?php echo $ticket->getPrice(); ?></td>
-                        <td id="td"><?php echo $ts->getStartDate($ticket)->format("H:i:s"); ?></td>
-                        <td id="td"><?php echo $ts->getEndDate($ticket)->format("H:i:s") ?></td>
+                        <td id="td"><?php echo "€" .$ticket->getPrice(); ?></td>
+                        <td id="td"><?php echo $ts->getStartDate($ticket)->format("H:i"); ?></td>
+                        <td id="td"><?php echo $ts->getEndDate($ticket)->format("H:i") ?></td>
                         <td id="td">
                             <?php if ($ticket->getEventType() == EventType::Food) {
 
