@@ -1,6 +1,5 @@
 <?php
 use Mollie\Api\Exceptions\ApiException;
-use PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf;
 
 require_once ("libs/Mollie/initialize.php");
 require_once ("services/InvoiceService.php");
@@ -16,7 +15,6 @@ try {
     $is = new InvoiceService();
     $ts = new TicketService();
     $mailer = MailService::getInstance();
-
 
     $payment = $mollie->payments->get($_POST['id']);
     $orderId = $payment->metadata->order_id;
@@ -59,40 +57,49 @@ try {
 
         // send mail thanking customer containing the tickets and invoice as attachment
         $subject = "Thank you for your order";
-        $body = "Your order has been succesfully placed. \nAttached to this e-mail is your invoice.";
+        $body = "Your order has been succesfully placed. \n\nAttached to this e-mail are your invoice and tickets.";
 
         $mailer->sendMailWithInvoice($user->getEmail(), $subject, $body, $ticketPdf, $invoicePdf);
         return http_response_code(200);
     } elseif ($payment->isOpen()) {
+        $subject = "Your order is still open";
+        $body = "Your order with order number " . $orderId . " is currently still open \n Please try placing a new order.";
         return http_response_code(200);
     } elseif ($payment->isPending()) {
         //inform the user about the pending order
         $subject = "Your order is still pending";
-        $body = "Your order with order number " . $orderId . "is being processed. \nWe will notify you when the order has succeeded.";
+        $body = "Your order with order number " . $orderId . " is being processed. \nWe will notify you when the order has succeeded.";
 
         $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     } elseif ($payment->isFailed()) {
         // inform the user about the failed order
         $subject = "Your order has failed";
-        $body = "Your order with " . $orderId . "has failed to be completed";
+        $body = "Your order with " . $orderId . " has failed to be completed";
 
         $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     } elseif ($payment->isExpired()) {
         // inform the user about the expired order
         $subject = "Your order has expired";
-        $body = "The order with order number ". $orderId ."you placed for your Haarlem Festival tickets has expired.";
+        $body = "The order with order number ". $orderId ." you placed for your Haarlem Festival tickets has expired.";
 
         $mailer->sendMail($user->getEmail(), $subject, $body);
         return http_response_code(200);
     } elseif ($payment->isCanceled()) {
         $subject = "Your order has been canceled";
-        $body = "Your order with order number". $orderId ." for your Haarlem Festival tickets has been canceled";
+        $body = "Your order for your Haarlem Festival tickets has been canceled";
 
         $mailer->sendMail($user->getEmail(), $subject, $body);
         // delete the order
         $ps->deleteOrder($orderId);
+        foreach ($tickets as $twc) {
+            $ticket = $twc->ticket;
+            $ticketId = $ticket->getId();
+
+            // clear the cart
+            $ts->deleteFromCart($userId, $ticketId);
+        }
         return http_response_code(200);
     } elseif ($payment->hasRefunds()) {
         // inform the user about the refunded order

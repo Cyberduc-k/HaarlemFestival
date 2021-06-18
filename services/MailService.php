@@ -9,7 +9,7 @@ class MailService {
     private const HOST = "send.one.com";
     private const PASSWORD = "PHPAssignment";
     private const PORT = 465;
-    private const FROM_NAME = "Bram Bierhuis";
+    private const FROM_NAME = "Haarlem Festival";
 
     private function __construct() {}
 

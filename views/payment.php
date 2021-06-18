@@ -8,6 +8,17 @@
 <body>
 <?php require __DIR__ . '/menubar.php'; ?>
 <main>
+    <?php if(empty($tickets)) { ?>
+            <article id="tickets">
+                <h1> Your order has not yet been completed <br></h1>
+
+                An email concerning the status of your order has been sent to your email address.
+                <div id="buttonContainer">
+                    <button onclick="window.location.href='/account'" id="returnButton" name="returnButton">Return to my account
+                    </button>
+                </div>
+            </article>
+        <?php } else { ?>
     <article id="tickets">
         <h1>
             Thank you for your order.<br>
@@ -23,6 +34,7 @@
             </button>
         </div>
     </article>
+    <?php } ?>
 </main>
 
 <?php require __DIR__ . '/footer.php'; ?>

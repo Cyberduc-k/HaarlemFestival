@@ -37,7 +37,6 @@ if (isset($_POST['deleteTicketsButton'])) {
         $ticket = $twc->ticket;
         if ($ticket->getId() == $ticketId) {
             $amount = $twc->count;
-//            $ticketService->cancelTicketOrder($ticketId, $amount);
             $ticketService->deleteFromCart($userId, $ticketId);
             $_SESSION['cartTicketsRemoved'] = "removed tickets";
         }

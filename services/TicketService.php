@@ -557,7 +557,7 @@ class TicketService extends ServiceUtils {
 
             ErrorService::getInstance()->create($error);
 
-            return null;
+            return false;
         }
     }
 

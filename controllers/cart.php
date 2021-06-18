@@ -49,7 +49,6 @@ if ($_POST) {
                 $amount = $twc->count;
                 if ($amount >= 2) {
                     $amount--;
-//                    $ticketService->addBackToStock($ticket->getId());
                     $ticketService->updateCart($userId, $ticketId, $amount);
                 }
             }
@@ -63,7 +62,6 @@ if ($_POST) {
             $ticket = $twc->ticket;
             if ($ticket->getId() == $ticketId) {
                 $amount = $twc->count;
-//                $ticketService->cancelTicketOrder($ticketId, $amount);
                 $ticketService->deleteFromCart($userId, $ticketId);
                 $_SESSION['cartTicketsRemoved'] = "removed tickets";
             }
